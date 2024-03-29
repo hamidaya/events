@@ -8,11 +8,11 @@
         <version>3.1.4</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>nl.novi</groupId>
-    <artifactId>TechItEasy-11-21</artifactId>
+    <groupId>org.music</groupId>
+    <artifactId>Events</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>TechItEasy-11-21</name>
-    <description>TechItEasy-11-21</description>
+    <name>Events</name>
+    <description>Events</description>
     <properties>
         <java.version>21</java.version>
     </properties>
