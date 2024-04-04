@@ -1,6 +1,7 @@
 package org.music.events.dtos;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.Date;
 
 public class eventRequestDTO {
