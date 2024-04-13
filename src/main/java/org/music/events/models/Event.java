@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import org.music.events.interfaces.IEevent;
 
 import java.util.Date;
+import java.util.Collection;
+
 
 @Entity
 @Table(name = "events")
@@ -11,7 +13,7 @@ import java.util.Date;
 public class    Event implements IEevent {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
+
     private Long eventID;
     private String eventName;
     private String eventLocation;
@@ -27,7 +29,6 @@ public class    Event implements IEevent {
         this.eventPrice = eventPrice;
         this.availableTickets = availableTickets;
     }
-
 
     public Long getEventID() {
         return eventID;

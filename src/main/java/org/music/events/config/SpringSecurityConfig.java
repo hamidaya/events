@@ -81,6 +81,13 @@ public class SpringSecurityConfig {
                 .requestMatchers("/cimodules", "/remotecontrollers", "/televisions", "/wallbrackets").hasAnyRole("ADMIN", "USER")
                 .requestMatchers("/authenticated").authenticated()
                 .requestMatchers("/authenticate").permitAll()
+
+                 //events endpoints
+
+                 .requestMatchers(HttpMethod.POST, "/events").hasAnyRole("ADMIN","USER")
+                 .requestMatchers(HttpMethod.GET,"/events").hasRole("ADMIN")
+                 .requestMatchers(HttpMethod.POST,"/events/**").hasRole("ADMIN")
+                 .requestMatchers(HttpMethod.DELETE, "/events/**").hasRole("ADMIN")
                 .anyRequest().denyAll()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

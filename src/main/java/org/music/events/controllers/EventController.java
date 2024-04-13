@@ -1,32 +1,44 @@
 package org.music.events.controllers;
 
-//import jakarta.validation.Valid;
-//import org.music.events.dtos.eventRequestDTO;
-import org.music.events.models.Event;
+import jakarta.validation.Valid;
+import org.music.events.dtos.EventRespondsDTO;
+import org.music.events.dtos.EventRequestDTO;
+=import org.music.events.models.Event;
 import org.music.events.services.EventService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("events")
 public class EventController {
 
-
-
-    @Autowired
-    private EventService eventService;
+    private final EventService eventService;
 
     public EventController(EventService eventService) {
         this.eventService = eventService;
     }
 
+    @GetMapping("/events")
+    public ResponseEntity<List<EventRequestDTO>> getAllEvents(@RequestParam(value = "eventName", required = false) Optional<String> eventName) {
 
-    @GetMapping
-    public List<Event> getAllEvents() {
-        return eventService.getAllEvents();
+        List<EventRequestDTO> dtos;
+
+        if (eventName.isEmpty()){
+
+            dtos = eventService.getAllEvents();
+
+
+        } else {
+
+            dtos = eventService.getAllEvents();
+
+        }
+
+        return ResponseEntity.ok().body(dtos);
+
     }
 
     @GetMapping("/{eventId}")
@@ -40,24 +52,16 @@ public class EventController {
         return ResponseEntity.ok(event);
     }
 
-//    @PostMapping("/events")
-//
-//    public ResponseEntity<eventRequestDTO> addEvent(@Valid @RequestBody eventRequestDTO eventDto) {
-//        eventRequestDTO dto;
-//
-//// Hier gebruiken we weer een service methode in plaats van direct de repository aan te spreken.
-//
-//        if(eventRequestDTO.getFestival() != null && eventDto.getcampingAvailable() != null) {
-//            dto = festivalService.addEvent(mapper.toFestival(eventDto));
-//        } else if(festivalInputDto.getHdr()){
-//            dto = partyService.addParty(mapper.toParty(eventRequestDTO));
-//        } else {
-//            return ResponseEntity.badRequest().body("Niet duidelijk of het een party of festival is");
-//        }
-//
-//        return ResponseEntity.created(null).body(dto);
-//
-//    }
+ @PostMapping("/events")
+
+    public ResponseEntity<EventRespondsDTO> addEvent(@Valid @RequestBody EventRequestDTO eventDto) {
+     EventRespondsDTO dto = new EventRespondsDTO();
+// Hier gebruiken we weer een service methode in plaats van direct de repository aan te spreken.
+
+
+        return ResponseEntity.created(null).body(dto);
+
+    }
 
     @PutMapping("/{eventId}")
     public ResponseEntity<Event> updateEvent(@PathVariable Long eventId, @RequestBody Event updatedEvent) {
