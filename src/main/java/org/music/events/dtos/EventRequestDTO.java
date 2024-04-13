@@ -1,16 +1,15 @@
 package org.music.events.dtos;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotBlank;
+
 import java.util.Date;
 
-public class eventRequestDTO {
+public class EventRequestDTO {
 
+    @NotBlank(message = "eventID must not be blank")
+    private Long eventID;
     @NotBlank(message = "eventName must not be blank")
     private String eventName;
-    @NotBlank(message = "festival must not be blank")
-    private String festival;
-    @NotBlank(message = "Party must not be blank")
-    private String party;
     @NotBlank(message = "eventLocation must not be blank")
     private String eventLocation;
     @NotBlank(message = "eventStartDate must not be blank")
@@ -20,28 +19,20 @@ public class eventRequestDTO {
     @NotBlank(message = "availableTickets must not be blank")
     private Integer availableTickets;
 
+    public EventRequestDTO(String eventName, String eventLocation, Date eventStartDate, Double eventPrice, Integer availableTickets) {
+        this.eventName = eventName;
+          this.eventLocation = eventLocation;
+        this.eventStartDate = eventStartDate;
+        this.eventPrice = eventPrice;
+        this.availableTickets = availableTickets;
+    }
+
     public String getEventName() {
         return eventName;
     }
 
     public void setEventName(String eventName) {
         this.eventName = eventName;
-    }
-
-    public String getFestival() {
-        return festival;
-    }
-
-    public void setFestival(String festival) {
-        this.festival = festival;
-    }
-
-    public String getParty() {
-        return party;
-    }
-
-    public void setParty(String party) {
-        this.party = party;
     }
 
     public String getEventLocation() {
@@ -75,8 +66,9 @@ public class eventRequestDTO {
     public void setAvailableTickets(Integer availableTickets) {
         this.availableTickets = availableTickets;
     }
-}
 
+
+}
 
 
 

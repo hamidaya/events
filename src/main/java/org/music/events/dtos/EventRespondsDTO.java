@@ -2,18 +2,23 @@ package org.music.events.dtos;
 
 import java.util.Date;
 
-public class eventRespondsDTO {
+public class EventRespondsDTO {
 
-    // Hier zet je alleen data die je wil terug geven aan de client. Voor nu
-  // alles in mijn geval, maar later kijken welke data geheim is.
     private Long eventID;
-    private String festival;
-    private String party;
     private String eventName;
     private String eventLocation;
     private Date eventStartDate;
     private Double eventPrice;
     private Integer availableTickets;
+
+    public EventRespondsDTO(Long eventID, String eventName, String eventLocation, Date eventStartDate, Double eventPrice, Integer availableTickets) {
+        this.eventID = eventID;
+        this.eventName = eventName;
+        this.eventLocation = eventLocation;
+        this.eventStartDate = eventStartDate;
+        this.eventPrice = eventPrice;
+        this.availableTickets = availableTickets;
+    }
 
     public Long getEventID() {
         return eventID;
@@ -23,23 +28,7 @@ public class eventRespondsDTO {
         this.eventID = eventID;
     }
 
-    public String getFestival() {
-        return festival;
-    }
-
-    public void setFestival(String festival) {
-        this.festival = festival;
-    }
-
-    public String getParty() {
-        return party;
-    }
-
-    public void setParty(String party) {
-        this.party = party;
-    }
-
-    public String getEventName() {
+      public String getEventName() {
         return eventName;
     }
 
