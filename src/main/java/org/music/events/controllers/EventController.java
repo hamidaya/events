@@ -22,9 +22,9 @@ public class EventController {
     }
 
     @GetMapping("/events")
-    public ResponseEntity<List<EventRequestDTO>> getAllEvents(@RequestParam(value = "eventName", required = false) Optional<String> eventName) {
+    public ResponseEntity<List<EventRespondsDTO>> getAllEvents(@RequestParam(value = "eventName", required = false) Optional<String> eventName) {
 
-        List<EventRequestDTO> dtos;
+        List<EventRespondsDTO> dtos;
 
         if (eventName.isEmpty()){
 
@@ -33,7 +33,7 @@ public class EventController {
 
         } else {
 
-            dtos = eventService.getAllEvents();
+            dtos = eventService.getAllEventsByName(eventName.get());
 
         }
 
