@@ -25,14 +25,6 @@ INSERT INTO television_wall_bracket(television_id, wall_bracket_id) values (1005
                                                                            (1001, 1004),
                                                                            (1001, 1005);
 
--- password = "password" (dit comment is een security lek, zet dit nooit in je code.
--- Als je hier je plaintext password niet meer weet, moet je een nieuw password encrypted)
-INSERT INTO users (username, password, email, enabled) VALUES ('user', '$2a$12$IzA1Ja1LH4PSMoro9PeITO1etDlknPjSX1nLusgt1vi9c1uaEXdEK','user@test.nl', TRUE);
-INSERT INTO users (username, password, email, enabled) VALUES ('admin', '$2a$12$IzA1Ja1LH4PSMoro9PeITO1etDlknPjSX1nLusgt1vi9c1uaEXdEK', 'admin@test.nl', TRUE);
-
-INSERT INTO authorities (username, authority) VALUES ('user', 'ROLE_USER');
-INSERT INTO authorities (username, authority) VALUES ('admin', 'ROLE_USER');
-INSERT INTO authorities (username, authority) VALUES ('admin', 'ROLE_ADMIN');
 
 
 DROP TABLE IF EXISTS events CASCADE;
@@ -62,76 +54,36 @@ CREATE TABLE festivals
     festivalPrice DOUBLE PRECISION
 );
 CREATE TABLE partys
-     (
-   partyID SERIAL PRIMARY KEY,
-   eventID INT REFERENCES events(eventID), -- a foreign key relationship to Event
-   partyName VARCHAR(100),
-   partyLocation VARCHAR(50),
-   partyStartDate DATE,
-   partyEndDate DATE,
-   partyPrice DOUBLE PRECISION,
-   dresscode VARCHAR(50),
-   djName VARCHAR(100)
+(
+    partyID SERIAL PRIMARY KEY,
+    eventID INT REFERENCES events(eventID), -- a foreign key relationship to Event
+    partyName VARCHAR(100),
+    partyLocation VARCHAR(50),
+    partyStartDate DATE,
+    partyEndDate DATE,
+    partyPrice DOUBLE PRECISION,
+    dresscode VARCHAR(50),
+    djName VARCHAR(100)
 
 );
 
 
-
 INSERT INTO events (eventName, eventLocation, eventPrice, availableTickets, eventStartDate, eventEndDate)
-
-VALUES (
-
-           random_string(15) || ' Event',
-
-           random_string(8) || ' City',
-
-           random() * 100,
-
-           floor(random() * 1000),
-
-           '2024-01-01'::DATE + (random() * 365)::INT,
-
-           '2024-01-01'::DATE + (random() * 365)::INT
-
-       );
+VALUES ('hamid event', 'Rotterdam', 50.0, 1000, '2024-02-01', '2024-02-05');
 
 INSERT INTO festivals (festivalName, festivalLocation, artistName, campingAvailable, festivalStartDate, festivalEndDate, festivalPrice)
-
-VALUES (
-
-
-           random_string(15) || ' Festival',
-
-           random_string(8) || ' City',
-
-           random_string(12) || ' Artist',
-
-           random() < 0.5,
-
-           '2024-01-01'::DATE + (random() * 365)::INT,
-
-           '2024-01-01'::DATE + (random() * 365)::INT,
-
-           random() * 100
-
-       );
-
-INSERT INTO partys (partyName, partyLocation, partyStartDate, partyEndDate, partyPrice, dressCode, djName)
-
-VALUES (
+VALUES ('santi festival', 'Utrecht', 30.0, false, '2024-01-01', '2024-01-02',120);
 
 
-           random_string(15) || ' Party',
+INSERT INTO partys (partyName, partyLocation, partyPrice,partyStartDate, partyEndDate, dressCode, djName)
+VALUES ('fanti party', 'Amsterdam', 30.0, '2024-02-03', '2024-02-05', 'carnaval kleding', 'djKivit');
 
-           random_string(8) || ' City',
+-- password = "password" (dit comment is een security lek, zet dit nooit in je code.
+-- Als je hier je plaintext password niet meer weet, moet je een nieuw password encrypted)
+INSERT INTO users (username, password, email, enabled) VALUES ('user', '$2a$12$IzA1Ja1LH4PSMoro9PeITO1etDlknPjSX1nLusgt1vi9c1uaEXdEK','user@test.nl', TRUE);
+INSERT INTO users (username, password, email, enabled) VALUES ('admin', '$2a$12$IzA1Ja1LH4PSMoro9PeITO1etDlknPjSX1nLusgt1vi9c1uaEXdEK', 'admin@test.nl', TRUE);
 
-           '2024-01-01'::DATE + (random() * 365)::INT,
-
-           '2024-01-01'::DATE + (random() * 365)::INT,
-
-           random() * 100,
-           random_string(12) || ' dressCode',
-           random_string(1) || ' Dj'
-
-       );
+INSERT INTO authorities (username, authority) VALUES ('user', 'ROLE_USER');
+INSERT INTO authorities (username, authority) VALUES ('admin', 'ROLE_USER');
+INSERT INTO authorities (username, authority) VALUES ('admin', 'ROLE_ADMIN');
 

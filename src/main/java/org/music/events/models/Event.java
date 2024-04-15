@@ -1,10 +1,13 @@
 package org.music.events.models;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import jakarta.persistence.*;
 import org.music.events.interfaces.IEevent;
 
 import java.util.Date;
-import java.util.Collection;
 
 
 @Entity
@@ -12,8 +15,8 @@ import java.util.Collection;
 
 public class Event implements IEevent {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long eventID;
     private String eventName;
     private String eventLocation;

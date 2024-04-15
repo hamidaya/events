@@ -1,24 +1,21 @@
 package org.music.events.services;
 import org.music.events.dtos.EventRequestDTO;
 import org.music.events.dtos.EventRespondsDTO;
-import org.music.events.dtos.TelevisionDto;
-import org.music.events.dtos.TelevisionInputDto;
-import org.music.events.exceptions.RecordNotFoundException;
 import org.music.events.models.Event;
-import org.music.events.models.Television;
 import org.music.events.repositories.EventRepository;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
-import java.util.Optional;
 import java.util.ArrayList;
 @Service
 public class EventService {
-    private final EventRepository eventRepository;
+    private EventRepository eventRepository;
+
     public EventService(EventRepository eventRepository) {
         this.eventRepository = eventRepository;
     }
-    public List<EventRespondsDTO> getAllEvents() {
-        List<Event> eventList = eventRepository.findAll();
+    public List<EventRespondsDTO> getAllEvents(String eventName) {
+        List<Event> eventList = eventRepository.findAllEventsByEventNameEqualsIgnoreCase(eventName);
         return transferEventListToDtoList(eventList);
     }
     public List<EventRespondsDTO> getAllEventsByName(String eventName) {

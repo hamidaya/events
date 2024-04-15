@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("events")
+//@RequestMapping("events")
 public class EventController {
 
     private final EventService eventService;
@@ -21,14 +21,14 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @GetMapping("")
-    public ResponseEntity<List<EventRespondsDTO>> getAllEvents(@RequestParam(value = "eventName", required = false) Optional<String> eventName) {
+    @GetMapping("events")
+    public ResponseEntity<List<EventRespondsDTO>> getAllEvents(@RequestParam(value = "eventname", required = false) Optional<String> eventName) {
 
         List<EventRespondsDTO> dtos;
 
         if (eventName.isEmpty()){
 
-            dtos = eventService.getAllEvents();
+            dtos = eventService.getAllEvents(eventName.get());
 
 
         } else {
@@ -41,7 +41,7 @@ public class EventController {
 
     }
 
-//    @GetMapping("/{eventId}")
+//@GetMapping("/{eventId}")
 //    public ResponseEntity<Event> getEvent(@PathVariable ("id")Long eventId) {
 //        Event event = eventService.getEventById(eventId);
 //

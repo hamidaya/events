@@ -67,6 +67,7 @@ public class SpringSecurityConfig {
                // .requestMatchers("/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/users").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET,"/users").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET,"/events").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST,"/users/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/cimodules").hasRole("ADMIN")
@@ -82,8 +83,6 @@ public class SpringSecurityConfig {
                 .requestMatchers("/authenticated").authenticated()
                 .requestMatchers("/authenticate").permitAll()
 
-                .requestMatchers("/events").permitAll()
-                //.requestMatchers(HttpMethod.GET, "/events").hasAnyRole("ADMIN","USER")
                 .requestMatchers(HttpMethod.POST, "/events").hasAnyRole("ADMIN","USER")
                 .requestMatchers(HttpMethod.POST,"/events/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/events/**").hasRole("ADMIN")
