@@ -13,7 +13,7 @@ INSERT INTO remote_controller (id, compatible_with, battery_type, name, brand, p
 
 INSERT INTO television (id, type, brand, name, price, available_size, refresh_rate, screen_type, screen_quality, smart_tv, wifi, voice_control, hdr, bluetooth, ambi_light, original_stock, sold) VALUES (1001, 'NH3216SMART', 'Nikkei', 'HD smart TV', 159, 32, 100, 'LED', 'HD ready',  true, true, false, false, false, false, 235885, 45896),
                                                                                                                                                                                                          (1002, '43PUS6504/12/L', 'Philips', '4K UHD LED Smart Tv', 379, 43, 60, 'LED', 'Ultra HD',  true, true, false, true, false, false, 8569452, 5685489),
-                                                                                                                                                                                                         (1003, '43PUS6504/12/M', 'Philips', '4K UHD LED Smart Tv', 379, 50, 60, 'LED', 'Ultra HD',  true, true, false, true, false, false, 345549, 244486),
+                                                                                                                                                                                                       (1003, '43PUS6504/12/M', 'Philips', '4K UHD LED Smart Tv', 379, 50, 60, 'LED', 'Ultra HD',  true, true, false, true, false, false, 345549, 244486),
                                                                                                                                                                                                          (1004, '43PUS6504/12/S', 'Philips', '4K UHD LED Smart Tv', 379, 58, 60, 'LED', 'Ultra HD',  true, true, false, true, false, false, 6548945, 4485741),
                                                                                                                                                                                                          (1005, 'OLED55C16LA', 'LG', 'LG OLED55C16LA', 989, 55, 100, 'OLED', 'ULTRA HD',  true, true, true, true, true, false, 50000, 20500);
 
@@ -33,3 +33,105 @@ INSERT INTO users (username, password, email, enabled) VALUES ('admin', '$2a$12$
 INSERT INTO authorities (username, authority) VALUES ('user', 'ROLE_USER');
 INSERT INTO authorities (username, authority) VALUES ('admin', 'ROLE_USER');
 INSERT INTO authorities (username, authority) VALUES ('admin', 'ROLE_ADMIN');
+
+
+DROP TABLE IF EXISTS events CASCADE;
+DROP TABLE IF EXISTS festivals CASCADE;
+DROP TABLE IF EXISTS partys CASCADE;
+
+CREATE TABLE events
+(
+    eventID SERIAL PRIMARY KEY,
+    eventName VARCHAR(100),
+    eventLocation VARCHAR(50),
+    availableTickets INT,
+    eventStartDate DATE,
+    eventEndDate DATE,
+    eventPrice DOUBLE PRECISION
+);
+CREATE TABLE festivals
+(
+    festivalID SERIAL PRIMARY KEY,
+    eventID INT REFERENCES events(eventID), -- a foreign key relationship to Event
+    festivalName VARCHAR(100),
+    festivalLocation VARCHAR(50),
+    artistName VARCHAR(100),
+    campingAvailable BOOLEAN,
+    festivalStartDate DATE,
+    festivalEndDate DATE,
+    festivalPrice DOUBLE PRECISION
+);
+CREATE TABLE partys
+     (
+   partyID SERIAL PRIMARY KEY,
+   eventID INT REFERENCES events(eventID), -- a foreign key relationship to Event
+   partyName VARCHAR(100),
+   partyLocation VARCHAR(50),
+   partyStartDate DATE,
+   partyEndDate DATE,
+   partyPrice DOUBLE PRECISION,
+   dresscode VARCHAR(50),
+   djName VARCHAR(100)
+
+);
+
+
+
+INSERT INTO events (eventName, eventLocation, eventPrice, availableTickets, eventStartDate, eventEndDate)
+
+VALUES (
+
+           random_string(15) || ' Event',
+
+           random_string(8) || ' City',
+
+           random() * 100,
+
+           floor(random() * 1000),
+
+           '2024-01-01'::DATE + (random() * 365)::INT,
+
+           '2024-01-01'::DATE + (random() * 365)::INT
+
+       );
+
+INSERT INTO festivals (festivalName, festivalLocation, artistName, campingAvailable, festivalStartDate, festivalEndDate, festivalPrice)
+
+VALUES (
+
+
+           random_string(15) || ' Festival',
+
+           random_string(8) || ' City',
+
+           random_string(12) || ' Artist',
+
+           random() < 0.5,
+
+           '2024-01-01'::DATE + (random() * 365)::INT,
+
+           '2024-01-01'::DATE + (random() * 365)::INT,
+
+           random() * 100
+
+       );
+
+INSERT INTO partys (partyName, partyLocation, partyStartDate, partyEndDate, partyPrice, dressCode, djName)
+
+VALUES (
+
+
+           random_string(15) || ' Party',
+
+           random_string(8) || ' City',
+
+           '2024-01-01'::DATE + (random() * 365)::INT,
+
+           '2024-01-01'::DATE + (random() * 365)::INT,
+
+           random() * 100,
+           random_string(12) || ' dressCode',
+           random_string(1) || ' Dj'
+
+       );
+

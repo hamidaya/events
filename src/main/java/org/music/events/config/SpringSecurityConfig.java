@@ -63,8 +63,8 @@ public class SpringSecurityConfig {
                 .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(auth ->
                         auth
-                // Wanneer je deze uncomments, staat je hele security open. Je hebt dan alleen nog een jwt nodig.
-//                .requestMatchers("/**").permitAll()
+
+               // .requestMatchers("/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/users").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET,"/users").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST,"/users/**").hasRole("ADMIN")
@@ -82,12 +82,11 @@ public class SpringSecurityConfig {
                 .requestMatchers("/authenticated").authenticated()
                 .requestMatchers("/authenticate").permitAll()
 
-                 //events endpoints
-
-                 .requestMatchers(HttpMethod.POST, "/events").hasAnyRole("ADMIN","USER")
-                 .requestMatchers(HttpMethod.GET,"/events").hasRole("ADMIN")
-                 .requestMatchers(HttpMethod.POST,"/events/**").hasRole("ADMIN")
-                 .requestMatchers(HttpMethod.DELETE, "/events/**").hasRole("ADMIN")
+                .requestMatchers("/events").permitAll()
+                //.requestMatchers(HttpMethod.GET, "/events").hasAnyRole("ADMIN","USER")
+                .requestMatchers(HttpMethod.POST, "/events").hasAnyRole("ADMIN","USER")
+                .requestMatchers(HttpMethod.POST,"/events/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.DELETE, "/events/**").hasRole("ADMIN")
                 .anyRequest().denyAll()
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));

@@ -10,10 +10,10 @@ import java.util.Collection;
 @Entity
 @Table(name = "events")
 
-public class    Event implements IEevent {
+public class Event implements IEevent {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
+    @Id
     private Long eventID;
     private String eventName;
     private String eventLocation;
@@ -21,7 +21,7 @@ public class    Event implements IEevent {
     private Double eventPrice;
     private Integer availableTickets;
 
-    public Event(Long eventID, String festival, String party, String eventName, String eventLocation, Date eventStartDate, Double eventPrice, Integer availableTickets) {
+    public Event(Long eventID, String eventName, String eventLocation, Date eventStartDate, Double eventPrice, Integer availableTickets) {
         this.eventID = eventID;
         this.eventName = eventName;
         this.eventLocation = eventLocation;

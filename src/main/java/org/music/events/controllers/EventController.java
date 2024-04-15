@@ -3,7 +3,7 @@ package org.music.events.controllers;
 import jakarta.validation.Valid;
 import org.music.events.dtos.EventRespondsDTO;
 import org.music.events.dtos.EventRequestDTO;
-=import org.music.events.models.Event;
+import org.music.events.models.Event;
 import org.music.events.services.EventService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,7 +21,7 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @GetMapping("/events")
+    @GetMapping("")
     public ResponseEntity<List<EventRespondsDTO>> getAllEvents(@RequestParam(value = "eventName", required = false) Optional<String> eventName) {
 
         List<EventRespondsDTO> dtos;
@@ -41,22 +41,26 @@ public class EventController {
 
     }
 
-    @GetMapping("/{eventId}")
-    public ResponseEntity<Event> getEventById(@PathVariable Long eventId) {
-        Event event = eventService.getEventById(eventId);
-        return ResponseEntity.ok(event);
-    }
-    @GetMapping("/{eventname}")
-    public ResponseEntity<Event> getEventName(@PathVariable Long eventName) {
-        Event event = eventService.getEventById(eventName);
-        return ResponseEntity.ok(event);
-    }
+//    @GetMapping("/{eventId}")
+//    public ResponseEntity<Event> getEvent(@PathVariable ("id")Long eventId) {
+//        Event event = eventService.getEventById(eventId);
+//
+//        return ResponseEntity.ok().body(event);
+//
+//            }
+//    @GetMapping("/{eventname}")
+//    public ResponseEntity<Event> getEventName(@PathVariable Long eventName) {
+//
+//        Event event = eventService.getEventById(eventName);
+//
+//        return ResponseEntity.ok().body(event);
+//    }
 
  @PostMapping("/events")
 
-    public ResponseEntity<EventRespondsDTO> addEvent(@Valid @RequestBody EventRequestDTO eventDto) {
-     EventRespondsDTO dto = new EventRespondsDTO();
-// Hier gebruiken we weer een service methode in plaats van direct de repository aan te spreken.
+    public ResponseEntity<Object> addEvent(@Valid @RequestBody EventRequestDTO eventRequestDTO) {
+
+     EventRespondsDTO dto = eventService.addEvent(eventRequestDTO);
 
 
         return ResponseEntity.created(null).body(dto);
