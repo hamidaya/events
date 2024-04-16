@@ -20,6 +20,10 @@ public class EventRespondsDTO {
         this.availableTickets = availableTickets;
     }
 
+    public EventRespondsDTO() {
+
+    }
+
     public Long getEventID() {
         return eventID;
     }

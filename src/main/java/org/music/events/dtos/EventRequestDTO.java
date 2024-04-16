@@ -1,22 +1,21 @@
 package org.music.events.dtos;
 
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
 
 public class EventRequestDTO {
 
-    @NotBlank(message = "eventID must not be blank")
-    private Long eventID;
-    @NotBlank(message = "eventName must not be blank")
+   // @NotNull(message = "eventName must not be blank")
     private String eventName;
-    @NotBlank(message = "eventLocation must not be blank")
+  //  @NotNull(message = "eventLocation must not be blank")
     private String eventLocation;
-    @NotBlank(message = "eventStartDate must not be blank")
+   // @NotBlank(message = "eventStartDate must not be blank")
     private Date eventStartDate;
-    @NotBlank(message = "eventPrice must not be blank")
+   // @NotBlank(message = "eventPrice must not be blank")
     private Double eventPrice;
-    @NotBlank(message = "availableTickets must not be blank")
+   // @NotBlank(message = "availableTickets must not be blank")
     private Integer availableTickets;
 
     public EventRequestDTO(String eventName, String eventLocation, Date eventStartDate, Double eventPrice, Integer availableTickets) {

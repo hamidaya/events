@@ -1,77 +1,94 @@
 package org.music.events.services;
-
 import org.music.events.dtos.EventRequestDTO;
 import org.music.events.dtos.EventRespondsDTO;
-import org.music.events.dtos.TelevisionDto;
 import org.music.events.models.Event;
-import org.music.events.models.Television;
 import org.music.events.repositories.EventRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.ArrayList;
-
-
 @Service
 public class EventService {
-
-    private final EventRepository eventRepository;
-
+    private EventRepository eventRepository;
 
     public EventService(EventRepository eventRepository) {
         this.eventRepository = eventRepository;
     }
-
-
-    public List<EventRespondsDTO> getAllEvents() {
-        List<Event> eventList = eventRepository.findAll();
-        return transferTvListToDtoList(eventList);
-    }
-
-    public List<EventRespondsDTO> findAllEventsByNameEqualsIgnoreCase(String eventName) {
-        List<Event>eventList = eventRepository.findAllEventsByEventNameEqualsIgnoreCase(eventName);
+    public List<EventRespondsDTO> getAllEvents(String eventName) {
+        List<Event> eventList = eventRepository.findAllEventsByEventNameEqualsIgnoreCase(eventName);
         return transferEventListToDtoList(eventList);
     }
-
-
-//    public List<EventRespondsDTO> transferEventListToDtoList(List<Event> Events){
-//        List<EventRespondsDTO> eventDtoList = new ArrayList<>();
+    public List<EventRespondsDTO> getAllEventsByName(String eventName) {
+        List<Event> eventList = eventRepository.findAllEventsByEventNameEqualsIgnoreCase(eventName);
+        return transferEventListToDtoList(eventList);
+    }
+    public List<EventRespondsDTO> transferEventListToDtoList(List<Event> events) {
+        List<EventRespondsDTO> eventDtoList = new ArrayList<>();
+        for (Event event : events) {
+            EventRespondsDTO dto = transferToDto(event);
+            if (event.getEventName() != null) {
+                dto.setEventName(event.getEventName());
+            }
+            if (event.getEventLocation() != null) {
+                dto.setEventLocation(event.getEventLocation());
+            }
+            eventDtoList.add(dto);
+        }
+        return eventDtoList;
+    }
+//    public EventRespondsDTO getEventById(Long id) {
 //
-//        for(Event event : events) {
-//            EventRespondsDTO dto = transferToDto(event);
+//        if (eventRepository.findById(id).isPresent()){
+//            Event event = eventRepository.findById(id).get();
+//            EventRespondsDTO dto =transferToDto(event);
 //            if(event.getEventName() != null){
-//                dto.seteventNameDto(ciModuleService.transferToDto(tv.getCiModule()));
+//                dto.setEventRespondsDTO(eventService.transferToDto(event.getEventID()));
 //            }
-//            if(event.getRemoteController() != null){
-//                dto.setRemoteControllerDto(remoteControllerService.transferToDto(tv.getRemoteController()));
+//            if(event.getEventController() != null){
+//                dto.setEventRespondsDTO(eventService.transferToDto(event.getEventController()));
 //            }
-//            eventDtoList.add(dto);
+//
+//            return transferToDto(event);
+//        } else {
+//            throw new RecordNotFoundException("geen event gevonden");
 //        }
-//        return eventDtoList;
 //    }
 
+    public EventRespondsDTO addEvent(EventRequestDTO dto) {
 
-    private List<EventRequestDTO> transferEventListToDtoList(List<Event> eventList) {
-        return transferEventListToDtoList(eventList);
+        Event event = transferToEvent(dto);
+        eventRepository.save(event);
+
+        return transferToDto(event);
     }
 
-
-    public Event getEventById(Long eventId) {
-        Optional<Event> optionalEvent = eventRepository.findById(eventId);
-        return optionalEvent.orElse(null);
-
-    }
-
-    public Event updateEvent (Long eventId, Event updatedEvent){
+    public Event updateEvent(Long eventId, Event updatedEvent) {
         return updatedEvent;
     }
-
-    public void deleteEvent (Long eventId){
+    public void deleteEvent(Long eventId) {
+        // Implementation for deleting event
     }
-
     public Event createEvent(Event event) {
         return event;
     }
-}
+    public Event transferToEvent(EventRequestDTO dto) {
+        Event event = new Event();
+        event.setEventLocation(dto.getEventLocation());
+        event.setEventName(dto.getEventName());
+        event.setEventPrice(dto.getEventPrice());
+        event.setEventStartDate(dto.getEventStartDate());
+        event.setAvailableTickets(dto.getAvailableTickets());
+        return event;
+    }
+    public EventRespondsDTO transferToDto(Event event) {
+        EventRespondsDTO dto =  new EventRespondsDTO();
+        dto.setEventID(event.getEventID());
+        dto.setEventName(event.getEventName());
+        dto.setEventLocation(event.getEventLocation());
+        dto.setEventPrice(event.getEventPrice());
+        dto.setEventStartDate(event.getEventStartDate());
+        dto.setAvailableTickets(event.getAvailableTickets());
+        return dto;
+    }
 
+    }

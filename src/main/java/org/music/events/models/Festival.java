@@ -1,26 +1,35 @@
 package org.music.events.models;
 
+import jakarta.persistence.*;
+
 import java.util.Date;
+
+@Table(name = "events")
 
 public class Festival extends Event {
 
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Id
     Long festivalID;
+    String festivalName;
     String artistName;
     Boolean campingAvailable;
     Date festivalStartDate;
     Date festivalEndtDate;
 
-    public Festival(Long eventID, String festival, String party, String eventName, String eventLocation, Date eventStartDate, Double eventPrice, Integer availableTickets, Long festivalID, String artistName, Boolean campingAvailable, Date festivalStartDate, Date festivalEndtDate) {
-        super(eventID, festival, party, eventName, eventLocation, eventStartDate, eventPrice, availableTickets);
+      public Festival(Long festivalID, String festivalName, String artistName, Boolean campingAvailable, Date festivalStartDate, Date festivalEndtDate) {
         this.festivalID = festivalID;
+        this.festivalName = festivalName;
         this.artistName = artistName;
         this.campingAvailable = campingAvailable;
         this.festivalStartDate = festivalStartDate;
         this.festivalEndtDate = festivalEndtDate;
     }
 
-    public Festival(Long festivalID, String artistName, Boolean campingAvailable, Date festivalStartDate, Date festivalEndtDate) {
+    public Festival(Long eventID, String eventName, String eventLocation, Date eventStartDate, Double eventPrice, Integer availableTickets, Long festivalID, String festivalName, String artistName, Boolean campingAvailable, Date festivalStartDate, Date festivalEndtDate) {
+        super(eventID, eventName, eventLocation, eventStartDate, eventPrice, availableTickets);
         this.festivalID = festivalID;
+        this.festivalName = festivalName;
         this.artistName = artistName;
         this.campingAvailable = campingAvailable;
         this.festivalStartDate = festivalStartDate;
@@ -33,6 +42,14 @@ public class Festival extends Event {
 
     public void setFestivalID(Long festivalID) {
         this.festivalID = festivalID;
+    }
+
+    public String getFestivalName() {
+        return festivalName;
+    }
+
+    public void setFestivalName(String festivalName) {
+        this.festivalName = festivalName;
     }
 
     public String getArtistName() {
@@ -66,6 +83,4 @@ public class Festival extends Event {
     public void setFestivalEndtDate(Date festivalEndtDate) {
         this.festivalEndtDate = festivalEndtDate;
     }
-
 }
-
