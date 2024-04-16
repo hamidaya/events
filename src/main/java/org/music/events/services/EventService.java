@@ -14,8 +14,9 @@ public class EventService {
     public EventService(EventRepository eventRepository) {
         this.eventRepository = eventRepository;
     }
-    public List<EventRespondsDTO> getAllEvents(String eventName) {
-        List<Event> eventList = eventRepository.findAllEventsByEventNameEqualsIgnoreCase(eventName);
+
+    public List<EventRespondsDTO> getAllEvents() {
+        List<Event> eventList = eventRepository.findAll();
         return transferEventListToDtoList(eventList);
     }
     public List<EventRespondsDTO> getAllEventsByName(String eventName) {

@@ -28,7 +28,7 @@ public class EventController {
 
         if (eventName.isEmpty()){
 
-            dtos = eventService.getAllEvents(eventName.get());
+            dtos = eventService.getAllEvents();
 
 
         } else {

@@ -27,56 +27,15 @@ INSERT INTO television_wall_bracket(television_id, wall_bracket_id) values (1005
 
 
 
-DROP TABLE IF EXISTS events CASCADE;
-DROP TABLE IF EXISTS festivals CASCADE;
-DROP TABLE IF EXISTS partys CASCADE;
-
-CREATE TABLE events
-(
-    eventID SERIAL PRIMARY KEY,
-    eventName VARCHAR(100),
-    eventLocation VARCHAR(50),
-    availableTickets INT,
-    eventStartDate DATE,
-    eventEndDate DATE,
-    eventPrice DOUBLE PRECISION
-);
-CREATE TABLE festivals
-(
-    festivalID SERIAL PRIMARY KEY,
-    eventID INT REFERENCES events(eventID), -- a foreign key relationship to Event
-    festivalName VARCHAR(100),
-    festivalLocation VARCHAR(50),
-    artistName VARCHAR(100),
-    campingAvailable BOOLEAN,
-    festivalStartDate DATE,
-    festivalEndDate DATE,
-    festivalPrice DOUBLE PRECISION
-);
-CREATE TABLE partys
-(
-    partyID SERIAL PRIMARY KEY,
-    eventID INT REFERENCES events(eventID), -- a foreign key relationship to Event
-    partyName VARCHAR(100),
-    partyLocation VARCHAR(50),
-    partyStartDate DATE,
-    partyEndDate DATE,
-    partyPrice DOUBLE PRECISION,
-    dresscode VARCHAR(50),
-    djName VARCHAR(100)
-
-);
-
-
-INSERT INTO events (eventName, eventLocation, eventPrice, availableTickets, eventStartDate, eventEndDate)
-VALUES ('hamid event', 'Rotterdam', 50.0, 1000, '2024-02-01', '2024-02-05');
-
-INSERT INTO festivals (festivalName, festivalLocation, artistName, campingAvailable, festivalStartDate, festivalEndDate, festivalPrice)
-VALUES ('santi festival', 'Utrecht', 30.0, false, '2024-01-01', '2024-01-02',120);
-
-
-INSERT INTO partys (partyName, partyLocation, partyPrice,partyStartDate, partyEndDate, dressCode, djName)
-VALUES ('fanti party', 'Amsterdam', 30.0, '2024-02-03', '2024-02-05', 'carnaval kleding', 'djKivit');
+-- INSERT INTO events (event_name, event_location, event_price, available_tickets, event_start_date, event_end_date)
+-- VALUES ('hamid event', 'Rotterdam', 50.0, 1000, '2024-02-01', '2024-02-05');
+--
+-- INSERT INTO festivals (festival_Name, festival_location, artist_name, camping_Available, festival_Start_Date, festival_End_Date, festival_Price)
+-- VALUES ('santi festival', 'Utrecht', 30.0, false, '2024-01-01', '2024-01-02',120);
+--
+--
+-- INSERT INTO partys (party_Name, party_Location, party_Price,party_Start_Date, party_End_Date, dress_Code, dj_Name)
+-- VALUES ('fanti party', 'Amsterdam', 30.0, '2024-02-03', '2024-02-05', 'carnaval kleding', 'djKivit');
 
 -- password = "password" (dit comment is een security lek, zet dit nooit in je code.
 -- Als je hier je plaintext password niet meer weet, moet je een nieuw password encrypted)
