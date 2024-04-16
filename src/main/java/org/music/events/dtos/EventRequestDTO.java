@@ -1,9 +1,6 @@
 package org.music.events.dtos;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-
-import java.util.Date;
+import java.time.LocalDate;
 
 public class EventRequestDTO {
 
@@ -12,13 +9,13 @@ public class EventRequestDTO {
   //  @NotNull(message = "eventLocation must not be blank")
     private String eventLocation;
    // @NotBlank(message = "eventStartDate must not be blank")
-    private Date eventStartDate;
+    private LocalDate eventStartDate;
    // @NotBlank(message = "eventPrice must not be blank")
     private Double eventPrice;
    // @NotBlank(message = "availableTickets must not be blank")
     private Integer availableTickets;
 
-    public EventRequestDTO(String eventName, String eventLocation, Date eventStartDate, Double eventPrice, Integer availableTickets) {
+    public EventRequestDTO(String eventName, String eventLocation, LocalDate eventStartDate, Double eventPrice, Integer availableTickets) {
         this.eventName = eventName;
           this.eventLocation = eventLocation;
         this.eventStartDate = eventStartDate;
@@ -42,11 +39,11 @@ public class EventRequestDTO {
         this.eventLocation = eventLocation;
     }
 
-    public Date getEventStartDate() {
+    public LocalDate getEventStartDate() {
         return eventStartDate;
     }
 
-    public void setEventStartDate(Date eventStartDate) {
+    public void setEventStartDate(LocalDate eventStartDate) {
         this.eventStartDate = eventStartDate;
     }
 

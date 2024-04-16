@@ -1,17 +1,17 @@
 package org.music.events.dtos;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 public class EventRespondsDTO {
 
     private Long eventID;
     private String eventName;
     private String eventLocation;
-    private Date eventStartDate;
+    private LocalDate eventStartDate;
     private Double eventPrice;
     private Integer availableTickets;
 
-    public EventRespondsDTO(Long eventID, String eventName, String eventLocation, Date eventStartDate, Double eventPrice, Integer availableTickets) {
+    public EventRespondsDTO(Long eventID, String eventName, String eventLocation, LocalDate eventStartDate, Double eventPrice, Integer availableTickets) {
         this.eventID = eventID;
         this.eventName = eventName;
         this.eventLocation = eventLocation;
@@ -48,11 +48,11 @@ public class EventRespondsDTO {
         this.eventLocation = eventLocation;
     }
 
-    public Date getEventStartDate() {
+    public LocalDate getEventStartDate() {
         return eventStartDate;
     }
 
-    public void setEventStartDate(Date eventStartDate) {
+    public void setEventStartDate(LocalDate eventStartDate) {
         this.eventStartDate = eventStartDate;
     }
 

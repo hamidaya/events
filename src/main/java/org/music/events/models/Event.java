@@ -1,42 +1,33 @@
 package org.music.events.models;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+
 
 import jakarta.persistence.*;
 import org.music.events.interfaces.IEevent;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 
-@Entity
 @Table(name = "events")
-
+@MappedSuperclass
 public class Event implements IEevent {
 
-    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long eventID;
     private String eventName;
     private String eventLocation;
-    private Date eventStartDate;
+    private LocalDate eventStartDate;
+    private LocalDate eventEndDate;
     private Double eventPrice;
     private Integer availableTickets;
 
-    public Event(Long eventID, String eventName, String eventLocation, Date eventStartDate, Double eventPrice, Integer availableTickets) {
-        this.eventID = eventID;
-        this.eventName = eventName;
-        this.eventLocation = eventLocation;
-        this.eventStartDate = eventStartDate;
-        this.eventPrice = eventPrice;
-        this.availableTickets = availableTickets;
+    public Event() {
+
     }
 
     public Long getEventID() {
         return eventID;
     }
-
 
     public void setEventID(Long eventID) {
         this.eventID = eventID;
@@ -58,12 +49,20 @@ public class Event implements IEevent {
         this.eventLocation = eventLocation;
     }
 
-    public Date getEventDate() {
+    public LocalDate getEventStartDate() {
         return eventStartDate;
     }
 
-    public void setEventDate(Date eventDate) {
-        this.eventStartDate = eventDate;
+    public void setEventStartDate(LocalDate eventStartDate) {
+        this.eventStartDate = eventStartDate;
+    }
+
+    public LocalDate getEventEndDate() {
+        return eventEndDate;
+    }
+
+    public void setEventEndDate(LocalDate eventEndDate) {
+        this.eventEndDate = eventEndDate;
     }
 
     public Double getEventPrice() {
@@ -82,18 +81,18 @@ public class Event implements IEevent {
         this.availableTickets = availableTickets;
     }
 
-
-    public Date getEventStartDate() {
-        return eventStartDate;
-    }
-
-    public void setEventStartDate(Date eventStartDate) {
+    public Event(Long eventID, String eventName, String eventLocation, LocalDate eventStartDate, LocalDate eventEndDate, Double eventPrice, Integer availableTickets) {
+        this.eventID = eventID;
+        this.eventName = eventName;
+        this.eventLocation = eventLocation;
         this.eventStartDate = eventStartDate;
+        this.eventEndDate = eventEndDate;
+        this.eventPrice = eventPrice;
+        this.availableTickets = availableTickets;
+
+
     }
 
-    public Event() {
-
-    }
     @Override
     public void myEvent() {
         System.out.println("Event processing interface executed...");

@@ -2,38 +2,29 @@ package org.music.events.models;
 
 import jakarta.persistence.*;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Table(name = "events")
-
 public class Festival extends Event {
 
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Id
+
     Long festivalID;
     String festivalName;
     String artistName;
     Boolean campingAvailable;
-    Date festivalStartDate;
-    Date festivalEndtDate;
 
-      public Festival(Long festivalID, String festivalName, String artistName, Boolean campingAvailable, Date festivalStartDate, Date festivalEndtDate) {
+
+    public Festival(Long festivalID, String festivalName, String artistName, Boolean campingAvailable) {
         this.festivalID = festivalID;
         this.festivalName = festivalName;
         this.artistName = artistName;
         this.campingAvailable = campingAvailable;
-        this.festivalStartDate = festivalStartDate;
-        this.festivalEndtDate = festivalEndtDate;
+
     }
 
-    public Festival(Long eventID, String eventName, String eventLocation, Date eventStartDate, Double eventPrice, Integer availableTickets, Long festivalID, String festivalName, String artistName, Boolean campingAvailable, Date festivalStartDate, Date festivalEndtDate) {
-        super(eventID, eventName, eventLocation, eventStartDate, eventPrice, availableTickets);
-        this.festivalID = festivalID;
-        this.festivalName = festivalName;
-        this.artistName = artistName;
-        this.campingAvailable = campingAvailable;
-        this.festivalStartDate = festivalStartDate;
-        this.festivalEndtDate = festivalEndtDate;
+    public Festival() {
+
     }
 
     public Long getFestivalID() {
@@ -68,19 +59,12 @@ public class Festival extends Event {
         this.campingAvailable = campingAvailable;
     }
 
-    public Date getFestivalStartDate() {
-        return festivalStartDate;
-    }
 
-    public void setFestivalStartDate(Date festivalStartDate) {
-        this.festivalStartDate = festivalStartDate;
-    }
-
-    public Date getFestivalEndtDate() {
-        return festivalEndtDate;
-    }
-
-    public void setFestivalEndtDate(Date festivalEndtDate) {
-        this.festivalEndtDate = festivalEndtDate;
-    }
+    public Festival(Long eventID, String eventName, String eventLocation, LocalDate eventStartDate, LocalDate eventEndDate, Double eventPrice, Integer availableTickets, Long festivalID, String festivalName, String artistName, Boolean campingAvailable, LocalDate festivalStartDate, LocalDate festivalEndtDate) {
+        super(eventID, eventName, eventLocation, eventStartDate, eventEndDate, eventPrice, availableTickets);
+        this.festivalID = festivalID;
+        this.festivalName = festivalName;
+        this.artistName = artistName;
+        this.campingAvailable = campingAvailable;
+     }
 }
