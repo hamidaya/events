@@ -62,7 +62,6 @@ public class EventController {
 
      EventRespondsDTO dto = eventService.addEvent(eventRequestDTO);
 
-
         return ResponseEntity.created(null).body(dto);
 
     }

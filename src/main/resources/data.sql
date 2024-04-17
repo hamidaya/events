@@ -25,17 +25,19 @@ INSERT INTO television_wall_bracket(television_id, wall_bracket_id) values (1005
                                                                            (1001, 1004),
                                                                            (1001, 1005);
 
+-- --
+-- -- -- -- --
+INSERT INTO events (event_name, event_location, event_type, event_price, available_tickets, event_start_date, event_end_date)
+VALUES ('mark event', 'utrecht', 'festival',530.0, 10040, '2024-02-04', '2024-02-07'),
+       ('hamid event', 'Rotterdam','party', 50.0, 1000, '2024-02-01', '2024-02-05');
+--
+INSERT INTO festivals (artist_name, camping_available,event_id)
+VALUES ('chris artist ', true, (SELECT event_id FROM Events
+        WHERE event_name='mark event'));
 
-
--- INSERT INTO events (event_name, event_location, event_price, available_tickets, event_start_date, event_end_date)
--- VALUES ('hamid event', 'Rotterdam', 50.0, 1000, '2024-02-01', '2024-02-05');
---
--- INSERT INTO festivals (festival_Name, festival_location, artist_name, camping_Available, festival_Start_Date, festival_End_Date, festival_Price)
--- VALUES ('santi festival', 'Utrecht', 30.0, false, '2024-01-01', '2024-01-02',120);
---
---
--- INSERT INTO partys (party_Name, party_Location, party_Price,party_Start_Date, party_End_Date, dress_Code, dj_Name)
--- VALUES ('fanti party', 'Amsterdam', 30.0, '2024-02-03', '2024-02-05', 'carnaval kleding', 'djKivit');
+-- INSERT INTO partys (dj_name, dress_code,event_id)
+-- VALUES ('DJ mark ', 'carnaval kleding', (SELECT event_id FROM Events
+--                                 WHERE event_name='hamid party event'));
 
 -- password = "password" (dit comment is een security lek, zet dit nooit in je code.
 -- Als je hier je plaintext password niet meer weet, moet je een nieuw password encrypted)

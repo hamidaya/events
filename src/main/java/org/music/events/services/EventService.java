@@ -79,16 +79,19 @@ public class EventService {
         event.setEventPrice(dto.getEventPrice());
         event.setEventStartDate(dto.getEventStartDate());
         event.setAvailableTickets(dto.getAvailableTickets());
+        event.setEventType(dto.getEventType());
         return event;
     }
     public EventRespondsDTO transferToDto(Event event) {
         EventRespondsDTO dto =  new EventRespondsDTO();
-        dto.setEventID(event.getEventID());
+        dto.setEventID(event.getEventId());
         dto.setEventName(event.getEventName());
         dto.setEventLocation(event.getEventLocation());
         dto.setEventPrice(event.getEventPrice());
         dto.setEventStartDate(event.getEventStartDate());
         dto.setAvailableTickets(event.getAvailableTickets());
+        dto.setEventType(event.getEventType());
+
         return dto;
     }
 
