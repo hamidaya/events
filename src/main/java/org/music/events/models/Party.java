@@ -3,44 +3,28 @@ package org.music.events.models;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
-import java.util.Date;
 
-@Table(name = "partys")
+@Table(name="partys")
+@Entity
 public class Party extends Event {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-
-    Long partyID;
-    String partyName;
     String djName;
     String dressCode;
 
-    public Party(Long partyID, String partyName, Date partyDate, String djName, String dressCode) {
-        this.partyID = partyID;
-        this.partyName = partyName;
+    public Party() {;
+    }
+
+    public Party(String partyName, String djName, String dressCode) {
         this.djName = djName;
         this.dressCode = dressCode;
     }
 
-    public Party() {
-
+    public Party(Long eventId, String eventName, String eventType, String eventLocation, LocalDate eventStartDate, LocalDate eventEndDate, Double eventPrice, Integer availableTickets, String partyName, String djName, String dressCode) {
+        super(eventId, eventName, eventType, eventLocation, eventStartDate, eventEndDate, eventPrice, availableTickets);
+        this.djName = djName;
+        this.dressCode = dressCode;
     }
 
-    public Long getPartyID() {
-        return partyID;
-    }
-
-    public void setPartyID(Long partyID) {
-        this.partyID = partyID;
-    }
-
-    public String getPartyName() {
-        return partyName;
-    }
-
-    public void setPartyName(String partyName) {
-        this.partyName = partyName;
-    }
 
     public String getDjName() {
         return djName;
@@ -57,15 +41,5 @@ public class Party extends Event {
     public void setDressCode(String dressCode) {
         this.dressCode = dressCode;
     }
-
-    public Party(Long eventID, String eventName, String eventLocation, LocalDate eventStartDate, LocalDate eventEndDate, Double eventPrice, Integer availableTickets, Long partyID, String partyName, String djName, String dressCode) {
-        super(eventID, eventName, eventLocation, eventStartDate, eventEndDate, eventPrice, availableTickets);
-        this.partyID = partyID;
-        this.partyName = partyName;
-
-        this.djName = djName;
-        this.dressCode = dressCode;
-    }
-
-
 }
+

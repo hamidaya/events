@@ -5,14 +5,16 @@ import java.time.LocalDate;
 public class EventRespondsDTO {
 
     private Long eventID;
+    private String eventType;
     private String eventName;
     private String eventLocation;
     private LocalDate eventStartDate;
     private Double eventPrice;
     private Integer availableTickets;
 
-    public EventRespondsDTO(Long eventID, String eventName, String eventLocation, LocalDate eventStartDate, Double eventPrice, Integer availableTickets) {
+    public EventRespondsDTO(Long eventID, String eventType, String eventName, String eventLocation, LocalDate eventStartDate, Double eventPrice, Integer availableTickets) {
         this.eventID = eventID;
+        this.eventType = eventType;
         this.eventName = eventName;
         this.eventLocation = eventLocation;
         this.eventStartDate = eventStartDate;
@@ -32,7 +34,15 @@ public class EventRespondsDTO {
         this.eventID = eventID;
     }
 
-      public String getEventName() {
+    public String getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
+    }
+
+    public String getEventName() {
         return eventName;
     }
 
@@ -72,3 +82,4 @@ public class EventRespondsDTO {
         this.availableTickets = availableTickets;
     }
 }
+

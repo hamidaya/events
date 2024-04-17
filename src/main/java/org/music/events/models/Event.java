@@ -1,36 +1,45 @@
 package org.music.events.models;
-
-
-
 import jakarta.persistence.*;
-import org.music.events.interfaces.IEevent;
-
 import java.time.LocalDate;
 
+@Table(name="events")
+@Entity
+@Inheritance(strategy = InheritanceType.JOINED)
+public class Event {
 
-@Table(name = "events")
-@MappedSuperclass
-public class Event implements IEevent {
-
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long eventID;
+    @Id
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private Long eventId;
+   @Column(unique = true)
     private String eventName;
+    private String eventType;
     private String eventLocation;
     private LocalDate eventStartDate;
     private LocalDate eventEndDate;
     private Double eventPrice;
     private Integer availableTickets;
 
+
     public Event() {
-
     }
 
-    public Long getEventID() {
-        return eventID;
+    public Event(Long eventId, String eventName, String eventType, String eventLocation, LocalDate eventStartDate, LocalDate eventEndDate, Double eventPrice, Integer availableTickets) {
+        this.eventId = eventId;
+        this.eventName = eventName;
+        this.eventType = eventType;
+        this.eventLocation = eventLocation;
+        this.eventStartDate = eventStartDate;
+        this.eventEndDate = eventEndDate;
+        this.eventPrice = eventPrice;
+        this.availableTickets = availableTickets;
     }
 
-    public void setEventID(Long eventID) {
-        this.eventID = eventID;
+    public Long getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(Long eventId) {
+        this.eventId = eventId;
     }
 
     public String getEventName() {
@@ -39,6 +48,14 @@ public class Event implements IEevent {
 
     public void setEventName(String eventName) {
         this.eventName = eventName;
+    }
+
+    public String getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(String eventType) {
+        this.eventType = eventType;
     }
 
     public String getEventLocation() {
@@ -80,23 +97,4 @@ public class Event implements IEevent {
     public void setAvailableTickets(Integer availableTickets) {
         this.availableTickets = availableTickets;
     }
-
-    public Event(Long eventID, String eventName, String eventLocation, LocalDate eventStartDate, LocalDate eventEndDate, Double eventPrice, Integer availableTickets) {
-        this.eventID = eventID;
-        this.eventName = eventName;
-        this.eventLocation = eventLocation;
-        this.eventStartDate = eventStartDate;
-        this.eventEndDate = eventEndDate;
-        this.eventPrice = eventPrice;
-        this.availableTickets = availableTickets;
-
-
-    }
-
-    @Override
-    public void myEvent() {
-        System.out.println("Event processing interface executed...");
-
-    }
 }
-
