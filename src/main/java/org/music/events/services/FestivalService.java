@@ -3,12 +3,13 @@ import org.music.events.dtos.EventRequestDTO;
 import org.music.events.dtos.EventRespondsDTO;
 import org.music.events.models.Event;
 import org.music.events.repositories.EventRepository;
+import org.music.events.repositories.FestivalRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.ArrayList;
 @Service
-public class EventService {
+public class FestivalService {
     private EventRepository eventRepository;
 
     public EventService(EventRepository eventRepository) {
@@ -99,4 +100,4 @@ public class EventService {
         return dto;
     }
 
-    }
+}

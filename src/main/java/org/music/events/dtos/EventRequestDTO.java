@@ -1,6 +1,7 @@
 package org.music.events.dtos;
 
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
@@ -15,17 +16,25 @@ public class EventRequestDTO {
    // @NotBlank(message = "eventStartDate must not be blank")
     private LocalDate eventStartDate;
    // @NotBlank(message = "eventPrice must not be blank")
+
+    private LocalDate eventEndDate;
     private Double eventPrice;
    // @NotBlank(message = "availableTickets must not be blank")
     private Integer availableTickets;
 
-    public EventRequestDTO(String eventName, String eventType, String eventLocation, LocalDate eventStartDate, Double eventPrice, Integer availableTickets) {
+
+    private String eventDescription ;
+
+    public EventRequestDTO(String eventName, String eventType, String eventLocation, LocalDate eventStartDate, LocalDate eventEndDate, Double eventPrice, Integer availableTickets, String eventDescription) {
         this.eventName = eventName;
         this.eventType = eventType;
           this.eventLocation = eventLocation;
         this.eventStartDate = eventStartDate;
+        this.eventEndDate = eventEndDate;
         this.eventPrice = eventPrice;
         this.availableTickets = availableTickets;
+        this.eventDescription = eventDescription;
+
     }
 
     public String getEventName() {
@@ -61,6 +70,14 @@ public class EventRequestDTO {
         this.eventStartDate = eventStartDate;
     }
 
+    public LocalDate getEventEndDate() {
+        return eventEndDate;
+    }
+
+    public void setEventEndDate(LocalDate eventEndDate) {
+        this.eventEndDate = eventEndDate;
+    }
+
     public Double getEventPrice() {
         return eventPrice;
     }
@@ -77,6 +94,13 @@ public class EventRequestDTO {
         this.availableTickets = availableTickets;
     }
 
+    public String getEventDescription() {
+        return eventDescription;
+    }
+
+    public void setEventDescription(String eventDescription) {
+        this.eventDescription = eventDescription;
+    }
 }
 
 

@@ -1,51 +1,41 @@
-package org.music.events.models;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
+package org.music.events.dtos;
+
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 
-@Table(name="events")
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-public class Event {
+public class FestivalRequestDTO {
 
-    @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private Long eventId;
-   @Column(unique = true)
+    @NotNull(message = "festivalName must not be blank")
     private String eventName;
+    //  @NotNull(message = "festivalLocation must not be blank")
     private String eventType;
     private String eventLocation;
+    // @NotBlank(message = "festivalStartDate must not be blank")
     private LocalDate eventStartDate;
+    // @NotBlank(message = "festivalPrice must not be blank")
     private LocalDate eventEndDate;
     private Double eventPrice;
+    // @NotBlank(message = "availableTickets must not be blank")
     private Integer availableTickets;
 
     private String eventDescription;
 
+    private String artistName;
 
-    public Event() {
-    }
+    private Boolean campingAvailable;
 
-
-    public Event(Long eventId, String eventName, String eventType, String eventLocation, LocalDate eventStartDate, LocalDate eventEndDate, Double eventPrice, Integer availableTickets, String eventDescription) {
-        this.eventId = eventId;
+    public FestivalRequestDTO(String eventName, String eventType, String eventLocation, LocalDate eventStartDate, LocalDate eventEndDate, Double eventPrice, Integer availableTickets, String eventDescription, String artistName, Boolean campingAvailable) {
         this.eventName = eventName;
         this.eventType = eventType;
         this.eventLocation = eventLocation;
         this.eventStartDate = eventStartDate;
         this.eventEndDate = eventEndDate;
         this.eventPrice = eventPrice;
-        this.eventDescription = eventDescription;
         this.availableTickets = availableTickets;
-    }
-
-    public Long getEventId() {
-        return eventId;
-    }
-
-    public void setEventId(Long eventId) {
-        this.eventId = eventId;
+        this.eventDescription = eventDescription;
+        this.artistName = artistName;
+        this.campingAvailable = campingAvailable;
     }
 
     public String getEventName() {
@@ -110,5 +100,21 @@ public class Event {
 
     public void setEventDescription(String eventDescription) {
         this.eventDescription = eventDescription;
+    }
+
+    public String getArtistName() {
+        return artistName;
+    }
+
+    public void setArtistName(String artistName) {
+        this.artistName = artistName;
+    }
+
+    public Boolean getCampingAvailable() {
+        return campingAvailable;
+    }
+
+    public void setCampingAvailable(Boolean campingAvailable) {
+        this.campingAvailable = campingAvailable;
     }
 }

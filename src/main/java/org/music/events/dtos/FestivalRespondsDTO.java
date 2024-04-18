@@ -1,59 +1,46 @@
-package org.music.events.models;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
+package org.music.events.dtos;
 
 import java.time.LocalDate;
 
-@Table(name="events")
-@Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-public class Event {
+public class FestivalRespondsDTO {
 
-    @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
-    private Long eventId;
-   @Column(unique = true)
-    private String eventName;
+    private Long eventID;
     private String eventType;
+    private String eventName;
     private String eventLocation;
     private LocalDate eventStartDate;
     private LocalDate eventEndDate;
     private Double eventPrice;
     private Integer availableTickets;
-
     private String eventDescription;
 
+    private String artistName;
 
-    public Event() {
-    }
+    private Boolean campingAvailable;
 
-
-    public Event(Long eventId, String eventName, String eventType, String eventLocation, LocalDate eventStartDate, LocalDate eventEndDate, Double eventPrice, Integer availableTickets, String eventDescription) {
-        this.eventId = eventId;
-        this.eventName = eventName;
+    public FestivalRespondsDTO(Long eventID, String eventType, String eventName, String eventLocation, LocalDate eventStartDate, LocalDate eventEndDate, Double eventPrice, Integer availableTickets, String eventDescription, String artistName, Boolean campingAvailable) {
+        this.eventID = eventID;
         this.eventType = eventType;
+        this.eventName = eventName;
         this.eventLocation = eventLocation;
         this.eventStartDate = eventStartDate;
         this.eventEndDate = eventEndDate;
         this.eventPrice = eventPrice;
-        this.eventDescription = eventDescription;
         this.availableTickets = availableTickets;
+        this.eventDescription = eventDescription;
+        this.artistName = artistName;
+        this.campingAvailable = campingAvailable;
     }
 
-    public Long getEventId() {
-        return eventId;
+    public FestivalRespondsDTO() {
+
+    }
+    public Long getEventID() {
+        return eventID;
     }
 
-    public void setEventId(Long eventId) {
-        this.eventId = eventId;
-    }
-
-    public String getEventName() {
-        return eventName;
-    }
-
-    public void setEventName(String eventName) {
-        this.eventName = eventName;
+    public void setEventID(Long eventID) {
+        this.eventID = eventID;
     }
 
     public String getEventType() {
@@ -62,6 +49,14 @@ public class Event {
 
     public void setEventType(String eventType) {
         this.eventType = eventType;
+    }
+
+    public String getEventName() {
+        return eventName;
+    }
+
+    public void setEventName(String eventName) {
+        this.eventName = eventName;
     }
 
     public String getEventLocation() {
@@ -110,5 +105,21 @@ public class Event {
 
     public void setEventDescription(String eventDescription) {
         this.eventDescription = eventDescription;
+    }
+
+    public String getArtistName() {
+        return artistName;
+    }
+
+    public void setArtistName(String artistName) {
+        this.artistName = artistName;
+    }
+
+    public Boolean getCampingAvailable() {
+        return campingAvailable;
+    }
+
+    public void setCampingAvailable(Boolean campingAvailable) {
+        this.campingAvailable = campingAvailable;
     }
 }

@@ -9,17 +9,24 @@ public class EventRespondsDTO {
     private String eventName;
     private String eventLocation;
     private LocalDate eventStartDate;
+    private LocalDate eventEndDate;
     private Double eventPrice;
     private Integer availableTickets;
 
-    public EventRespondsDTO(Long eventID, String eventType, String eventName, String eventLocation, LocalDate eventStartDate, Double eventPrice, Integer availableTickets) {
+
+    private String eventDescription;
+
+    public EventRespondsDTO(Long eventID, String eventType, String eventName, String eventLocation, LocalDate eventStartDate, LocalDate eventEndDate, Double eventPrice, Integer availableTickets, String eventDescription) {
         this.eventID = eventID;
         this.eventType = eventType;
         this.eventName = eventName;
         this.eventLocation = eventLocation;
         this.eventStartDate = eventStartDate;
+        this.eventEndDate = eventEndDate;
         this.eventPrice = eventPrice;
         this.availableTickets = availableTickets;
+        this.eventDescription = eventDescription;
+
     }
 
     public EventRespondsDTO() {
@@ -66,6 +73,14 @@ public class EventRespondsDTO {
         this.eventStartDate = eventStartDate;
     }
 
+    public LocalDate getEventEndDate() {
+        return eventEndDate;
+    }
+
+    public void setEventEndDate(LocalDate eventEndDate) {
+        this.eventEndDate = eventEndDate;
+    }
+
     public Double getEventPrice() {
         return eventPrice;
     }
@@ -80,6 +95,14 @@ public class EventRespondsDTO {
 
     public void setAvailableTickets(Integer availableTickets) {
         this.availableTickets = availableTickets;
+    }
+
+    public String getEventDescription() {
+        return eventDescription;
+    }
+
+    public void setEventDescription(String eventDescription) {
+        this.eventDescription = eventDescription;
     }
 }
 
