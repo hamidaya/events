@@ -78,8 +78,10 @@ public class EventService {
         event.setEventName(dto.getEventName());
         event.setEventPrice(dto.getEventPrice());
         event.setEventStartDate(dto.getEventStartDate());
+        event.setEventEndDate(dto.getEventEndDate());
         event.setAvailableTickets(dto.getAvailableTickets());
         event.setEventType(dto.getEventType());
+        event.setEventDescription(dto.getEventDescription());
         return event;
     }
     public EventRespondsDTO transferToDto(Event event) {
@@ -89,8 +91,10 @@ public class EventService {
         dto.setEventLocation(event.getEventLocation());
         dto.setEventPrice(event.getEventPrice());
         dto.setEventStartDate(event.getEventStartDate());
+        dto.setEventEndDate(event.getEventEndDate());
         dto.setAvailableTickets(event.getAvailableTickets());
         dto.setEventType(event.getEventType());
+        dto.setEventDescription(event.getEventDescription());
 
         return dto;
     }

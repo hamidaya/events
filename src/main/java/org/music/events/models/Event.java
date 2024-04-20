@@ -1,5 +1,7 @@
 package org.music.events.models;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
+
 import java.time.LocalDate;
 
 @Table(name="events")
@@ -19,11 +21,14 @@ public class Event {
     private Double eventPrice;
     private Integer availableTickets;
 
+    private String eventDescription;
+
 
     public Event() {
     }
 
-    public Event(Long eventId, String eventName, String eventType, String eventLocation, LocalDate eventStartDate, LocalDate eventEndDate, Double eventPrice, Integer availableTickets) {
+
+    public Event(Long eventId, String eventName, String eventType, String eventLocation, LocalDate eventStartDate, LocalDate eventEndDate, Double eventPrice, Integer availableTickets, String eventDescription) {
         this.eventId = eventId;
         this.eventName = eventName;
         this.eventType = eventType;
@@ -31,6 +36,7 @@ public class Event {
         this.eventStartDate = eventStartDate;
         this.eventEndDate = eventEndDate;
         this.eventPrice = eventPrice;
+        this.eventDescription = eventDescription;
         this.availableTickets = availableTickets;
     }
 
@@ -96,5 +102,13 @@ public class Event {
 
     public void setAvailableTickets(Integer availableTickets) {
         this.availableTickets = availableTickets;
+    }
+
+    public String getEventDescription() {
+        return eventDescription;
+    }
+
+    public void setEventDescription(String eventDescription) {
+        this.eventDescription = eventDescription;
     }
 }

@@ -67,7 +67,6 @@ public class SpringSecurityConfig {
                // .requestMatchers("/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/users").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET,"/users").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.GET,"/events").hasAnyRole("ADMIN", "USER")
                 .requestMatchers(HttpMethod.POST,"/users/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/cimodules").hasRole("ADMIN")
@@ -78,15 +77,37 @@ public class SpringSecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/televisions/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/wallbrackets").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/wallbrackets/**").hasRole("ADMIN")
+
                 // Je mag meerdere paths tegelijk definieren
                 .requestMatchers("/cimodules", "/remotecontrollers", "/televisions", "/wallbrackets").hasAnyRole("ADMIN", "USER")
+
+               // Authenticatie endpoints:
                 .requestMatchers("/authenticated").authenticated()
                 .requestMatchers("/authenticate").permitAll()
 
+               // Events endpoints.
+                .requestMatchers(HttpMethod.GET,"/events").hasAnyRole("ADMIN", "USER") //.done
                 .requestMatchers(HttpMethod.POST, "/events").hasAnyRole("ADMIN","USER")
                 .requestMatchers(HttpMethod.POST,"/events/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT, "/events").hasAnyRole("ADMIN","USER")
                 .requestMatchers(HttpMethod.DELETE, "/events/**").hasRole("ADMIN")
-                .anyRequest().denyAll()
+
+//                // Festivals endpoints:
+                .requestMatchers(HttpMethod.GET,"/festivals").hasAnyRole("ADMIN", "USER")
+//                .requestMatchers(HttpMethod.POST, "/festivals").hasAnyRole("ADMIN","USER")
+//                .requestMatchers(HttpMethod.POST,"/festivals/**").hasRole("ADMIN")
+//                .requestMatchers(HttpMethod.PUT, "/festivals").hasAnyRole("ADMIN","USER")
+//                .requestMatchers(HttpMethod.DELETE, "/festivals/**").hasRole("ADMIN")
+//                .anyRequest().denyAll()
+//
+//                // Festivals endpoints:
+//                .requestMatchers(HttpMethod.GET,"/partys").hasAnyRole("ADMIN", "USER")
+//                .requestMatchers(HttpMethod.POST, "/partys").hasAnyRole("ADMIN","USER")
+//                .requestMatchers(HttpMethod.POST,"/partys/**").hasRole("ADMIN")
+//                .requestMatchers(HttpMethod.PUT, "/partys").hasAnyRole("ADMIN","USER")
+//                .requestMatchers(HttpMethod.DELETE, "/partys/**").hasRole("ADMIN")
+                  .anyRequest().denyAll()
+
                 )
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);

@@ -24,20 +24,21 @@ INSERT INTO television_wall_bracket(television_id, wall_bracket_id) values (1005
                                                                            (1004, 1003),
                                                                            (1001, 1004),
                                                                            (1001, 1005);
-
--- --
--- -- -- -- --
-INSERT INTO events (event_name, event_location, event_type, event_price, available_tickets, event_start_date, event_end_date)
-VALUES ('mark event', 'utrecht', 'festival',530.0, 10040, '2024-02-04', '2024-02-07'),
-       ('hamid event', 'Rotterdam','party', 50.0, 1000, '2024-02-01', '2024-02-05');
+--
+-- -- --
+-- -- -- -- -- -- --
+INSERT INTO events (event_name, event_location, event_type, event_price, available_tickets, event_start_date, event_end_date, event_Description)
+VALUES ('mark event', 'utrecht', 'festival',53.0, 10040, '2024-02-04', '2024-02-07', 'dit event is alleen voor mark en frans, het is verplicht om in groene kleding te komen'),
+       ('hamid event', 'Rotterdam','party', 50.0, 1000, '2024-02-01', '2024-02-05', 'dit event is alleen voor novi studenten, ' ||
+                                                                                    'het is verplicht om met een hoge hoed te komen');
 --
 INSERT INTO festivals (artist_name, camping_available,event_id)
 VALUES ('chris artist ', true, (SELECT event_id FROM Events
         WHERE event_name='mark event'));
-
--- INSERT INTO partys (dj_name, dress_code,event_id)
--- VALUES ('DJ mark ', 'carnaval kleding', (SELECT event_id FROM Events
---                                 WHERE event_name='hamid party event'));
+--
+INSERT INTO partys (dj_name, dress_code,event_id)
+VALUES ('dj hamid ', 'groene broek', (SELECT event_id FROM Events
+                                WHERE event_name='mark event'));
 
 -- password = "password" (dit comment is een security lek, zet dit nooit in je code.
 -- Als je hier je plaintext password niet meer weet, moet je een nieuw password encrypted)
