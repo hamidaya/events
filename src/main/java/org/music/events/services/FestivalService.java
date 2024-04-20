@@ -1,103 +1,75 @@
 package org.music.events.services;
-import org.music.events.dtos.EventRequestDTO;
-import org.music.events.dtos.EventRespondsDTO;
-import org.music.events.models.Event;
-import org.music.events.repositories.EventRepository;
+import org.music.events.dtos.FestivalRequestDTO;
+import org.music.events.dtos.FestivalRespondsDTO;
+import org.music.events.models.Festival;
 import org.music.events.repositories.FestivalRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.ArrayList;
+
 @Service
 public class FestivalService {
-    private EventRepository eventRepository;
-
-    public EventService(EventRepository eventRepository) {
-        this.eventRepository = eventRepository;
+    private final FestivalRepository festivalRepository;
+    public FestivalService(FestivalRepository festivalRepository) {
+        this.festivalRepository = festivalRepository;
     }
-
-    public List<EventRespondsDTO> getAllEvents() {
-        List<Event> eventList = eventRepository.findAll();
-        return transferEventListToDtoList(eventList);
+    public List<FestivalRespondsDTO> getAllFestivals() {
+        List<Festival> festivalList = festivalRepository.findAll();
+        return transferFestivalListToDtoList(festivalList);
     }
-    public List<EventRespondsDTO> getAllEventsByName(String eventName) {
-        List<Event> eventList = eventRepository.findAllEventsByEventNameEqualsIgnoreCase(eventName);
-        return transferEventListToDtoList(eventList);
-    }
-    public List<EventRespondsDTO> transferEventListToDtoList(List<Event> events) {
-        List<EventRespondsDTO> eventDtoList = new ArrayList<>();
-        for (Event event : events) {
-            EventRespondsDTO dto = transferToDto(event);
-            if (event.getEventName() != null) {
-                dto.setEventName(event.getEventName());
+    public List<FestivalRespondsDTO> transferFestivalListToDtoList(List<Festival> festivals) {
+        List<FestivalRespondsDTO> festivalDtoList = new ArrayList<>();
+        for (Festival festival : festivals) {
+            FestivalRespondsDTO dto = transferToDto(festival);
+            if (festival.getEventName() != null) {
+                dto.setEventName(festival.getEventName());
             }
-            if (event.getEventLocation() != null) {
-                dto.setEventLocation(event.getEventLocation());
+            if (festival.getEventLocation() != null) {
+                dto.setEventLocation(festival.getEventLocation());
             }
-            eventDtoList.add(dto);
+            festivalDtoList.add(dto);
         }
-        return eventDtoList;
+        return festivalDtoList;
     }
-//    public EventRespondsDTO getEventById(Long id) {
-//
-//        if (eventRepository.findById(id).isPresent()){
-//            Event event = eventRepository.findById(id).get();
-//            EventRespondsDTO dto =transferToDto(event);
-//            if(event.getEventName() != null){
-//                dto.setEventRespondsDTO(eventService.transferToDto(event.getEventID()));
-//            }
-//            if(event.getEventController() != null){
-//                dto.setEventRespondsDTO(eventService.transferToDto(event.getEventController()));
-//            }
-//
-//            return transferToDto(event);
-//        } else {
-//            throw new RecordNotFoundException("geen event gevonden");
-//        }
-//    }
-
-    public EventRespondsDTO addEvent(EventRequestDTO dto) {
-
-        Event event = transferToEvent(dto);
-        eventRepository.save(event);
-
-        return transferToDto(event);
+    public FestivalRespondsDTO addFestival(FestivalRequestDTO dto) {
+        Festival festival = transferToEvent(dto);
+        festivalRepository.save(festival);
+        return transferToDto(festival);
     }
-
-    public Event updateEvent(Long eventId, Event updatedEvent) {
-        return updatedEvent;
+    public Festival updateFestival(Long festivalId, Festival updatedFestival) {
+        // Implement updating festival
+        return updatedFestival;
     }
-    public void deleteEvent(Long eventId) {
-        // Implementation for deleting event
+    public void deleteFestival(Long festivalId) {
+        // Implement deleting festival
     }
-    public Event createEvent(Event event) {
-        return event;
+    public Festival transferToEvent(FestivalRequestDTO dto) {
+        Festival festival = new Festival();
+        festival.setEventLocation(dto.getEventLocation());
+        festival.setEventName(dto.getEventName());
+        festival.setEventPrice(dto.getEventPrice());
+        festival.setEventStartDate(dto.getEventStartDate());
+        festival.setEventEndDate(dto.getEventEndDate());
+        festival.setAvailableTickets(dto.getAvailableTickets());
+        festival.setEventType(dto.getEventType());
+        festival.setEventDescription(dto.getEventDescription());
+        festival.setArtistName(dto.getArtistName());
+        festival.setCampingAvailable(dto.getCampingAvailable());
+        return festival;
     }
-    public Event transferToEvent(EventRequestDTO dto) {
-        Event event = new Event();
-        event.setEventLocation(dto.getEventLocation());
-        event.setEventName(dto.getEventName());
-        event.setEventPrice(dto.getEventPrice());
-        event.setEventStartDate(dto.getEventStartDate());
-        event.setEventEndDate(dto.getEventEndDate());
-        event.setAvailableTickets(dto.getAvailableTickets());
-        event.setEventType(dto.getEventType());
-        event.setEventDescription(dto.getEventDescription());
-        return event;
-    }
-    public EventRespondsDTO transferToDto(Event event) {
-        EventRespondsDTO dto =  new EventRespondsDTO();
-        dto.setEventID(event.getEventId());
-        dto.setEventName(event.getEventName());
-        dto.setEventLocation(event.getEventLocation());
-        dto.setEventPrice(event.getEventPrice());
-        dto.setEventStartDate(event.getEventStartDate());
-        dto.setEventEndDate(event.getEventEndDate());
-        dto.setAvailableTickets(event.getAvailableTickets());
-        dto.setEventType(event.getEventType());
-        dto.setEventDescription(event.getEventDescription());
-
+    public FestivalRespondsDTO transferToDto(Festival festival) {
+        FestivalRespondsDTO dto = new FestivalRespondsDTO();
+        dto.setEventID(festival.getEventId());
+        dto.setEventName(festival.getEventName());
+        dto.setEventLocation(festival.getEventLocation());
+        dto.setEventPrice(festival.getEventPrice());
+        dto.setEventStartDate(festival.getEventStartDate());
+        dto.setEventEndDate(festival.getEventEndDate());
+        dto.setAvailableTickets(festival.getAvailableTickets());
+        dto.setEventType(festival.getEventType());
+        dto.setEventDescription(festival.getEventDescription());
+        dto.setArtistName(festival.getArtistName());
+        dto.setCampingAvailable(festival.getCampingAvailable());
         return dto;
     }
-
 }

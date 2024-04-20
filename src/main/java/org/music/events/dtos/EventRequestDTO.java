@@ -35,6 +35,7 @@ public class EventRequestDTO {
         this.availableTickets = availableTickets;
         this.eventDescription = eventDescription;
 
+
     }
 
     public String getEventName() {
