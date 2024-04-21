@@ -43,7 +43,7 @@ VALUES ('chris artist ', true, (SELECT event_id FROM Events
 --
 INSERT INTO partys (dj_name, dress_code,event_id)
 VALUES ('dj hamid ', 'groene broek', (SELECT event_id FROM Events
-                                      WHERE event_name='mark event'));
+                                      WHERE event_name='hamid event'));
 
 INSERT INTO festivals (artist_name, camping_available,event_id)
 VALUES ('micha artist ', true, (SELECT event_id FROM Events
