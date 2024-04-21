@@ -12,16 +12,10 @@ public class Party extends Event {
     String dressCode;
 
     public Party() {
-        ;
+
     }
 
     public Party(String djName, String dressCode) {
-        this.djName = djName;
-        this.dressCode = dressCode;
-    }
-
-    public Party(Long eventId, String eventName, String eventType, String eventLocation, LocalDate eventStartDate, LocalDate eventEndDate, Double eventPrice, Integer availableTickets, String eventDescription, String djName, String dressCode) {
-        super(eventId, eventName, eventType, eventLocation, eventStartDate, eventEndDate, eventPrice, availableTickets, eventDescription);
         this.djName = djName;
         this.dressCode = dressCode;
     }

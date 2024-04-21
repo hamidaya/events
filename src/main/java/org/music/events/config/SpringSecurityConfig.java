@@ -94,14 +94,14 @@ public class SpringSecurityConfig {
 
 //                // Festivals endpoints:
                 .requestMatchers(HttpMethod.GET,"/festivals").hasAnyRole("ADMIN", "USER")
-//                .requestMatchers(HttpMethod.POST, "/festivals").hasAnyRole("ADMIN","USER")
+                .requestMatchers(HttpMethod.POST, "/festivals").hasAnyRole("ADMIN","USER")
 //                .requestMatchers(HttpMethod.POST,"/festivals/**").hasRole("ADMIN")
 //                .requestMatchers(HttpMethod.PUT, "/festivals").hasAnyRole("ADMIN","USER")
 //                .requestMatchers(HttpMethod.DELETE, "/festivals/**").hasRole("ADMIN")
 //                .anyRequest().denyAll()
 //
 //                // Festivals endpoints:
-//                .requestMatchers(HttpMethod.GET,"/partys").hasAnyRole("ADMIN", "USER")
+                  .requestMatchers(HttpMethod.GET,"/partys").hasAnyRole("ADMIN", "USER")
 //                .requestMatchers(HttpMethod.POST, "/partys").hasAnyRole("ADMIN","USER")
 //                .requestMatchers(HttpMethod.POST,"/partys/**").hasRole("ADMIN")
 //                .requestMatchers(HttpMethod.PUT, "/partys").hasAnyRole("ADMIN","USER")

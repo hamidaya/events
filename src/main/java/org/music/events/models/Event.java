@@ -1,6 +1,9 @@
 package org.music.events.models;
+
+
+
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Size;
+import org.music.events.interfaces.IEevent;
 
 import java.time.LocalDate;
 
@@ -12,7 +15,7 @@ public class Event {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
     private Long eventId;
-   @Column(unique = true)
+    @Column(unique = true)
     private String eventName;
     private String eventType;
     private String eventLocation;

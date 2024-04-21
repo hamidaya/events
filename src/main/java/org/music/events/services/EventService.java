@@ -80,8 +80,6 @@ public class EventService {
         event.setEventStartDate(dto.getEventStartDate());
         event.setEventEndDate(dto.getEventEndDate());
         event.setAvailableTickets(dto.getAvailableTickets());
-        event.setEventType(dto.getEventType());
-        event.setEventDescription(dto.getEventDescription());
         return event;
     }
     public EventRespondsDTO transferToDto(Event event) {
@@ -94,7 +92,8 @@ public class EventService {
         dto.setEventEndDate(event.getEventEndDate());
         dto.setAvailableTickets(event.getAvailableTickets());
         dto.setEventType(event.getEventType());
-        dto.setEventDescription(event.getEventDescription());
+        dto.setEventDescription(event.getEventDescription());;
+
 
         return dto;
     }
