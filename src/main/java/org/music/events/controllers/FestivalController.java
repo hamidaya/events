@@ -1,12 +1,15 @@
 package org.music.events.controllers;
+
+import jakarta.validation.Valid;
 import org.music.events.dtos.FestivalRequestDTO;
 import org.music.events.dtos.FestivalRespondsDTO;
+import org.music.events.models.Festival;
 import org.music.events.services.FestivalService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 import java.util.Optional;
-
 
 @RestController
 @RequestMapping("festivals")
