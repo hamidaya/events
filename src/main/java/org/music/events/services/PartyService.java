@@ -38,6 +38,8 @@ public class PartyService {
         partyRepository.save(party);
         return transferToDto(party);
     }
+
+
     public Party updateParty(Long partyId, Party updatedParty) {
         // Implement updating party
         return updatedParty;
@@ -47,19 +49,23 @@ public class PartyService {
     }
     public Party transferToEvent(PartyRequestDTO dto) {
         Party party = new Party();
-        party.setEventLocation(dto.getEventLocation());
+               party.setEventLocation(dto.getEventLocation());
+        party.setEventType(dto.getEventType());
         party.setEventName(dto.getEventName());
         party.setEventPrice(dto.getEventPrice());
         party.setEventStartDate(dto.getEventStartDate());
         party.setEventEndDate(dto.getEventEndDate());
         party.setAvailableTickets(dto.getAvailableTickets());
+        party.setEventDescription(dto.getEventDescription());
         party.setDjName(dto.getDjName());
         party.setDressCode(dto.getDressCode());
         return party;
     }
     public PartyRespondsDTO transferToDto(Party party) {
         PartyRespondsDTO dto = new PartyRespondsDTO();
+        dto.setEventID(party.getEventId());
         dto.setEventName(party.getEventName());
+        dto.setEventType(party.getEventType());
         dto.setEventLocation(party.getEventLocation());
         dto.setEventPrice(party.getEventPrice());
         dto.setEventStartDate(party.getEventStartDate());
