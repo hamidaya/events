@@ -31,6 +31,13 @@ public class FestivalController {
         }
         return ResponseEntity.ok().body(festivalRespondsDTOS);
     }
-    // Implement other methods such as getFestival, addFestival, updateFestival, and deleteFestival
-    // These methods will interact with FestivalService to perform CRUD operations on festivals
+    @PostMapping()
+    public ResponseEntity<Object> addFestival(@Valid @RequestBody FestivalRequestDTO festivalRequestDTO) {
+
+        FestivalRespondsDTO dto = festivalService.addFestival(festivalRequestDTO);
+
+        return ResponseEntity.created(null).body(dto);
+
+    }
+
 }

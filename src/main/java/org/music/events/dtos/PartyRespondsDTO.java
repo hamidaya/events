@@ -9,6 +9,10 @@ public class PartyRespondsDTO extends EventRespondsDTO {
         return djName;
     }
 
+    public PartyRespondsDTO() {
+
+    }
+
     public void setDjName(String djName) {
         this.djName = djName;
     }

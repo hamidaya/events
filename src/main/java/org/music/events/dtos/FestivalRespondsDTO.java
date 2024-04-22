@@ -5,7 +5,12 @@ public class FestivalRespondsDTO extends EventRespondsDTO {
     private String artistName;
     private Boolean campingAvailable;
 
-        public String getArtistName() {
+
+    public FestivalRespondsDTO() {
+
+    }
+
+    public String getArtistName() {
         return artistName;
     }
 

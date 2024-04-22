@@ -59,6 +59,7 @@ public class FestivalService {
     }
     public FestivalRespondsDTO transferToDto(Festival festival) {
         FestivalRespondsDTO dto = new FestivalRespondsDTO();
+        dto.setEventID(festival.getEventId());
         dto.setEventName(festival.getEventName());
         dto.setEventLocation(festival.getEventLocation());
         dto.setEventPrice(festival.getEventPrice());

@@ -28,7 +28,7 @@ public class EventRequestDTO {
     public EventRequestDTO(String eventName, String eventType, String eventLocation, LocalDate eventStartDate, LocalDate eventEndDate, Double eventPrice, Integer availableTickets, String eventDescription) {
         this.eventName = eventName;
         this.eventType = eventType;
-          this.eventLocation = eventLocation;
+        this.eventLocation = eventLocation;
         this.eventStartDate = eventStartDate;
         this.eventEndDate = eventEndDate;
         this.eventPrice = eventPrice;
