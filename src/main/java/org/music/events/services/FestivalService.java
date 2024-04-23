@@ -1,4 +1,5 @@
 package org.music.events.services;
+import jakarta.persistence.EntityNotFoundException;
 import org.music.events.dtos.FestivalRequestDTO;
 import org.music.events.dtos.FestivalRespondsDTO;
 import org.music.events.models.Festival;
@@ -31,18 +32,15 @@ public class FestivalService {
         }
         return festivalDtoList;
     }
-    public FestivalRespondsDTO addFestival(FestivalRequestDTO dto) {
+
+        public FestivalRespondsDTO addFestival(FestivalRequestDTO dto) {
         Festival festival = transferToEvent(dto);
         festivalRepository.save(festival);
         return transferToDto(festival);
     }
-    public Festival updateFestival(Long festivalId, Festival updatedFestival) {
-        // Implement updating festival
-        return updatedFestival;
-    }
-    public void deleteFestival(Long festivalId) {
-        // Implement deleting festival
-    }
+
+
+
     public Festival transferToEvent(FestivalRequestDTO dto) {
         Festival festival = new Festival();
         festival.setEventLocation(dto.getEventLocation());
@@ -71,5 +69,26 @@ public class FestivalService {
         dto.setArtistName(festival.getArtistName());
         dto.setCampingAvailable(festival.getCampingAvailable());
         return dto;
+    }
+
+    //Update festival methode.
+    public Festival updateFestival(Long eventId, FestivalRequestDTO festivalRequestDTO) {
+        Festival festivalToUpdate = festivalRepository.findById(eventId).orElseThrow();
+        new EntityNotFoundException("Festival with id " + eventId + " not found");
+
+        festivalToUpdate.setEventName(festivalRequestDTO.getEventName());
+        festivalToUpdate.setEventLocation(festivalRequestDTO.getEventLocation());
+        festivalToUpdate.setEventType(festivalRequestDTO.getEventType());
+        festivalToUpdate.setEventStartDate(festivalRequestDTO.getEventStartDate());
+        festivalToUpdate.setEventEndDate(festivalRequestDTO.getEventEndDate());
+        festivalToUpdate.setEventPrice(festivalRequestDTO.getEventPrice());
+        festivalToUpdate.setEventDescription(festivalRequestDTO.getEventDescription());
+
+        return festivalRepository.save(festivalToUpdate);
+
+    }
+
+    public void deleteFestival(Long festivalId) {
+        // Implement deleting festival
     }
 }

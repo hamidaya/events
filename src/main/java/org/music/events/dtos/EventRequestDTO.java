@@ -16,13 +16,10 @@ public class EventRequestDTO {
    // @NotBlank(message = "eventStartDate must not be blank")
     private LocalDate eventStartDate;
    // @NotBlank(message = "eventPrice must not be blank")
-
     private LocalDate eventEndDate;
     private Double eventPrice;
    // @NotBlank(message = "availableTickets must not be blank")
     private Integer availableTickets;
-
-
     private String eventDescription ;
 
     public EventRequestDTO(String eventName, String eventType, String eventLocation, LocalDate eventStartDate, LocalDate eventEndDate, Double eventPrice, Integer availableTickets, String eventDescription) {
@@ -34,6 +31,7 @@ public class EventRequestDTO {
         this.eventPrice = eventPrice;
         this.availableTickets = availableTickets;
         this.eventDescription = eventDescription;
+
 
 
     }

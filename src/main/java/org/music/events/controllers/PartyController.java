@@ -2,6 +2,7 @@ package org.music.events.controllers;
 
 import jakarta.validation.Valid;
 import org.music.events.dtos.*;
+import org.music.events.models.Party;
 import org.music.events.services.FestivalService;
 import org.music.events.services.PartyService;
 import org.springframework.http.ResponseEntity;
@@ -37,4 +38,14 @@ public class PartyController {
            return ResponseEntity.created(null).body(dto);
 
        }
+
+    @PutMapping("/{eventId}")
+            public ResponseEntity<PartyRespondsDTO> updateParty(@PathVariable Long eventId, @RequestBody PartyRequestDTO partyRequestDTO) {
+
+        Party updatedParty = partyService.updateParty(eventId, partyRequestDTO);
+
+        return ResponseEntity.ok().body(partyService.transferToDto(updatedParty));
+
+    }
+
 }

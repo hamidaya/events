@@ -1,9 +1,11 @@
 package org.music.events.services;
+import jakarta.persistence.EntityNotFoundException;
 import org.music.events.dtos.EventRequestDTO;
 import org.music.events.dtos.EventRespondsDTO;
 import org.music.events.models.Event;
 import org.music.events.repositories.EventRepository;
 import org.springframework.stereotype.Service;
+import java.time.LocalDate;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -63,16 +65,23 @@ public class EventService {
         return transferToDto(event);
     }
 
-    public Event updateEvent(Long eventId, Event updatedEvent) {
-        return updatedEvent;
+    public Event updateEvent(Long eventId, EventRequestDTO eventRequestDTO) {
+        Event eventToUpdate = eventRepository.findById(eventId).orElseThrow();
+        new EntityNotFoundException("Event with id " + eventId + " not found");
+
+        eventToUpdate.setEventName(eventRequestDTO.getEventName());
+        eventToUpdate.setEventLocation(eventRequestDTO.getEventLocation());
+        eventToUpdate.setEventType(eventRequestDTO.getEventType());
+        eventToUpdate.setEventStartDate(eventRequestDTO.getEventStartDate());
+        eventToUpdate.setEventEndDate(eventRequestDTO.getEventEndDate());
+        eventToUpdate.setEventLocation(eventRequestDTO.getEventLocation());
+        eventToUpdate.setEventPrice(eventRequestDTO.getEventPrice());
+        eventToUpdate.setEventDescription(eventRequestDTO.getEventDescription());
+
+        return eventRepository.save(eventToUpdate);
+
     }
-    public void deleteEvent(Long eventId) {
-        // Implementation for deleting event
-    }
-    public Event createEvent(Event event) {
-        return event;
-    }
-    public Event transferToEvent(EventRequestDTO dto) {
+        public Event transferToEvent(EventRequestDTO dto) {
         Event event = new Event();
         event.setEventLocation(dto.getEventLocation());
         event.setEventName(dto.getEventName());
@@ -82,6 +91,7 @@ public class EventService {
         event.setAvailableTickets(dto.getAvailableTickets());
         event.setEventType(dto.getEventType());
         event.setEventDescription(dto.getEventDescription());
+
         return event;
     }
     public EventRespondsDTO transferToDto(Event event) {
@@ -94,7 +104,7 @@ public class EventService {
         dto.setEventEndDate(event.getEventEndDate());
         dto.setAvailableTickets(event.getAvailableTickets());
         dto.setEventType(event.getEventType());
-        dto.setEventDescription(event.getEventDescription());;
+        dto.setEventDescription(event.getEventDescription());
 
         return dto;
     }

@@ -90,22 +90,25 @@ public class SpringSecurityConfig {
                 .requestMatchers(HttpMethod.POST, "/events").hasAnyRole("ADMIN","USER")
                 .requestMatchers(HttpMethod.POST,"/events/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.PUT, "/events").hasAnyRole("ADMIN","USER")
+                .requestMatchers(HttpMethod.PUT, "/**").hasAnyRole("ADMIN","USER")
                 .requestMatchers(HttpMethod.DELETE, "/events/**").hasRole("ADMIN")
+
 
 //                // Festivals endpoints:
                 .requestMatchers(HttpMethod.GET,"/festivals").hasAnyRole("ADMIN", "USER")
                 .requestMatchers(HttpMethod.POST, "/festivals").hasAnyRole("ADMIN","USER")
                 .requestMatchers(HttpMethod.POST,"/festivals/**").hasRole("ADMIN")
-//                .requestMatchers(HttpMethod.PUT, "/festivals").hasAnyRole("ADMIN","USER")
-//                .requestMatchers(HttpMethod.DELETE, "/festivals/**").hasRole("ADMIN")
-//                .anyRequest().denyAll()
+                .requestMatchers(HttpMethod.PUT, "/festivals").hasAnyRole("ADMIN","USER")
+            //  .requestMatchers(HttpMethod.PUT, "/festivals/**").hasAnyRole("ADMIN","USER")
+                .requestMatchers(HttpMethod.DELETE, "/festivals/**").hasRole("ADMIN")
+
 //
-//                // Festivals endpoints:
+//                // Partys endpoints:
                   .requestMatchers(HttpMethod.GET,"/partys").hasAnyRole("ADMIN", "USER")
                   .requestMatchers(HttpMethod.POST, "/partys").hasAnyRole("ADMIN","USER")
                   .requestMatchers(HttpMethod.POST,"/partys/**").hasRole("ADMIN")
-//                .requestMatchers(HttpMethod.PUT, "/partys").hasAnyRole("ADMIN","USER")
-//                .requestMatchers(HttpMethod.DELETE, "/partys/**").hasRole("ADMIN")
+                  .requestMatchers(HttpMethod.PUT, "/partys").hasAnyRole("ADMIN","USER")
+                  .requestMatchers(HttpMethod.DELETE, "/partys/**").hasRole("ADMIN")
                   .anyRequest().denyAll()
 
                 )
