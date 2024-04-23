@@ -1,5 +1,6 @@
 package org.music.events.services;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.music.events.dtos.PartyRequestDTO;
 import org.music.events.dtos.PartyRespondsDTO;
 import org.music.events.models.Party;
@@ -40,13 +41,6 @@ public class PartyService {
     }
 
 
-    public Party updateParty(Long partyId, Party updatedParty) {
-        // Implement updating party
-        return updatedParty;
-    }
-    public void deleteParty(Long partyId) {
-        // Implement deleting party
-    }
     public Party transferToEvent(PartyRequestDTO dto) {
         Party party = new Party();
                party.setEventLocation(dto.getEventLocation());
@@ -77,4 +71,26 @@ public class PartyService {
         dto.setDressCode(party.getDressCode());
         return dto;
     }
+
+    //Update party methode.
+    public Party updateParty(Long eventId, PartyRequestDTO partyRequestDTO) {
+        Party partyToUpdate = partyRepository.findById(eventId).orElseThrow();
+        new EntityNotFoundException("Party with id " + eventId + " not found");
+
+        partyToUpdate.setEventName(partyRequestDTO.getEventName());
+        partyToUpdate.setEventLocation(partyRequestDTO.getEventLocation());
+        partyToUpdate.setEventType(partyRequestDTO.getEventType());
+        partyToUpdate.setEventStartDate(partyRequestDTO.getEventStartDate());
+        partyToUpdate.setEventEndDate(partyRequestDTO.getEventEndDate());
+        partyToUpdate.setEventPrice(partyRequestDTO.getEventPrice());
+        partyToUpdate.setEventDescription(partyRequestDTO.getEventDescription());
+
+        return partyRepository.save(partyToUpdate);
+
+    }
+
+    public void deleteParty(Long partyId) {
+        // Implement deleting party
+    }
+
 }

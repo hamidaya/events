@@ -15,22 +15,23 @@ import java.util.Optional;
 @RequestMapping("festivals")
 public class FestivalController {
     private final FestivalService festivalService;
+
     public FestivalController(FestivalService festivalService) {
         this.festivalService = festivalService;
     }
+
     @GetMapping
     public ResponseEntity<List<FestivalRespondsDTO>> getAllFestivals(@RequestParam(value = "festivalname", required = false) Optional<String> festivalName) {
         List<FestivalRespondsDTO> festivalRespondsDTOS;
         if (festivalName.isEmpty()) {
             festivalRespondsDTOS = festivalService.getAllFestivals();
         } else {
-            // Implement method to get festivals by name
-            // festivalRespondsDTOS = festivalService.getFestivalsByName(festivalName.get());
-            // For now, return empty list
+
             festivalRespondsDTOS = List.of();
         }
         return ResponseEntity.ok().body(festivalRespondsDTOS);
     }
+
     @PostMapping()
     public ResponseEntity<Object> addFestival(@Valid @RequestBody FestivalRequestDTO festivalRequestDTO) {
 
@@ -40,4 +41,12 @@ public class FestivalController {
 
     }
 
+    @PutMapping("/{eventId}")
+    public ResponseEntity<FestivalRespondsDTO> updateFestival(@PathVariable Long eventId, @RequestBody FestivalRequestDTO festivalRequestDTO) {
+
+        Festival updatedFestival = festivalService.updateFestival(eventId, festivalRequestDTO);
+
+        return ResponseEntity.ok().body(festivalService.transferToDto(updatedFestival));
+
+    }
 }
