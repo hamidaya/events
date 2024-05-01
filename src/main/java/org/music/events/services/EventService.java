@@ -39,23 +39,6 @@ public class EventService {
         }
         return eventDtoList;
     }
-//    public EventRespondsDTO getEventById(Long id) {
-//
-//        if (eventRepository.findById(id).isPresent()){
-//            Event event = eventRepository.findById(id).get();
-//            EventRespondsDTO dto =transferToDto(event);
-//            if(event.getEventName() != null){
-//                dto.setEventRespondsDTO(eventService.transferToDto(event.getEventID()));
-//            }
-//            if(event.getEventController() != null){
-//                dto.setEventRespondsDTO(eventService.transferToDto(event.getEventController()));
-//            }
-//
-//            return transferToDto(event);
-//        } else {
-//            throw new RecordNotFoundException("geen event gevonden");
-//        }
-//    }
 
     public EventRespondsDTO addEvent(EventRequestDTO dto) {
 
@@ -81,7 +64,16 @@ public class EventService {
         return eventRepository.save(eventToUpdate);
 
     }
-        public Event transferToEvent(EventRequestDTO dto) {
+
+    public void deleteEvent(Long eventId) {
+        eventRepository.deleteById(eventId);
+        new EntityNotFoundException("Event with id " + eventId + "deleted successfully");
+
+
+    }
+
+
+    public Event transferToEvent(EventRequestDTO dto) {
         Event event = new Event();
         event.setEventLocation(dto.getEventLocation());
         event.setEventName(dto.getEventName());

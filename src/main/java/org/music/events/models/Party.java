@@ -15,12 +15,7 @@ public class Party extends Event {
 
     }
 
-    public Party(String djName, String dressCode) {
-        this.djName = djName;
-        this.dressCode = dressCode;
-    }
-
-    public String getDjName() {
+        public String getDjName() {
         return djName;
     }
 

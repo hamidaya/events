@@ -13,6 +13,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("festivals")
+
 public class FestivalController {
     private final FestivalService festivalService;
 
@@ -20,7 +21,7 @@ public class FestivalController {
         this.festivalService = festivalService;
     }
 
-    @GetMapping
+    @GetMapping()
     public ResponseEntity<List<FestivalRespondsDTO>> getAllFestivals(@RequestParam(value = "festivalname", required = false) Optional<String> festivalName) {
         List<FestivalRespondsDTO> festivalRespondsDTOS;
         if (festivalName.isEmpty()) {
@@ -49,4 +50,14 @@ public class FestivalController {
         return ResponseEntity.ok().body(festivalService.transferToDto(updatedFestival));
 
     }
+
+    @DeleteMapping("/{eventId}")
+    public ResponseEntity<Object> deleteFestival(@PathVariable Long eventId) {
+
+        festivalService.deleteFestival(eventId);
+
+        return ResponseEntity.noContent().build();
+
+    }
+
 }

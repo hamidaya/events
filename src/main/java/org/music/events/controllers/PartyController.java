@@ -48,4 +48,14 @@ public class PartyController {
 
     }
 
+
+    @DeleteMapping("/{eventId}")
+    public ResponseEntity<Object> deleteParty(@PathVariable Long eventId) {
+
+        partyService.deleteParty(eventId);
+
+        return ResponseEntity.noContent().build();
+
+    }
+
 }

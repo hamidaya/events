@@ -88,7 +88,11 @@ public class FestivalService {
 
     }
 
-    public void deleteFestival(Long festivalId) {
-        // Implement deleting festival
+
+    public void deleteFestival(Long eventId) {
+        festivalRepository.deleteById(eventId);
+        new EntityNotFoundException("Event with id " + eventId + "deleted successfully");
+
+
     }
 }

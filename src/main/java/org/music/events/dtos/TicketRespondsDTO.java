@@ -1,37 +1,38 @@
 package org.music.events.dtos;
 
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
-
 import java.time.LocalDate;
 
-public class EventRequestDTO {
+public class TicketRespondsDTO {
 
-    @NotNull(message = "eventName must not be blank")
-    private String eventName;
-  //  @NotNull(message = "eventLocation must not be blank")
 
+    private Long eventId;
     private String eventType;
+    private String eventName;
     private String eventLocation;
-   // @NotBlank(message = "eventStartDate must not be blank")
     private LocalDate eventStartDate;
-   // @NotBlank(message = "eventPrice must not be blank")
     private LocalDate eventEndDate;
     private Double eventPrice;
-   // @NotBlank(message = "availableTickets must not be blank")
     private Integer availableTickets;
-    private String eventDescription ;
+    private String eventDescription;
 
-    public EventRequestDTO(String eventName, String eventType, String eventLocation, LocalDate eventStartDate, LocalDate eventEndDate, Double eventPrice, Integer availableTickets, String eventDescription) {
-        this.eventName = eventName;
+    public TicketRespondsDTO() {
+
+    }
+
+    public Long getEventId() {
+        return eventId;
+    }
+
+    public void setEventId(Long eventId) {
+        this.eventId = eventId;
+    }
+
+    public String getEventType() {
+        return eventType;
+    }
+
+    public void setEventType(String eventType) {
         this.eventType = eventType;
-        this.eventLocation = eventLocation;
-        this.eventStartDate = eventStartDate;
-        this.eventEndDate = eventEndDate;
-        this.eventPrice = eventPrice;
-        this.availableTickets = availableTickets;
-        this.eventDescription = eventDescription;
-
     }
 
     public String getEventName() {
@@ -40,15 +41,6 @@ public class EventRequestDTO {
 
     public void setEventName(String eventName) {
         this.eventName = eventName;
-    }
-
-
-    public String getEventType() {
-        return eventType;
-    }
-
-    public void setEventType(String eventType) {
-        this.eventType = eventType;
     }
 
     public String getEventLocation() {
@@ -99,10 +91,3 @@ public class EventRequestDTO {
         this.eventDescription = eventDescription;
     }
 }
-
-
-
-
-
-
-

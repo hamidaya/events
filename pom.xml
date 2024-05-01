@@ -21,12 +21,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-<!--        Deze security dependency is nodig voor Spring security. Zodra je deze dependency inlaadt, is je app beveiligd en kan je er alleen nog in met credentials-->
+        <!--        Deze security dependency is nodig voor Spring security. Zodra je deze dependency inlaadt, is je app beveiligd en kan je er alleen nog in met credentials-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
-<!--        Deze 3 depedencies zijn nodig voor jwt-->
+        <!--        Deze 3 depedencies zijn nodig voor jwt-->
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt-api</artifactId>
@@ -44,14 +44,22 @@
             <version>0.11.5</version>
             <scope>runtime</scope>
         </dependency>
-<!--    Deze dependency heb je nodig, omdat de versie die origineel bij Spring Boot 3.1.4 wordt geleverd een bug heeft die in dit project een error geeft voor de User-Authority relatie.    -->
+        <!--    Deze dependency heb je nodig, omdat de versie die origineel bij Spring Boot 3.1.4 wordt geleverd een bug heeft die in dit project een error geeft voor de User-Authority relatie.    -->
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>6.3.1.Final</version>
         </dependency>
-
-
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>core</artifactId>
+            <version>3.3.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.zxing</groupId>
+            <artifactId>javase</artifactId>
+            <version>3.3.0</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
@@ -86,5 +94,4 @@
             </plugin>
         </plugins>
     </build>
-
 </project>

@@ -43,7 +43,7 @@ public class PartyService {
 
     public Party transferToEvent(PartyRequestDTO dto) {
         Party party = new Party();
-               party.setEventLocation(dto.getEventLocation());
+        party.setEventLocation(dto.getEventLocation());
         party.setEventType(dto.getEventType());
         party.setEventName(dto.getEventName());
         party.setEventPrice(dto.getEventPrice());
@@ -89,8 +89,11 @@ public class PartyService {
 
     }
 
-    public void deleteParty(Long partyId) {
-        // Implement deleting party
+    public void deleteParty(Long eventId) {
+        partyRepository.deleteById(eventId);
+        new EntityNotFoundException("Event with id " + eventId + "deleted successfully");
+
+
     }
 
 }

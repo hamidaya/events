@@ -16,6 +16,11 @@ public class User {
     @Column(nullable = false, length = 255)
     private String password;
 
+    @OneToOne
+    private Profile profile;
+
+    @Lob
+    private Byte[] profilePhoto;
 
     @OneToMany(
             targetEntity = Authority.class,
@@ -39,13 +44,30 @@ public class User {
     public String getUsername() { return username; }
     public void setUsername(String username) {
         this.username = username;
-    }
+     }
     public String getPassword() {
         return password;
     }
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public Profile getProfile() {
+        return profile;
+    }
+
+    public void setProfile(Profile profile) {
+        this.profile = profile;
+    }
+
+    public Byte[] getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public void setProfilePhoto(Byte[] profilePhoto) {
+        this.profilePhoto = profilePhoto;
+    }
+
     public boolean isEnabled() { return enabled;}
     public void setEnabled(boolean enabled) { this.enabled = enabled; }
     public String getApikey() { return apikey; }
