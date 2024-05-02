@@ -13,6 +13,16 @@ public class UserDto {
     public String email;
     public Set<Authority> authorities;
 
+    public Byte[] getProfilePhoto() {
+        return profilePhoto;
+    }
+
+    public void setProfilePhoto(Byte[] profilePhoto) {
+        this.profilePhoto = profilePhoto;
+    }
+
+    private Byte[] profilePhoto;
+
     public String getUsername() {
         return username;
     }

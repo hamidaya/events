@@ -12,8 +12,6 @@ public class EventRespondsDTO {
     private LocalDate eventEndDate;
     private Double eventPrice;
     private Integer availableTickets;
-
-
     private String eventDescription;
 
     public EventRespondsDTO(Long eventID, String eventType, String eventName, String eventLocation, LocalDate eventStartDate, LocalDate eventEndDate, Double eventPrice, Integer availableTickets, String eventDescription) {

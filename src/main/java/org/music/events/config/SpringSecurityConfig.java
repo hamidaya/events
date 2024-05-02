@@ -66,8 +66,10 @@ public class SpringSecurityConfig {
 
                // .requestMatchers("/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/users").hasRole("ADMIN")
-                .requestMatchers(HttpMethod.GET,"/users").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST,"/users/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET,"/users").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.GET,"/users/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.PUT,"/users/**").hasAnyRole("USER","ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/cimodules").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.DELETE, "/cimodules/**").hasRole("ADMIN")
@@ -112,8 +114,12 @@ public class SpringSecurityConfig {
                   .requestMatchers(HttpMethod.DELETE, "/partys").hasAnyRole("ADMIN","USER")
                   .requestMatchers(HttpMethod.DELETE,"/partys/**").hasAnyRole("ADMIN","USER")
 
-                // Partys endpoints:
+                // Tickets endpoints:
                   .requestMatchers(HttpMethod.GET,"/tickets").hasAnyRole("ADMIN", "USER")
+
+                 // Profile endpoints:
+                  .requestMatchers(HttpMethod.PUT, "/profiles").hasAnyRole("ADMIN","USER")
+                  .requestMatchers(HttpMethod.PUT, "profiles/**").hasAnyRole("ADMIN","USER")
 
 
 

@@ -3,6 +3,7 @@ package org.music.events.services;
 import org.music.events.dtos.UserDto;
 import org.music.events.exceptions.RecordNotFoundException;
 import org.music.events.models.Authority;
+import org.music.events.models.Profile;
 import org.music.events.models.User;
 import org.music.events.repositories.UserRepository;
 import org.music.events.utils.RandomStringGenerator;
@@ -115,4 +116,6 @@ public class UserService {
         return user;
     }
 
+    public void updateProfile(Profile profile) {
+    }
 }

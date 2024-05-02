@@ -4,8 +4,8 @@ import jakarta.persistence.*;
 @Table(name = "profiles")
 public class Profile {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long profileId;
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
     private String email;
     private String phone;
@@ -17,12 +17,12 @@ public class Profile {
     @Lob
     private Byte[] profilePhoto;
 
-    public Long getProfileId() {
-        return profileId;
+    public Long getId() {
+        return id;
     }
 
-    public void setProfileId(Long profileId) {
-        this.profileId = profileId;
+    public void setId(Long profileId) {
+        this.id = profileId;
     }
 
     public String getName() {
