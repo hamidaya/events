@@ -2,7 +2,6 @@ package org.music.events.controllers;
 
 import org.music.events.exceptions.BadRequestException;
 import org.music.events.exceptions.RecordNotFoundException;
-import org.music.events.exceptions.TelevisionNameTooLongException;
 import org.music.events.exceptions.UsernameNotFoundException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,11 +28,7 @@ public class ExceptionController {
 
     }
 
-//    Deze exception handler vangt elke TelevisionNameTooLongException op die naar de gebruiker gegooid wordt en returned daar voor in de plaats een ResponseEntity met de Message en de NOT_FOUND-status (404)
-    @ExceptionHandler(value = TelevisionNameTooLongException.class)
-    public ResponseEntity<String> exception(TelevisionNameTooLongException exception) {
-        return new ResponseEntity<>(exception.getMessage(), HttpStatus.BAD_REQUEST);
-    }
+//
 
     @ExceptionHandler(value = BadRequestException.class)
     public ResponseEntity<String> exception(BadRequestException exception) {

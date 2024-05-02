@@ -20,10 +20,7 @@ public class User {
     @JoinColumn(name = "profile_id")
     private Profile profile;
 
-    @Lob
-    private Byte[] profilePhoto;
-
-    @OneToMany(
+   @OneToMany(
             targetEntity = Authority.class,
             mappedBy = "username",
             cascade = CascadeType.ALL,
@@ -61,13 +58,6 @@ public class User {
         this.profile = profile;
     }
 
-    public Byte[] getProfilePhoto() {
-        return profilePhoto;
-    }
-
-    public void setProfilePhoto(Byte[] profilePhoto) {
-        this.profilePhoto = profilePhoto;
-    }
 
     public boolean isEnabled() { return enabled;}
     public void setEnabled(boolean enabled) { this.enabled = enabled; }

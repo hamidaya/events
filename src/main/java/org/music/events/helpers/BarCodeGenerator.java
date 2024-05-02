@@ -23,5 +23,6 @@ public class BarCodeGenerator{
                 barcodeWriter.encode(barcodeText, BarcodeFormat.QR_CODE, 200, 200);
 
         return MatrixToImageWriter.toBufferedImage(bitMatrix);
+
     }
 }

@@ -12,10 +12,9 @@ public class ProfileController {
     public ProfileController(UserService userService) {
         this.userService = userService;
     }
-
-    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Byte> updateProfile(@RequestBody Profile profile) {
-        userService.updateProfile(profile);
+    @PutMapping("/{username}/profilephoto")
+    public ResponseEntity<Void> updateProfilePhoto(@PathVariable String username, @RequestBody Byte[] profilePhoto) {
+        userService.updateProfile(username, profilePhoto);
         return ResponseEntity.ok().build();
     }
 }

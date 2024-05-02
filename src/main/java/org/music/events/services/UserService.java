@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -65,6 +66,20 @@ public class UserService {
         user.setPassword(newUser.getPassword());
         userRepository.save(user);
     }
+
+        public void updateProfile(String username, Byte[] profilePhoto) {
+    Optional<User> userOptional = userRepository.findById(username);
+
+    if (userOptional.isPresent()) {
+    User userToUpdate = userOptional.get();
+    userToUpdate.getProfile().setProfilePhoto(profilePhoto);
+    userRepository.save(userToUpdate);
+        } else {
+    throw new RecordNotFoundException("User not found for the given username: " + username);
+}
+
+}
+
 
     public Set<Authority> getAuthorities(String username) {
         if (!userRepository.existsById(username)) throw new UsernameNotFoundException(username);
@@ -118,4 +133,5 @@ public class UserService {
 
     public void updateProfile(Profile profile) {
     }
+
 }
