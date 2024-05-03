@@ -11,6 +11,7 @@ public class UserDto {
     public Boolean enabled;
     public String apikey;
     public String email;
+    public String adress;
     public Set<Authority> authorities;
 
     public Byte[] getProfilePhoto() {

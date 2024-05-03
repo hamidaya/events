@@ -1,28 +1,67 @@
 package org.music.events.models;
+
 import jakarta.persistence.*;
+
+import org.springframework.web.multipart.MultipartFile;
+
 @Entity
+
 @Table(name = "profiles")
+
 public class Profile {
+
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
+
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
+
     private String name;
+
     private String email;
+
     private String phone;
+
     private String address;
+
     private String city;
+
     private String state;
+
     private String zip;
+
     private String country;
+
     @Lob
-    private Byte[] profilePhoto;
+    private byte[] profilePhoto;
+
+    public Profile(Long id, String name, String email, String phone, String address, String city, String state, String zip, String country, byte[] profilePhoto) {
+        this.id = id;
+        this.name = name;
+        this.email = email;
+        this.phone = phone;
+        this.address = address;
+        this.city = city;
+        this.state = state;
+        this.zip = zip;
+        this.country = country;
+        this.profilePhoto = profilePhoto;
+    }
+
+      public void setProfilePhoto(byte[] profilePhoto) {
+        this.profilePhoto = profilePhoto;
+    }
+
+    public Profile() {
+
+    }
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long profileId) {
-        this.id = profileId;
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -88,12 +127,4 @@ public class Profile {
     public void setCountry(String country) {
         this.country = country;
     }
-
-    public Byte[] getProfilePhoto() {
-        return profilePhoto;
     }
-
-    public void setProfilePhoto(Byte[] profilePhoto) {
-        this.profilePhoto = profilePhoto;
-    }
-}

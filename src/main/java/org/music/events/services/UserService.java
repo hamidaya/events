@@ -9,7 +9,9 @@ import org.music.events.repositories.UserRepository;
 import org.music.events.utils.RandomStringGenerator;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -67,12 +69,12 @@ public class UserService {
         userRepository.save(user);
     }
 
-        public void updateProfile(String username, Byte[] profilePhoto) {
+    public void updateProfilePhoto(String username, MultipartFile profilePhoto) throws IOException {
     Optional<User> userOptional = userRepository.findById(username);
 
     if (userOptional.isPresent()) {
     User userToUpdate = userOptional.get();
-    userToUpdate.getProfile().setProfilePhoto(profilePhoto);
+    userToUpdate.getProfile().setProfilePhoto(profilePhoto.getBytes());
     userRepository.save(userToUpdate);
         } else {
     throw new RecordNotFoundException("User not found for the given username: " + username);
@@ -128,10 +130,10 @@ public class UserService {
         user.setApikey(userDto.getApikey());
         user.setEmail(userDto.getEmail());
 
+
         return user;
     }
 
-    public void updateProfile(Profile profile) {
-    }
+
 
 }

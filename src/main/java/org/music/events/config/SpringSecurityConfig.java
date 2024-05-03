@@ -112,7 +112,7 @@ public class SpringSecurityConfig {
 
                  // Profile endpoints:
                   .requestMatchers(HttpMethod.PUT, "/profiles").hasAnyRole("ADMIN","USER")
-                  .requestMatchers(HttpMethod.PUT, "profiles/**").hasAnyRole("ADMIN","USER")
+                  .requestMatchers(HttpMethod.PUT, "/profiles/**").hasAnyRole("ADMIN","USER")
 
 
 
