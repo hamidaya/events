@@ -2,8 +2,6 @@ package org.music.events.models;
 
 import jakarta.persistence.*;
 
-import org.springframework.web.multipart.MultipartFile;
-
 @Entity
 
 @Table(name = "profiles")
@@ -11,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 public class Profile {
 
     @Id
-
     @GeneratedValue(strategy = GenerationType.IDENTITY)
 
     private Long id;
@@ -32,10 +29,10 @@ public class Profile {
 
     private String country;
 
-    @Lob
-    private byte[] profilePhoto;
+    @OneToOne
+    private Photo photo;
 
-    public Profile(Long id, String name, String email, String phone, String address, String city, String state, String zip, String country, byte[] profilePhoto) {
+    public Profile(Long id, String name, String email, String phone, String address, String city, String state, String zip, String country) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -45,11 +42,6 @@ public class Profile {
         this.state = state;
         this.zip = zip;
         this.country = country;
-        this.profilePhoto = profilePhoto;
-    }
-
-      public void setProfilePhoto(byte[] profilePhoto) {
-        this.profilePhoto = profilePhoto;
     }
 
     public Profile() {
@@ -100,6 +92,14 @@ public class Profile {
         return city;
     }
 
+    public Photo getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Photo photo) {
+        this.photo = photo;
+    }
+
     public void setCity(String city) {
         this.city = city;
     }
@@ -127,4 +127,4 @@ public class Profile {
     public void setCountry(String country) {
         this.country = country;
     }
-    }
+}

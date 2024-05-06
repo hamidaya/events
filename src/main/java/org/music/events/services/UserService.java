@@ -3,14 +3,20 @@ package org.music.events.services;
 import org.music.events.dtos.UserDto;
 import org.music.events.exceptions.RecordNotFoundException;
 import org.music.events.models.Authority;
+import org.music.events.models.Photo;
 import org.music.events.models.Profile;
 import org.music.events.models.User;
+import org.music.events.repositories.PhotoRepository;
+import org.music.events.repositories.ProfileRepository;
 import org.music.events.repositories.UserRepository;
 import org.music.events.utils.RandomStringGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -21,11 +27,15 @@ import java.util.Set;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+    private final ProfileRepository profileRepository;
+    private final PhotoRepository photoRepository;
 
-    public UserService(UserRepository userRepository) {
+    @Autowired
+    public UserService(UserRepository userRepository, ProfileRepository profileRepository, PhotoRepository photoRepository) {
         this.userRepository = userRepository;
+        this.profileRepository = profileRepository;
+        this.photoRepository = photoRepository;
     }
-
 
     public List<UserDto> getUsers() {
         List<UserDto> collection = new ArrayList<>();
@@ -39,9 +49,9 @@ public class UserService {
     public UserDto getUser(String username) {
         UserDto dto = new UserDto();
         Optional<User> user = userRepository.findById(username);
-        if (user.isPresent()){
+        if (user.isPresent()) {
             dto = fromUser(user.get());
-        }else {
+        } else {
             throw new UsernameNotFoundException(username);
         }
         return dto;
@@ -51,11 +61,26 @@ public class UserService {
         return userRepository.existsById(username);
     }
 
-    public String createUser(UserDto userDto) {
+    public String createUser(UserDto userDto, Profile profile) {
         String randomString = RandomStringGenerator.generateAlphaNumeric(20);
         userDto.setApikey(randomString);
         User newUser = userRepository.save(toUser(userDto));
+
         return newUser.getUsername();
+    }
+
+
+    public String createUser(UserDto userDto) {
+        String randomString = RandomStringGenerator.generateAlphaNumeric(20);
+        userDto.setApikey(randomString);
+        User user = toUser(userDto);
+        Profile profile = toProfile(userDto);
+        profileRepository.save(profile);
+        user.setProfile(profile);
+        user = userRepository.save(user);
+
+
+        return user.getUsername();
     }
 
     public void deleteUser(String username) {
@@ -69,18 +94,18 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public void updateProfilePhoto(String username, MultipartFile profilePhoto) throws IOException {
-    Optional<User> userOptional = userRepository.findById(username);
-
-    if (userOptional.isPresent()) {
-    User userToUpdate = userOptional.get();
-    userToUpdate.getProfile().setProfilePhoto(profilePhoto.getBytes());
-    userRepository.save(userToUpdate);
-        } else {
-    throw new RecordNotFoundException("User not found for the given username: " + username);
-}
-
-}
+//    public void updateProfilePhoto(String username, MultipartFile profilePhoto) throws IOException {
+//        Optional<User> userOptional = userRepository.findById(username);
+//
+//        if (userOptional.isPresent()) {
+//            User userToUpdate = userOptional.get();
+//            userToUpdate.getProfile().setProfilePhoto();
+//            userRepository.save(userToUpdate);
+//        } else {
+//            throw new RecordNotFoundException("User not found for the given username: " + username);
+//        }
+//
+//    }
 
 
     public Set<Authority> getAuthorities(String username) {
@@ -106,7 +131,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public static UserDto fromUser(User user){
+    public static UserDto fromUser(User user) {
 
         var dto = new UserDto();
 
@@ -116,9 +141,23 @@ public class UserService {
         dto.apikey = user.getApikey();
         dto.email = user.getEmail();
         dto.authorities = user.getAuthorities();
-
         return dto;
     }
+
+
+    public static Profile toProfile(UserDto userDto) {
+        var profile = new Profile();
+        profile.setName(userDto.getName());
+        profile.setCity(userDto.getCity());
+        profile.setCountry(userDto.getCountry());
+        profile.setPhone(userDto.getPhone());
+
+
+        return profile;
+    }
+
+
+
 
     public User toUser(UserDto userDto) {
 
@@ -135,5 +174,31 @@ public class UserService {
     }
 
 
+    public void storeFile(MultipartFile profilePhoto, String username) throws IOException {
 
+        Optional<User> optionalUser = userRepository.findById(username);
+
+        if (optionalUser.isEmpty()) {
+            throw new RecordNotFoundException("User not found");
+        }
+        User user = optionalUser.get();
+        Profile profile = user.getProfile();
+        String originalFileName = profilePhoto.getOriginalFilename();
+        String contentType = profilePhoto.getContentType();
+        byte[] bytes = profilePhoto.getBytes();
+
+        Photo photo = new Photo(bytes, contentType, originalFileName);
+        photoRepository.save(photo);
+        profile.setPhoto(photo);
+
+                 profileRepository.save(profile);
+
+        //eerst foto maken
+        //foto opslaan
+        //foto koppelen aan profile
+        //profile opslaan
+    }
 }
+
+
+
