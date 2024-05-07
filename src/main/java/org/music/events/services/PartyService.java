@@ -59,7 +59,7 @@ public class PartyService {
     }
     public PartyRespondsDTO transferToDto(Party party) {
         PartyRespondsDTO dto = new PartyRespondsDTO();
-        dto.setEventID(party.getEventId());
+        dto.setEventId(party.getEventId());
         dto.setEventName(party.getEventName());
         dto.setEventType(party.getEventType());
         dto.setEventLocation(party.getEventLocation());

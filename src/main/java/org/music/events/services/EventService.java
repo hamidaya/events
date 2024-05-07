@@ -88,7 +88,7 @@ public class EventService {
     }
     public EventRespondsDTO transferToDto(Event event) {
         EventRespondsDTO dto =  new EventRespondsDTO();
-        dto.setEventID(event.getEventId());
+        dto.setEventId(event.getEventId());
         dto.setEventName(event.getEventName());
         dto.setEventLocation(event.getEventLocation());
         dto.setEventPrice(event.getEventPrice());
