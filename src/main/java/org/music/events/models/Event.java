@@ -3,6 +3,7 @@ package org.music.events.models;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Table(name="events")
 @Entity
@@ -21,6 +22,9 @@ public class Event {
     private Integer availableTickets;
     private String eventDescription;
 
+@OneToMany(mappedBy = "event")
+
+private List<Ticket> tickets;
 
     public Event() {
     }

@@ -24,7 +24,6 @@ public class ProfileController {
     }
 
 
-
     @PutMapping(value = "/{username}")
     public ResponseEntity<Void> updatePhoto(@PathVariable("username") String username,
                                             @RequestParam("profilePhoto") MultipartFile profilePhoto) throws IOException {

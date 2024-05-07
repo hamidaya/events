@@ -115,6 +115,9 @@ public class SpringSecurityConfig {
                   .requestMatchers(HttpMethod.PUT, "/profiles/**").hasAnyRole("ADMIN","USER")
 
 
+                 // Tickets endpoints:
+                    .requestMatchers(HttpMethod.POST, "/tickets").hasAnyRole("ADMIN","USER")
+                    .requestMatchers(HttpMethod.POST, "/tickets/**").hasAnyRole("ADMIN","USER")
 
                                 //None role
                   .anyRequest().denyAll()

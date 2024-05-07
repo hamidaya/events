@@ -1,38 +1,35 @@
 package org.music.events.controllers;
 
-import org.music.events.dtos.TicketRespondsDTO;
 import org.music.events.services.TicketService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.List;
 
 
 @RestController
 @RequestMapping("/tickets")
-
 public class TicketController {
+
+
     private final TicketService ticketService;
 
     public TicketController(TicketService ticketService) {
         this.ticketService = ticketService;
     }
 
-    @GetMapping
-     public ResponseEntity<List<TicketRespondsDTO>> getAllTickets(@RequestParam("eventName") String eventName)
-                                                                   {
-         List<TicketRespondsDTO> dtos;
+    @PostMapping("/purchase")
+    public ResponseEntity<String> purchaseTicket(@RequestParam("eventId") String eventId, @RequestParam("username") String username) {
+        ticketService.purchaseTicket(eventId,username);
 
-         if (eventName.isEmpty()) {
-
-             dtos = ticketService.getAllTickets();
-         } else {
-
-             dtos = ticketService.getAllTickets();
-         }
-         return ResponseEntity.ok().body(dtos);
-     }
+        return ResponseEntity.ok("Ticket purchased successfully!");
     }
+    @PostMapping("/validate")
+    public ResponseEntity<String> validateTicket(@RequestParam("qrCode") String qrCode) {
+        return ResponseEntity.ok("Ticket validated successfully!");
+    }
+}
 
 

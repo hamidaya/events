@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+
 public class PartyService {
+
     private final PartyRepository partyRepository;
     public PartyService(PartyRepository partyRepository) {
         this.partyRepository = partyRepository;

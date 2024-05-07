@@ -94,19 +94,6 @@ public class UserService {
         userRepository.save(user);
     }
 
-//    public void updateProfilePhoto(String username, MultipartFile profilePhoto) throws IOException {
-//        Optional<User> userOptional = userRepository.findById(username);
-//
-//        if (userOptional.isPresent()) {
-//            User userToUpdate = userOptional.get();
-//            userToUpdate.getProfile().setProfilePhoto();
-//            userRepository.save(userToUpdate);
-//        } else {
-//            throw new RecordNotFoundException("User not found for the given username: " + username);
-//        }
-//
-//    }
-
 
     public Set<Authority> getAuthorities(String username) {
         if (!userRepository.existsById(username)) throw new UsernameNotFoundException(username);
