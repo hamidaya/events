@@ -11,7 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Service
+
 public class PartyService {
+
     private final PartyRepository partyRepository;
     public PartyService(PartyRepository partyRepository) {
         this.partyRepository = partyRepository;
@@ -43,7 +45,7 @@ public class PartyService {
 
     public Party transferToEvent(PartyRequestDTO dto) {
         Party party = new Party();
-               party.setEventLocation(dto.getEventLocation());
+        party.setEventLocation(dto.getEventLocation());
         party.setEventType(dto.getEventType());
         party.setEventName(dto.getEventName());
         party.setEventPrice(dto.getEventPrice());
@@ -57,7 +59,7 @@ public class PartyService {
     }
     public PartyRespondsDTO transferToDto(Party party) {
         PartyRespondsDTO dto = new PartyRespondsDTO();
-        dto.setEventID(party.getEventId());
+        dto.setEventId(party.getEventId());
         dto.setEventName(party.getEventName());
         dto.setEventType(party.getEventType());
         dto.setEventLocation(party.getEventLocation());
@@ -89,8 +91,11 @@ public class PartyService {
 
     }
 
-    public void deleteParty(Long partyId) {
-        // Implement deleting party
+    public void deleteParty(Long eventId) {
+        partyRepository.deleteById(eventId);
+        new EntityNotFoundException("Event with id " + eventId + "deleted successfully");
+
+
     }
 
 }

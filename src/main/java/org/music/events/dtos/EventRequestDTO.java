@@ -1,7 +1,6 @@
 package org.music.events.dtos;
 
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
@@ -31,8 +30,6 @@ public class EventRequestDTO {
         this.eventPrice = eventPrice;
         this.availableTickets = availableTickets;
         this.eventDescription = eventDescription;
-
-
 
     }
 

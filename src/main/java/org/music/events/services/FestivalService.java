@@ -57,7 +57,7 @@ public class FestivalService {
     }
     public FestivalRespondsDTO transferToDto(Festival festival) {
         FestivalRespondsDTO dto = new FestivalRespondsDTO();
-        dto.setEventID(festival.getEventId());
+        dto.setEventId(festival.getEventId());
         dto.setEventName(festival.getEventName());
         dto.setEventLocation(festival.getEventLocation());
         dto.setEventPrice(festival.getEventPrice());
@@ -88,7 +88,11 @@ public class FestivalService {
 
     }
 
-    public void deleteFestival(Long festivalId) {
-        // Implement deleting festival
+
+    public void deleteFestival(Long eventId) {
+        festivalRepository.deleteById(eventId);
+        new EntityNotFoundException("Event with id " + eventId + "deleted successfully");
+
+
     }
 }

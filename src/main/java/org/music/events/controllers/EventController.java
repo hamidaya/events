@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-//@RequestMapping("events")
+@RequestMapping("events")
 public class EventController {
 
     private final EventService eventService;
@@ -21,7 +21,7 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @GetMapping("events")
+    @GetMapping()
     public ResponseEntity<List<EventRespondsDTO>> getAllEvents(@RequestParam(value = "eventname", required = false) Optional<String> eventName) {
 
         List<EventRespondsDTO> dtos;
@@ -41,22 +41,7 @@ public class EventController {
 
     }
 
-//@GetMapping("/{eventId}")
-//    public ResponseEntity<Event> getEvent(@PathVariable ("id")Long eventId) {
-//        Event event = eventService.getEventById(eventId);
-//
-//        return ResponseEntity.ok().body(event);
-//
-//            }
-//    @GetMapping("/{eventname}")
-//    public ResponseEntity<Event> getEventName(@PathVariable Long eventName) {
-//
-//        Event event = eventService.getEventById(eventName);
-//
-//        return ResponseEntity.ok().body(event);
-//    }
-
- @PostMapping("/events")
+ @PostMapping()
 
     public ResponseEntity<Object> addEvent(@Valid @RequestBody EventRequestDTO eventRequestDTO) {
 
@@ -66,7 +51,7 @@ public class EventController {
 
     }
 
-    @PutMapping("/events/{eventId}")
+    @PutMapping("/{eventId}")
     public ResponseEntity<EventRespondsDTO> updateEvent(@PathVariable Long eventId, @RequestBody EventRequestDTO eventRequestDTO) {
 
         Event updatedEvent = eventService.updateEvent(eventId, eventRequestDTO);
@@ -74,10 +59,13 @@ public class EventController {
         return ResponseEntity.ok().body(eventService.transferToDto(updatedEvent));
 
             }
+    @DeleteMapping("/{eventId}")
+    public ResponseEntity<Object> deleteEvent(@PathVariable Long eventId) {
 
-//    @DeleteMapping("/{eventId}")
-//    public ResponseEntity<Void> deleteEvent(@PathVariable Long eventId) {
-//        eventService.deleteEvent(eventId);
-//        return ResponseEntity.noContent().build();
-//    }
+        eventService.deleteEvent(eventId);
+
+        return ResponseEntity.noContent().build();
+
+    }
+
 }

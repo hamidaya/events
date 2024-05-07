@@ -2,6 +2,7 @@ package org.music.events.controllers;
 
 import org.music.events.dtos.UserDto;
 import org.music.events.exceptions.BadRequestException;
+import org.music.events.models.User;
 import org.music.events.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping(value = "")
+    @GetMapping()
     public ResponseEntity<List<UserDto>> getUsers() {
 
         List<UserDto> userDtos = userService.getUsers();
