@@ -1,43 +1,36 @@
 package org.music.events.services;
-
+import org.hibernate.event.service.spi.EventListenerRegistrationException;
 import org.music.events.exceptions.UsernameNotFoundException;
-import org.music.events.models.Ticket;
+import org.music.events.models.QRCodeImage;
 import org.music.events.models.TicketStatus;
 import org.music.events.repositories.EventRepository;
 import org.music.events.repositories.TicketRepository;
 import org.music.events.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.music.events.models.Ticket;
+
 
 @Service
 public class TicketService {
-
-    private final TicketRepository ticketRepository;
-    private final UserRepository userRepository;
-    private final EventRepository eventRepository;
-
     @Autowired
-    public TicketService(TicketRepository ticketRepository, UserRepository userRepository, EventRepository eventRepository) {
-        this.ticketRepository = ticketRepository;
+    private TicketRepository ticketRepository;
+    private UserRepository userRepository;
+    private EventRepository eventRepository;
+
+    public TicketService(UserRepository userRepository, EventRepository eventRepository, QRCodeImageService qrCodeImageService) {
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
     }
 
     public void purchaseTicket(Long eventId, String username) {
-        // Create a new Ticket object
+        //kopen nieuwe ticket:
         Ticket ticket = new Ticket();
-
-        // Set the event and user for the ticket
-        ticket.setEvent(eventRepository.findById(eventId)
-                .orElseThrow(() -> new IllegalArgumentException("Event not found")));
-
-        ticket.setUser(userRepository.findByUsername(username)
-                .orElseThrow(() -> new UsernameNotFoundException("User not found")));
-
-        // Set any other relevant information for the ticket
+        ticket.setEvent(eventRepository.findById(eventId).orElseThrow(() -> new EventListenerRegistrationException("Event not found")));
+        ticket.setUser(userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found")));
+        ticket.setQrCodeImage(new QRCodeImage());
         ticket.setStatus(TicketStatus.VALID);
 
-        // Save the ticket to the database
         ticketRepository.save(ticket);
     }
 
@@ -51,4 +44,5 @@ public class TicketService {
             return "Invalid ticket!";
         }
     }
+
 }
