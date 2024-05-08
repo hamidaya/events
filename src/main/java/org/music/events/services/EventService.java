@@ -5,7 +5,6 @@ import org.music.events.dtos.EventRespondsDTO;
 import org.music.events.models.Event;
 import org.music.events.repositories.EventRepository;
 import org.springframework.stereotype.Service;
-import java.time.LocalDate;
 
 import java.util.List;
 import java.util.ArrayList;

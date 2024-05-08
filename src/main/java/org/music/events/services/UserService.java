@@ -1,5 +1,6 @@
 package org.music.events.services;
 
+import jakarta.transaction.Transactional;
 import org.music.events.dtos.UserDto;
 import org.music.events.exceptions.RecordNotFoundException;
 import org.music.events.models.Authority;
@@ -184,6 +185,16 @@ public class UserService {
         //foto opslaan
         //foto koppelen aan profile
         //profile opslaan
+    }
+
+
+    @Transactional
+    public Photo getUserPhoto(String username) {
+        Optional<User> optionalUser = userRepository.findById(username);
+        if(optionalUser.isEmpty()){
+            throw new RecordNotFoundException("user with usernamme " + username + " not found.");
+        }
+        return optionalUser.get().getProfile().getPhoto();
     }
 }
 

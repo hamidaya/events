@@ -36,5 +36,24 @@ public class ProfileController {
 
     }
 
+    @GetMapping("/{username}")
+    public ResponseEntity<Void[]> getUserPhoto(@PathVariable("username") String username) {
+
+        userService.getUserPhoto(username);
+
+        MediaType mediaType;
+
+        try {
+            mediaType = MediaType.parseMediaType(photo.getContentType());
+        } catch (InvalidMediaTypeException ignore) {
+            mediaType = MediaType.APPLICATION_OCTET_STREAM;
+        }
+
+        return ResponseEntity
+                .ok()
+                .contentType(MediaType.parseMediaType(mimeType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline;fileName=" + resource.getFilename())
+                .body(resource);
+    }
 }
 
