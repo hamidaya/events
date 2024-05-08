@@ -8,6 +8,7 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ticketId;
 
+
     private String qrCode;
 
     @ManyToOne

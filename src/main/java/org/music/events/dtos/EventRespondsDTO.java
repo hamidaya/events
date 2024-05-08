@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 public class EventRespondsDTO {
 
-    private Long eventID;
+    private Long eventId;
     private String eventType;
     private String eventName;
     private String eventLocation;
@@ -14,8 +14,8 @@ public class EventRespondsDTO {
     private Integer availableTickets;
     private String eventDescription;
 
-    public EventRespondsDTO(Long eventID, String eventType, String eventName, String eventLocation, LocalDate eventStartDate, LocalDate eventEndDate, Double eventPrice, Integer availableTickets, String eventDescription) {
-        this.eventID = eventID;
+    public EventRespondsDTO(Long eventId, String eventType, String eventName, String eventLocation, LocalDate eventStartDate, LocalDate eventEndDate, Double eventPrice, Integer availableTickets, String eventDescription) {
+        this.eventId = eventId;
         this.eventType = eventType;
         this.eventName = eventName;
         this.eventLocation = eventLocation;
@@ -31,12 +31,12 @@ public class EventRespondsDTO {
 
     }
 
-    public Long getEventID() {
-        return eventID;
+    public Long getEventId() {
+        return eventId;
     }
 
-    public void setEventID(Long eventID) {
-        this.eventID = eventID;
+    public void setEventId(Long eventId) {
+        this.eventId = eventId;
     }
 
     public String getEventType() {

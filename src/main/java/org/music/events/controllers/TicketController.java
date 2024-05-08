@@ -21,7 +21,7 @@ public class TicketController {
     }
 
     @PostMapping("/purchase")
-    public ResponseEntity<String> purchaseTicket(@RequestParam("eventId") String eventId, @RequestParam("username") String username) {
+    public ResponseEntity<String> purchaseTicket(@RequestParam("eventId") Long eventId, @RequestParam("username") String username) {
         ticketService.purchaseTicket(eventId,username);
 
         return ResponseEntity.ok("Ticket purchased successfully!");
