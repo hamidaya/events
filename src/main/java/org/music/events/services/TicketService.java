@@ -1,14 +1,11 @@
 package org.music.events.services;
 import org.hibernate.event.service.spi.EventListenerRegistrationException;
-import org.music.events.exceptions.UsernameNotFoundException;
-import org.music.events.models.QRCodeImage;
-import org.music.events.models.TicketStatus;
+import org.music.events.models.*;
 import org.music.events.repositories.EventRepository;
 import org.music.events.repositories.TicketRepository;
 import org.music.events.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.music.events.models.Ticket;
 
 
 @Service
@@ -27,10 +24,11 @@ public class TicketService {
         //kopen nieuwe ticket:
         Ticket ticket = new Ticket();
         ticket.setEvent(eventRepository.findById(eventId).orElseThrow(() -> new EventListenerRegistrationException("Event not found")));
-        ticket.setUser(userRepository.findByUsername(username).orElseThrow(() -> new UsernameNotFoundException("User not found")));
+        User user = (User) userRepository.findByUsername(username).orElseThrow(() -> new RuntimeException("Gebruiker niet gevonden"));
+        ticket.setUser(user); // Koppel het ticket aan de gebruiker
+        ticket.setUsername(username);
         ticket.setQrCodeImage(new QRCodeImage());
         ticket.setStatus(TicketStatus.VALID);
-
         ticketRepository.save(ticket);
     }
 

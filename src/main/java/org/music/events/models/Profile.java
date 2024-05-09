@@ -1,5 +1,7 @@
 package org.music.events.models;
 import jakarta.persistence.*;
+import org.springframework.objenesis.SpringObjenesis;
+
 @Entity
 @Table(name = "profiles")
 public class Profile {
@@ -19,7 +21,8 @@ public class Profile {
     @OneToOne
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
-    public Long getProfileId() {
+
+      public Long getProfileId() {
         return profileId;
     }
     public void setProfileId(Long profileId) {
