@@ -1,5 +1,6 @@
 package org.music.events.controllers;
 
+import org.music.events.services.QRCodeImageService;
 import org.music.events.services.TicketService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,15 +16,16 @@ public class TicketController {
 
 
     private final TicketService ticketService;
+    private final QRCodeImageService qrCodeImageService;
 
-    public TicketController(TicketService ticketService) {
+    public TicketController(TicketService ticketService, QRCodeImageService qrCodeImageService) {
         this.ticketService = ticketService;
+        this.qrCodeImageService = qrCodeImageService;
     }
 
     @PostMapping("/purchase")
-    public ResponseEntity<String> purchaseTicket(@RequestParam("eventId") Long eventId, @RequestParam("username") String username) {
+    public ResponseEntity<Object> purchaseTicket(@RequestParam("eventId") Long eventId, @RequestParam("username") String username) {
         ticketService.purchaseTicket(eventId,username);
-
         return ResponseEntity.ok("Ticket purchased successfully!");
     }
     @PostMapping("/validate")

@@ -9,7 +9,9 @@ import java.util.Optional;
 public interface EventRepository extends JpaRepository<Event, Long> {
     List<Event>findAllEventsByEventNameEqualsIgnoreCase(String eventName);
 
-     Optional<Event> findEventByEventName(String eventName);}
+    Optional<Event> findEventByEventName(String eventName);
+
+}
 
 
 

@@ -16,6 +16,7 @@ import java.util.Map;
 public class QRCodeGenerator {
 
     public static byte[] generateQRCodeImage(String text, int width, int height) throws WriterException, IOException {
+
         Map<EncodeHintType, Object> hints = new HashMap<>();
         hints.put(EncodeHintType.ERROR_CORRECTION, ErrorCorrectionLevel.H);
 

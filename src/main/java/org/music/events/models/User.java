@@ -1,7 +1,10 @@
 package org.music.events.models;
 
 import jakarta.persistence.*;
+
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -16,9 +19,20 @@ public class User {
     @Column(nullable = false, length = 255)
     private String password;
 
-    @OneToOne
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     @JoinColumn(name = "profile_id")
     private Profile profile;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Ticket> tickets = new ArrayList<>();
+
+    public List<Ticket> getTickets() {
+        return tickets;
+    }
+
+    public void setTickets(List<Ticket> tickets) {
+        this.tickets = tickets;
+    }
 
    @OneToMany(
             targetEntity = Authority.class,
