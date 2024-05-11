@@ -20,10 +20,6 @@ public class Ticket {
     @OneToOne(mappedBy = "ticket", cascade = CascadeType.ALL)
     private QRCodeImage qrCodeImage;
 
-    @ManyToOne
-    @JoinColumn(name = "profileId")
-    private Profile profile;
-
     public User getUser() {
         return user;
     }
@@ -67,17 +63,6 @@ public class Ticket {
     }
     public void setEvent(Event event) {
         this.event = event;
-    }
-
-
-    public Profile getProfile() {
-        return profile;
-    }
-
-    public void setProfile(Profile profile) {
-        this.profile = profile;
-
-
     }
 
     public String getQrCode() {

@@ -62,16 +62,22 @@ public class UserService {
         return userRepository.existsById(username);
     }
 
-    public String createUser(UserDto userDto, Profile profile) {
-        String randomString = RandomStringGenerator.generateAlphaNumeric(20);
-        userDto.setApikey(randomString);
-        User newUser = userRepository.save(toUser(userDto));
-
-        return newUser.getUsername();
+    public boolean profileExists(String username, Long profileId) {
+        if (userRepository.existsById(username)) {
+            throw new RuntimeException("User already exists with username: " + username);
+        }
+        if (profileRepository.existsById(profileId)) {
+            throw new RuntimeException("Profile already exists with username: " + username);
+        }
+        return false;
     }
 
-
     public String createUser(UserDto userDto) {
+        String username = userDto.getUsername();
+        if (userExists(username)) {
+            throw new RuntimeException("User or profile already exists with username: " + username);
+        }
+
         String randomString = RandomStringGenerator.generateAlphaNumeric(20);
         userDto.setApikey(randomString);
         User user = toUser(userDto);
@@ -79,8 +85,6 @@ public class UserService {
         profileRepository.save(profile);
         user.setProfile(profile);
         user = userRepository.save(user);
-
-
         return user.getUsername();
     }
 
