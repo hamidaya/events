@@ -8,6 +8,14 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ticketId;
 
+    public void setQrCode(String qrCode) {
+        this.qrCode = qrCode;
+    }
+
+//    public QRCodeImage getQrCodeImage() {
+//        return qrCodeImage;
+//    }
+
     private String qrCode;
     @ManyToOne
     @JoinColumn(name = "eventId", referencedColumnName = "eventId")
@@ -17,8 +25,8 @@ public class Ticket {
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
 
-    @OneToOne(mappedBy = "ticket", cascade = CascadeType.ALL)
-    private QRCodeImage qrCodeImage;
+//    @OneToOne(mappedBy = "ticket", cascade = CascadeType.ALL)
+//    private QRCodeImage qrCodeImage;
 
     public User getUser() {
         return user;
@@ -28,18 +36,13 @@ public class Ticket {
         this.user = user;
     }
 
-    public QRCodeImage getQrCodeImage() {
-        return qrCodeImage;
-    }
 
-    public void setQrCodeImage(QRCodeImage qrCodeImage) {
-        this.qrCodeImage = qrCodeImage;
-    }
+//    public void setQrCodeImage(QRCodeImage qrCodeImage) {
+//        this.qrCodeImage = qrCodeImage;
+//    }
 
     @Enumerated(EnumType.STRING)
     private TicketStatus status;
-
-
 
     public Ticket() {
 
@@ -69,16 +72,6 @@ public class Ticket {
         return qrCode;
     }
 
-    public void setQrCode(String qrCode) {
-        this.qrCode = qrCode;
-    }
-
-    public Ticket(String qrCode) {
-        this.qrCode = qrCode;
-
-
-    }
-
     public void setUser(Object userNotFound) {
 
     }
@@ -88,6 +81,7 @@ public class Ticket {
 
     public void setName(String name) {
     }
-}
+
+  }
 
 

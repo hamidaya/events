@@ -10,6 +10,7 @@ public class QRCodeImageService {
 
     @Autowired
     private final QRCodeImageRepository qrCodeImageRepository;
+    public TicketService saveQRCodeImage;
 
     public QRCodeImageService(QRCodeImageRepository qrCodeImageRepository) {
         this.qrCodeImageRepository = qrCodeImageRepository;
