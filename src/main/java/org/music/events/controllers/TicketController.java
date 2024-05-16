@@ -24,7 +24,7 @@ public class TicketController {
         return ResponseEntity.ok("Ticket succesvol gekocht!");
     }
     // Methode om een ticket te valideren via een HTTP POST-verzoek
-    @PostMapping("/validate")
+    @GetMapping("/validate")
     public ResponseEntity<String> validateTicket(@RequestParam("qrCode") String qrCode) {
         return ResponseEntity.ok("Ticket succesvol gevalideerd!");
     }

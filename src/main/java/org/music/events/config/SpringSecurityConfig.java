@@ -108,7 +108,7 @@ public class SpringSecurityConfig {
                   .requestMatchers(HttpMethod.DELETE,"/partys/**").hasAnyRole("ADMIN","USER")
 
                 // Tickets endpoints:
-                  .requestMatchers(HttpMethod.GET,"/tickets").hasAnyRole("ADMIN", "USER")
+                  .requestMatchers(HttpMethod.GET,"/tickets/**").hasAnyRole("ADMIN", "USER")
 
                  // Profile endpoints:
                   .requestMatchers(HttpMethod.PUT, "/profiles").hasAnyRole("ADMIN","USER")
