@@ -89,7 +89,6 @@ public class SpringSecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/events").hasAnyRole("ADMIN","USER")
                 .requestMatchers(HttpMethod.DELETE,"/events/**").hasAnyRole("ADMIN","USER")
 
-
                 // Festivals endpoints:
                 .requestMatchers(HttpMethod.GET,"/festivals").hasAnyRole("ADMIN", "USER")
                 .requestMatchers(HttpMethod.POST, "/festivals").hasAnyRole("ADMIN","USER")
@@ -97,7 +96,6 @@ public class SpringSecurityConfig {
                 .requestMatchers(HttpMethod.PUT, "/festivals").hasAnyRole("ADMIN","USER")
                 .requestMatchers(HttpMethod.DELETE, "/festivals").hasAnyRole("ADMIN","USER")
                 .requestMatchers(HttpMethod.DELETE,"/festivals/**").hasAnyRole("ADMIN","USER")
-
 
                // Partys endpoints:
                   .requestMatchers(HttpMethod.GET,"/partys").hasAnyRole("ADMIN", "USER")
@@ -108,18 +106,16 @@ public class SpringSecurityConfig {
                   .requestMatchers(HttpMethod.DELETE,"/partys/**").hasAnyRole("ADMIN","USER")
 
                 // Tickets endpoints:
-                  .requestMatchers(HttpMethod.GET,"/tickets").hasAnyRole("ADMIN", "USER")
+                  .requestMatchers(HttpMethod.GET,"/tickets/**").hasAnyRole("ADMIN", "USER")
 
                  // Profile endpoints:
                   .requestMatchers(HttpMethod.PUT, "/profiles").hasAnyRole("ADMIN","USER")
                   .requestMatchers(HttpMethod.PUT, "/profiles/**").hasAnyRole("ADMIN","USER")
 
-
                  // Tickets endpoints:
                     .requestMatchers(HttpMethod.POST, "/tickets").hasAnyRole("ADMIN","USER")
                     .requestMatchers(HttpMethod.POST, "/tickets/**").hasAnyRole("ADMIN","USER")
-
-                                //None role
+                 //None role
                   .anyRequest().denyAll()
 
                 )

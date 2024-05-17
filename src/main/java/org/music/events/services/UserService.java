@@ -12,12 +12,10 @@ import org.music.events.repositories.ProfileRepository;
 import org.music.events.repositories.UserRepository;
 import org.music.events.utils.RandomStringGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -75,7 +73,7 @@ public class UserService {
     public String createUser(UserDto userDto) {
         String username = userDto.getUsername();
         if (userExists(username)) {
-            throw new RuntimeException("User or profile already exists with username: " + username);
+            throw new RuntimeException("User is already exists with username: " + username);
         }
 
         String randomString = RandomStringGenerator.generateAlphaNumeric(20);
@@ -136,7 +134,6 @@ public class UserService {
         return dto;
     }
 
-
     public static Profile toProfile(UserDto userDto) {
         var profile = new Profile();
         profile.setName(userDto.getName());
@@ -149,8 +146,6 @@ public class UserService {
     }
 
 
-
-
     public User toUser(UserDto userDto) {
 
         var user = new User();
@@ -160,7 +155,6 @@ public class UserService {
         user.setEnabled(userDto.getEnabled());
         user.setApikey(userDto.getApikey());
         user.setEmail(userDto.getEmail());
-
 
         return user;
     }

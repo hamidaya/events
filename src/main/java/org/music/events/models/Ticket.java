@@ -1,12 +1,21 @@
 package org.music.events.models;
 import jakarta.persistence.*;
 
+
 @Entity
 @Table(name = "tickets")
 public class Ticket {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ticketId;
+
+    public void setQrCode(String qrCode) {
+        this.qrCode = qrCode;
+    }
+
+    public QRCodeImage getQrCodeImage() {
+        return qrCodeImage;
+    }
 
     private String qrCode;
     @ManyToOne
@@ -26,14 +35,6 @@ public class Ticket {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public QRCodeImage getQrCodeImage() {
-        return qrCodeImage;
-    }
-
-    public void setQrCodeImage(QRCodeImage qrCodeImage) {
-        this.qrCodeImage = qrCodeImage;
     }
 
     @Enumerated(EnumType.STRING)
@@ -69,16 +70,6 @@ public class Ticket {
         return qrCode;
     }
 
-    public void setQrCode(String qrCode) {
-        this.qrCode = qrCode;
-    }
-
-    public Ticket(String qrCode) {
-        this.qrCode = qrCode;
-
-
-    }
-
     public void setUser(Object userNotFound) {
 
     }
@@ -88,6 +79,7 @@ public class Ticket {
 
     public void setName(String name) {
     }
+
 }
 
 
