@@ -13,8 +13,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class TicketService {
     // TicketRepository voor toegang tot ticketgegevens
-//    @Autowired
-//    private QRCodeImageService qrCodeImageService;
+    //    @Autowired
+    //    private QRCodeImageService qrCodeImageService;
 
     @Autowired
     private TicketRepository ticketRepository;
@@ -30,7 +30,6 @@ public class TicketService {
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
         this.qrCodeImageRepository = qrCodeImageRepository;
-
     }
     // Methode om een ticket te kopen
     public void purchaseTicket(Long eventId, String username) {
@@ -43,8 +42,8 @@ public class TicketService {
         ticket.setUser(user);
         // Save the ticket to the database
         // QR-codeafbeelding zoeken op basis van qrCodeId en toevoegen aan het ticket, anders exceptie werpen
-//        ticket.setQrCode(qrCodeImageRepository.findQRCodeImageByQrCodeId(qrCodeId).orElseThrow(() -> new RuntimeException("qr code niet gevonden")));
-//    -> new RuntimeException("qrcode niet gevonden"));
+        // ticket.setQrCode(qrCodeImageRepository.findQRCodeImageByQrCodeId(qrCodeId).orElseThrow(() -> new RuntimeException("qr code niet gevonden")));
+        //-> new RuntimeException("qrcode niet gevonden"));
         // Ticket opslaan in de database
         ticketRepository.save(ticket);
         // Ticketstatus instellen op GELDIG
@@ -63,12 +62,7 @@ public class TicketService {
         } catch (Exception e) {
             throw new QRCodeException();
         }
-
-
     }
-
-
-
     // Methode om een ticket te valideren
     public String validateTicket(String qrCode) {
         // Ticket zoeken op basis van qrCode
@@ -87,3 +81,4 @@ public class TicketService {
         }
     }
 }
+

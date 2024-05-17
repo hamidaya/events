@@ -1,6 +1,7 @@
 package org.music.events.models;
 import jakarta.persistence.*;
 
+
 @Entity
 @Table(name = "tickets")
 public class Ticket {
@@ -12,9 +13,9 @@ public class Ticket {
         this.qrCode = qrCode;
     }
 
-//    public QRCodeImage getQrCodeImage() {
-//        return qrCodeImage;
-//    }
+    public QRCodeImage getQrCodeImage() {
+        return qrCodeImage;
+    }
 
     private String qrCode;
     @ManyToOne
@@ -25,8 +26,8 @@ public class Ticket {
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
 
-//    @OneToOne(mappedBy = "ticket", cascade = CascadeType.ALL)
-//    private QRCodeImage qrCodeImage;
+    @OneToOne(mappedBy = "ticket", cascade = CascadeType.ALL)
+    private QRCodeImage qrCodeImage;
 
     public User getUser() {
         return user;
@@ -36,13 +37,10 @@ public class Ticket {
         this.user = user;
     }
 
-
-//    public void setQrCodeImage(QRCodeImage qrCodeImage) {
-//        this.qrCodeImage = qrCodeImage;
-//    }
-
     @Enumerated(EnumType.STRING)
     private TicketStatus status;
+
+
 
     public Ticket() {
 
@@ -82,6 +80,6 @@ public class Ticket {
     public void setName(String name) {
     }
 
-  }
+}
 
 

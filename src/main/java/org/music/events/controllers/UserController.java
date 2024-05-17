@@ -2,7 +2,6 @@ package org.music.events.controllers;
 
 import org.music.events.dtos.UserDto;
 import org.music.events.exceptions.BadRequestException;
-import org.music.events.models.User;
 import org.music.events.services.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,7 +13,7 @@ import java.util.Map;
 
 @CrossOrigin
 @RestController
-@RequestMapping(value = "/users")
+@RequestMapping(value = "users")
 public class UserController {
 
     private final UserService userService;
@@ -91,6 +90,7 @@ public class UserController {
     public ResponseEntity<Object> deleteUserAuthority(@PathVariable("username") String username, @PathVariable("authority") String authority) {
         userService.removeAuthority(username, authority);
         return ResponseEntity.noContent().build();
+
     }
 
 }

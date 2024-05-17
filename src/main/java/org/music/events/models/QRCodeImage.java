@@ -17,6 +17,7 @@ public class QRCodeImage {
     public QRCodeImage(byte[] image) {
         this.image = image;
     }
+
     // Getter voor qrCodeId
     public Long getQrCodeId() {
         return qrCodeId;
