@@ -5,6 +5,9 @@ import org.music.events.models.QRCodeImage;
 import org.music.events.services.QRCodeImageService;
 import org.music.events.services.TicketService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.InvalidMediaTypeException;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,14 +42,32 @@ public class TicketController {
     public ResponseEntity<Object> validateTicket(@RequestParam("qrCodeId") Long qrCodeId, @RequestParam("username") String username) {
         ticketService.purchaseTicket(qrCodeId, username);
         return ResponseEntity.ok("qrCodeId succesvol gevalideerd met username!");
+
     }
 
-    // Methode om een ticket te valideren via een HTTP POST-verzoek
-    @GetMapping("/validate/image")
-    public ResponseEntity<Object> validateTicket(@RequestParam("qrCodeId") Long qrCodeId, @RequestParam("username") String username) {
-        ticketService.purchaseTicket(qrCodeId, username);
-        return ResponseEntity.ok("qrCodeId succesvol gevalideerd met username!");
+    @GetMapping("/{id}/validate")
+
+    public ResponseEntity<byte[]> validateTicket(@PathVariable("qrCodeId") Long qrCodeId){
+
+        QRCodeImage qrCodeImage = ticketService.validateTicket(qrCodeId);
+
+        MediaType mediaType;
+
+        try {
+            mediaType = MediaType.parseMediaType(qrCodeImage.getContenType());
+        } catch (InvalidMediaTypeException ignore){
+            mediaType = MediaType.APPLICATION_OCTET_STREAM;
+        }
+
+
+
+        return ResponseEntity
+                .ok()
+                .contentType(mediaType)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline;fileName=" + qrCodeImage.getImage())
+                .body(qrCodeImage.getImage());
     }
+
     }
 
 

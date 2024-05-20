@@ -42,4 +42,8 @@ public class QRCodeImage {
     public void setTicket(Ticket ticket) {
         this.ticket = ticket;
     }
+
+    public String getContenType() {
+        return null;
+    }
 }

@@ -29,4 +29,5 @@ public class QRCodeGenerator {
         // ByteArray van outputStream retourneren
         return outputStream.toByteArray();
     }
+
 }
