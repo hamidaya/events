@@ -16,17 +16,19 @@ public class TicketService {
     //    @Autowired
     //    private QRCodeImageService qrCodeImageService;
 
-    @Autowired
-    private TicketRepository ticketRepository;
+    private final TicketRepository ticketRepository;
     // UserRepository voor toegang tot gebruikersgegevens
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
     // EventRepository voor toegang tot evenementgegevens
-    private EventRepository eventRepository;
+    private final EventRepository eventRepository;
 
     // QRCodeImageRepository voor toegang tot QR-codeafbeeldingsgegevens
-    private QRCodeImageRepository qrCodeImageRepository;
+    private final QRCodeImageRepository qrCodeImageRepository;
+
+    @Autowired
     // Constructor voor TicketService met UserRepository, EventRepository en QRCodeImageRepository injectie
-    public TicketService(UserRepository userRepository, EventRepository eventRepository, QRCodeImageRepository qrCodeImageRepository) {
+    public TicketService(TicketRepository ticketRepository, UserRepository userRepository, EventRepository eventRepository, QRCodeImageRepository qrCodeImageRepository) {
+        this.ticketRepository = ticketRepository;
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
         this.qrCodeImageRepository = qrCodeImageRepository;
