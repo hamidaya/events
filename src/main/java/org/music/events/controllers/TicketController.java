@@ -37,6 +37,7 @@ public class TicketController {
         return ResponseEntity.ok("Ticket succesvol gekocht!");
     }
 
+
     // Methode om een ticket te valideren via een HTTP POST-verzoek
     @GetMapping("/validate")
     public ResponseEntity<Object> validateTicket(@RequestParam("qrCodeId") Long qrCodeId, @RequestParam("username") String username) {
@@ -45,30 +46,31 @@ public class TicketController {
 
     }
 
-    @GetMapping("/{id}/validate")
+//    @GetMapping("/{id}/validate")
+//
+//    public ResponseEntity<byte[]> validateTicket(@PathVariable("qrCodeId") String username){
+//
+//        QRCodeImage qrCodeImage = ticketService.validateTicket(qrCode, username);
+//
+//        MediaType mediaType;
+//
+//        try {
+//            mediaType = MediaType.parseMediaType(qrCodeImage.getContenType());
+//        } catch (InvalidMediaTypeException ignore){
+//            mediaType = MediaType.APPLICATION_OCTET_STREAM;
+//        }
+//
+//
+//
+//
+//        return ResponseEntity
+//                .ok()
+//                .contentType(mediaType)
+//                .header(HttpHeaders.CONTENT_DISPOSITION, "inline;fileName=" + qrCodeImage.getImage())
+//                .body(qrCodeImage.getImage());
+//    }
 
-    public ResponseEntity<byte[]> validateTicket(@PathVariable("qrCodeId") Long qrCodeId){
-
-        QRCodeImage qrCodeImage = ticketService.validateTicket(qrCodeId);
-
-        MediaType mediaType;
-
-        try {
-            mediaType = MediaType.parseMediaType(qrCodeImage.getContenType());
-        } catch (InvalidMediaTypeException ignore){
-            mediaType = MediaType.APPLICATION_OCTET_STREAM;
-        }
-
-
-
-        return ResponseEntity
-                .ok()
-                .contentType(mediaType)
-                .header(HttpHeaders.CONTENT_DISPOSITION, "inline;fileName=" + qrCodeImage.getImage())
-                .body(qrCodeImage.getImage());
-    }
-
-    }
+}
 
 
 

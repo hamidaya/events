@@ -1,5 +1,6 @@
 package org.music.events.services;
 
+import org.music.events.exceptions.RecordNotFoundException;
 import org.music.events.models.QRCodeImage;
 import org.music.events.repositories.QRCodeImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,4 +23,4 @@ public class QRCodeImageService {
         qrCodeImage.setImage(imageBytes);
         return qrCodeImageRepository.save(qrCodeImage);
     }
-}
+    }

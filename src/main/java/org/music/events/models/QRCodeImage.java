@@ -44,6 +44,6 @@ public class QRCodeImage {
     }
 
     public String getContenType() {
-        return null;
+        return getContenType();
     }
 }

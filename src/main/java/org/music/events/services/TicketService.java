@@ -23,7 +23,7 @@ public class TicketService {
     // EventRepository voor toegang tot evenementgegevens
     private EventRepository eventRepository;
 
-     // QRCodeImageRepository voor toegang tot QR-codeafbeeldingsgegevens
+    // QRCodeImageRepository voor toegang tot QR-codeafbeeldingsgegevens
     private QRCodeImageRepository qrCodeImageRepository;
     // Constructor voor TicketService met UserRepository, EventRepository en QRCodeImageRepository injectie
     public TicketService(UserRepository userRepository, EventRepository eventRepository, QRCodeImageRepository qrCodeImageRepository) {
@@ -64,21 +64,21 @@ public class TicketService {
         }
     }
     // Methode om een ticket te valideren
-    public String validateTicket(String qrCode) {
-        // Ticket zoeken op basis van qrCode
-        Ticket ticket = ticketRepository.findByQrCode(qrCode);
-        // Als ticket bestaat en status GELDIG is
-        if (ticket != null && ticket.getStatus() == TicketStatus.VALID) {
-            // Status van ticket instellen op GEBRUIKT
-            ticket.setStatus(TicketStatus.USED);
-            // Ticket opslaan met bijgewerkte status
-            ticketRepository.save(ticket);
-            // Returnbericht "Ticket is geldig!"
-            return "Ticket is geldig!";
-        } else {
-            // Returnbericht "Ongeldig ticket!"
-            return "Ongeldig ticket!";
+//    public String validateTicket(Long qrCodeId, Long username) {
+//        // Ticket zoeken op basis van qrCode
+//        Ticket ticket = qrCodeImageRepository.findQRCodeImageByQrCodeId(qrCodeId);
+//        // Als ticket bestaat en status GELDIG is
+//        if (ticket != null && ticket.getStatus() == TicketStatus.VALID) {
+//            // Status van ticket instellen op GEBRUIKT
+//            ticket.setStatus(TicketStatus.USED);
+//            // Ticket opslaan met bijgewerkte status
+//            ticketRepository.save(ticket);
+//            // Returnbericht "Ticket is geldig!"
+//            return "Ticket is geldig!";
+//        } else {
+//            // Returnbericht "Ongeldig ticket!"
+//            return "Ongeldig ticket!";
         }
-    }
-}
+//    }
+
 

@@ -9,9 +9,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface TicketRepository extends JpaRepository<Ticket, Long> {
-//    Ticket  (String qrCode);
+public interface TicketRepository extends JpaRepository<Ticket, String> {
+    //    Ticket  (String qrCode);
     Ticket findByQrCode(String qrCode);
-
-    QRCodeImage findTicketByQrCode(Long qrCodeId);
 }

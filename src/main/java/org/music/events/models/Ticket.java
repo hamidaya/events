@@ -5,19 +5,20 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "tickets")
 public class Ticket {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ticketId;
 
-    public void setQrCode(String qrCode) {
-        this.qrCode = qrCode;
-    }
 
     public QRCodeImage getQrCodeImage() {
         return qrCodeImage;
     }
-
     private String qrCode;
+    @OneToOne
+    @JoinColumn(name = "qrCodeId", referencedColumnName = "qrCodeId")
+    private QRCodeImage qrCodeImage;
+
     @ManyToOne
     @JoinColumn(name = "eventId", referencedColumnName = "eventId")
     private Event event;
@@ -26,8 +27,6 @@ public class Ticket {
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
 
-    @OneToOne(mappedBy = "ticket", cascade = CascadeType.ALL)
-    private QRCodeImage qrCodeImage;
 
     public User getUser() {
         return user;
@@ -35,6 +34,10 @@ public class Ticket {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public void setQrCodeImage(QRCodeImage qrCodeImage) {
+        this.qrCodeImage = qrCodeImage;
     }
 
     @Enumerated(EnumType.STRING)
@@ -66,10 +69,6 @@ public class Ticket {
         this.event = event;
     }
 
-    public String getQrCode() {
-        return qrCode;
-    }
-
     public void setUser(Object userNotFound) {
 
     }
@@ -80,6 +79,9 @@ public class Ticket {
     public void setName(String name) {
     }
 
+    public String getQrCode() {
+        return qrCode;
+    }
 }
 
 
