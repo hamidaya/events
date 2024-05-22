@@ -16,17 +16,19 @@ public class TicketService {
     //    @Autowired
     //    private QRCodeImageService qrCodeImageService;
 
-    @Autowired
-    private TicketRepository ticketRepository;
+    private final TicketRepository ticketRepository;
     // UserRepository voor toegang tot gebruikersgegevens
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
     // EventRepository voor toegang tot evenementgegevens
-    private EventRepository eventRepository;
+    private final EventRepository eventRepository;
 
-     // QRCodeImageRepository voor toegang tot QR-codeafbeeldingsgegevens
-    private QRCodeImageRepository qrCodeImageRepository;
+    // QRCodeImageRepository voor toegang tot QR-codeafbeeldingsgegevens
+    private final QRCodeImageRepository qrCodeImageRepository;
+
+    @Autowired
     // Constructor voor TicketService met UserRepository, EventRepository en QRCodeImageRepository injectie
-    public TicketService(UserRepository userRepository, EventRepository eventRepository, QRCodeImageRepository qrCodeImageRepository) {
+    public TicketService(TicketRepository ticketRepository, UserRepository userRepository, EventRepository eventRepository, QRCodeImageRepository qrCodeImageRepository) {
+        this.ticketRepository = ticketRepository;
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
         this.qrCodeImageRepository = qrCodeImageRepository;
@@ -64,21 +66,21 @@ public class TicketService {
         }
     }
     // Methode om een ticket te valideren
-    public String validateTicket(String qrCode) {
-        // Ticket zoeken op basis van qrCode
-        Ticket ticket = ticketRepository.findByQrCode(qrCode);
-        // Als ticket bestaat en status GELDIG is
-        if (ticket != null && ticket.getStatus() == TicketStatus.VALID) {
-            // Status van ticket instellen op GEBRUIKT
-            ticket.setStatus(TicketStatus.USED);
-            // Ticket opslaan met bijgewerkte status
-            ticketRepository.save(ticket);
-            // Returnbericht "Ticket is geldig!"
-            return "Ticket is geldig!";
-        } else {
-            // Returnbericht "Ongeldig ticket!"
-            return "Ongeldig ticket!";
+//    public String validateTicket(Long qrCodeId, Long username) {
+//        // Ticket zoeken op basis van qrCode
+//        Ticket ticket = qrCodeImageRepository.findQRCodeImageByQrCodeId(qrCodeId);
+//        // Als ticket bestaat en status GELDIG is
+//        if (ticket != null && ticket.getStatus() == TicketStatus.VALID) {
+//            // Status van ticket instellen op GEBRUIKT
+//            ticket.setStatus(TicketStatus.USED);
+//            // Ticket opslaan met bijgewerkte status
+//            ticketRepository.save(ticket);
+//            // Returnbericht "Ticket is geldig!"
+//            return "Ticket is geldig!";
+//        } else {
+//            // Returnbericht "Ongeldig ticket!"
+//            return "Ongeldig ticket!";
         }
-    }
-}
+//    }
+
 

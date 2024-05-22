@@ -2,6 +2,7 @@ package org.music.events.controllers;
 import org.music.events.repositories.ProfileRepository;
 import org.music.events.repositories.UserRepository;
 import org.music.events.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.InvalidMediaTypeException;
@@ -20,15 +21,11 @@ public class ProfileController {
 
     private final UserService userService;
 
-    private final ProfileRepository profileRepository;
-    private final UserRepository userRepository;
-
-    public ProfileController(UserService userService, ProfileRepository profileRepository, UserRepository userRepository) {
+    @Autowired
+    public ProfileController(UserService userService) {
         this.userService = userService;
-        this.profileRepository = profileRepository;
-        this.userRepository = userRepository;
-    }
 
+    }
 
     @PutMapping(value = "/{username}")
     public ResponseEntity<Void> updatePhoto(@PathVariable("username") String username,

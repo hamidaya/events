@@ -8,7 +8,6 @@ public class Photo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @Lob
     private byte[] profilePhoto;
     private String contentType;

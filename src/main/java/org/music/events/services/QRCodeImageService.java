@@ -8,12 +8,13 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class QRCodeImageService {
 
-    @Autowired
     private final QRCodeImageRepository qrCodeImageRepository;
-    public TicketService saveQRCodeImage;
+    public final TicketService saveQRCodeImage;
 
-    public QRCodeImageService(QRCodeImageRepository qrCodeImageRepository) {
+    @Autowired
+    public QRCodeImageService(QRCodeImageRepository qrCodeImageRepository, TicketService saveQRCodeImage) {
         this.qrCodeImageRepository = qrCodeImageRepository;
+        this.saveQRCodeImage = saveQRCodeImage;
     }
 
     @Transactional
@@ -22,4 +23,4 @@ public class QRCodeImageService {
         qrCodeImage.setImage(imageBytes);
         return qrCodeImageRepository.save(qrCodeImage);
     }
-}
+    }

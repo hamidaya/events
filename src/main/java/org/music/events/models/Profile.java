@@ -21,7 +21,6 @@ public class Profile {
     @OneToOne
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
-
       public Long getProfileId() {
         return profileId;
     }
@@ -88,4 +87,7 @@ public class Profile {
     public void setUser(User user) {
         this.user = user;
     }
+
+
+
 }

@@ -26,7 +26,9 @@ import java.util.Set;
 @Service
 public class UserService {
     private final UserRepository userRepository;
+
     private final ProfileRepository profileRepository;
+
     private final PhotoRepository photoRepository;
 
     @Autowired
@@ -167,8 +169,15 @@ public class UserService {
         if (optionalUser.isEmpty()) {
             throw new RecordNotFoundException("User not found");
         }
+
+
         User user = optionalUser.get();
         Profile profile = user.getProfile();
+
+        if (profile == null) {
+            profile = new Profile();
+            profile.setUser(user);
+        }
         String originalFileName = profilePhoto.getOriginalFilename();
         String contentType = profilePhoto.getContentType();
         byte[] bytes = profilePhoto.getBytes();
@@ -177,7 +186,7 @@ public class UserService {
         photoRepository.save(photo);
         profile.setPhoto(photo);
 
-                 profileRepository.save(profile);
+        profileRepository.save(profile);
 
         //eerst foto maken
         //foto opslaan
@@ -185,15 +194,15 @@ public class UserService {
         //profile opslaan
     }
 
-
-    @Transactional
-    public Photo getUserPhoto(String username) {
-        Optional<User> optionalUser = userRepository.findById(username);
-        if(optionalUser.isEmpty()){
-            throw new RecordNotFoundException("user with usernamme " + username + " not found.");
-        }
-        return optionalUser.get().getProfile().getPhoto();
-    }
+//
+//    @Transactional
+//    public Photo getUserPhoto(String username) {
+//        Optional<User> optionalUser = userRepository.findById(username);
+//        if(optionalUser.isEmpty()){
+//            throw new RecordNotFoundException("user with usernamme " + username + " not found.");
+//        }
+//        return optionalUser.get().getProfile().getPhoto();
+//    }
 }
 
 
