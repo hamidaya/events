@@ -82,9 +82,10 @@ public class UserService {
         userDto.setApikey(randomString);
         User user = toUser(userDto);
         Profile profile = toProfile(userDto);
-        profileRepository.save(profile);
-        user.setProfile(profile);
         user = userRepository.save(user);
+        profile.setUser(user);
+        profileRepository.save(profile);
+
         return user.getUsername();
     }
 
@@ -174,10 +175,6 @@ public class UserService {
         User user = optionalUser.get();
         Profile profile = user.getProfile();
 
-        if (profile == null) {
-            profile = new Profile();
-            profile.setUser(user);
-        }
         String originalFileName = profilePhoto.getOriginalFilename();
         String contentType = profilePhoto.getContentType();
         byte[] bytes = profilePhoto.getBytes();
@@ -194,15 +191,15 @@ public class UserService {
         //profile opslaan
     }
 
-//
-//    @Transactional
-//    public Photo getUserPhoto(String username) {
-//        Optional<User> optionalUser = userRepository.findById(username);
-//        if(optionalUser.isEmpty()){
-//            throw new RecordNotFoundException("user with usernamme " + username + " not found.");
-//        }
-//        return optionalUser.get().getProfile().getPhoto();
-//    }
+
+    @Transactional
+    public Photo getUserPhoto(String username) {
+        Optional<User> optionalUser = userRepository.findById(username);
+        if(optionalUser.isEmpty()){
+            throw new RecordNotFoundException("user with usernamme " + username + " not found.");
+        }
+        return optionalUser.get().getProfile().getPhoto();
+   }
 }
 
 

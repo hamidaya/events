@@ -21,7 +21,7 @@ public class Profile {
     @OneToOne
     @JoinColumn(name = "username", referencedColumnName = "username")
     private User user;
-      public Long getProfileId() {
+    public Long getProfileId() {
         return profileId;
     }
     public void setProfileId(Long profileId) {
