@@ -1,4 +1,5 @@
 package org.music.events.controllers;
+import org.music.events.models.Photo;
 import org.music.events.repositories.ProfileRepository;
 import org.music.events.repositories.UserRepository;
 import org.music.events.services.UserService;
@@ -38,5 +39,27 @@ public class ProfileController {
         return ResponseEntity.created(URI.create(url)).build();
 
     }
+    @GetMapping("/{username}")
+    public ResponseEntity<byte[]> getUserPhoto(@PathVariable("username") String username){
+
+        Photo photo = userService.getUserPhoto(username);
+
+        MediaType mediaType;
+
+        try {
+            mediaType = MediaType.parseMediaType(photo.getContentType());
+        } catch (InvalidMediaTypeException ignore){
+            mediaType = MediaType.APPLICATION_OCTET_STREAM;
+        }
+
+
+
+        return ResponseEntity
+                .ok()
+                .contentType(mediaType)
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline;fileName=" + photo.getFilename())
+                .body(photo.getProfilePhoto());
+    }
+
 }
 

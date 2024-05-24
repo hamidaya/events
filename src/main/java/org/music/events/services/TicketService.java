@@ -9,6 +9,7 @@ import org.music.events.repositories.TicketRepository;
 import org.music.events.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class TicketService {
@@ -33,7 +34,9 @@ public class TicketService {
         this.eventRepository = eventRepository;
         this.qrCodeImageRepository = qrCodeImageRepository;
     }
+
     // Methode om een ticket te kopen
+    @Transactional
     public void purchaseTicket(Long eventId, String username) {
         // Nieuw ticket aanmaken
         Ticket ticket = new Ticket();
