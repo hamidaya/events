@@ -17,7 +17,7 @@ import java.net.URI;
 import java.util.Objects;
 
 @RestController
-@RequestMapping("/profiles")
+@RequestMapping("profiles")
 public class ProfileController {
 
     private final UserService userService;
@@ -39,7 +39,8 @@ public class ProfileController {
         return ResponseEntity.created(URI.create(url)).build();
 
     }
-    @GetMapping("/{username}")
+
+    @GetMapping("/{username}/profilePhoto")
     public ResponseEntity<byte[]> getUserPhoto(@PathVariable("username") String username){
 
         Photo photo = userService.getUserPhoto(username);
@@ -51,7 +52,6 @@ public class ProfileController {
         } catch (InvalidMediaTypeException ignore){
             mediaType = MediaType.APPLICATION_OCTET_STREAM;
         }
-
 
 
         return ResponseEntity

@@ -191,16 +191,32 @@ public class UserService {
         //profile opslaan
     }
 
+//    @Transactional
+//    public Photo getUserPhoto(String username) {
+//        Optional<User> optionalUser = userRepository.findById(username);
+//        if (optionalUser.isEmpty()) {
+//            throw new RecordNotFoundException("user with username " + username + " not found.");
+//        }
+//        Profile profile = optionalUser.get().getProfile();
+//        if (profile == null || profile.getPhoto() == null) {
+//            throw new RecordNotFoundException("Photo not found for user with username " + username);
+//        }
+//        return profile.getPhoto();
+//    }
+
 
     @Transactional
     public Photo getUserPhoto(String username) {
-        Optional<User> optionalUser = userRepository.findById(username);
-        if(optionalUser.isEmpty()){
-            throw new RecordNotFoundException("user with usernamme " + username + " not found.");
+        Optional<Photo> optionalUser = photoRepository.findById(username);
+        if (optionalUser.isEmpty()) {
+            throw new RecordNotFoundException("User with username " + username + " not found.");
         }
-        return optionalUser.get().getProfile().getPhoto();
-   }
+        Photo photo = optionalUser.get();
+        if (photo.getProfilePhoto() == null || photo.getProfilePhoto() == null) {
+            throw new RecordNotFoundException("Photo not found for user with username " + username);
+        }
+        return photo;
+    }
 }
-
 
 
