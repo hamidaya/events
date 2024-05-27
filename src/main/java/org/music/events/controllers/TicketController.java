@@ -30,7 +30,6 @@ public class TicketController {
         this.qrCodeImageService = qrCodeImageService;
     }
 
-    // Methode om een ticket te kopen via een HTTP POST-verzoek
     @PostMapping("/purchase")
     public ResponseEntity<Object> purchaseTicket(@RequestParam("eventId") Long eventId, @RequestParam("username") String username) {
         ticketService.purchaseTicket(eventId, username);
@@ -38,19 +37,17 @@ public class TicketController {
     }
 
 
-    // Methode om een ticket te valideren via een HTTP POST-verzoek
     @GetMapping("/validate")
     public ResponseEntity<Object> validateTicket(@RequestParam("qrCodeId") Long qrCodeId, @RequestParam("username") String username) {
         ticketService.purchaseTicket(qrCodeId, username);
         return ResponseEntity.ok("qrCodeId succesvol gevalideerd met username!");
 
     }
-
+//
 //    @GetMapping("/{id}/validate")
-//
-//    public ResponseEntity<byte[]> validateTicket(@PathVariable("qrCodeId") String username){
-//
-//        QRCodeImage qrCodeImage = ticketService.validateTicket(qrCode, username);
+////
+//    public ResponseEntity<byte[]> validateTicket(@PathVariable("username") Long qrCodeId, @PathVariable("id") Long ticketId){
+//        QRCodeImage qrCodeImage = qrCodeImageService.getUserGetQRcodeById();
 //
 //        MediaType mediaType;
 //
@@ -60,10 +57,7 @@ public class TicketController {
 //            mediaType = MediaType.APPLICATION_OCTET_STREAM;
 //        }
 //
-//
-//
-//
-//        return ResponseEntity
+//    return ResponseEntity
 //                .ok()
 //                .contentType(mediaType)
 //                .header(HttpHeaders.CONTENT_DISPOSITION, "inline;fileName=" + qrCodeImage.getImage())

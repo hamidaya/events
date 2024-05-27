@@ -111,6 +111,8 @@ public class SpringSecurityConfig {
                  // Profile endpoints:
                   .requestMatchers(HttpMethod.PUT, "/profiles").hasAnyRole("ADMIN","USER")
                   .requestMatchers(HttpMethod.PUT, "/profiles/**").hasAnyRole("ADMIN","USER")
+                 .requestMatchers(HttpMethod.GET, "/profiles").hasAnyRole("ADMIN","USER")
+                  .requestMatchers(HttpMethod.GET, "/profiles/**").hasAnyRole("ADMIN","USER")
 
                  // Tickets endpoints:
                     .requestMatchers(HttpMethod.POST, "/tickets").hasAnyRole("ADMIN","USER")
