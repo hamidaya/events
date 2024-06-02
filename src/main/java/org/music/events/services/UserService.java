@@ -185,7 +185,6 @@ public class UserService {
 
         profileRepository.save(profile);
     }
-
     @Transactional
     public Photo getUsergetPhotoById(String username) {
         Optional<User> optionalUser = userRepository.findById(username);

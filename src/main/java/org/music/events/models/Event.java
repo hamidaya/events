@@ -42,6 +42,7 @@ private List<Ticket> tickets;
         this.availableTickets = availableTickets;
     }
 
+
     public Long getEventId() {
         return eventId;
     }
