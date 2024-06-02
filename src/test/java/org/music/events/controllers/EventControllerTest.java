@@ -82,7 +82,7 @@ class EventControllerTest {
                 .andExpect(jsonPath("$[0].description").value("dit event alleen voor mark en frans"));
 
     }
-
+    
 }
 
 
