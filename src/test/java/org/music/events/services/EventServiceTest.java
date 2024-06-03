@@ -16,14 +16,18 @@ import org.music.events.models.Event;
 import org.music.events.repositories.EventRepository;
 import org.music.events.services.EventService;
 import org.springframework.context.annotation.Profile;
+import org.springframework.test.context.ActiveProfiles;
+
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
+
 @ExtendWith(MockitoExtension.class)
 @MockitoSettings(strictness = Strictness.LENIENT)
+@ActiveProfiles("test")
 class EventServiceTest {
     @Mock
     EventRepository eventRepository;
