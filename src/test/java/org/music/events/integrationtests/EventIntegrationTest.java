@@ -63,7 +63,7 @@ class EventIntegrationTest {
         event2 = new Event(2L, "frans event", "festival", "Amsterdam", LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 34.32, 456, "dit event alleen voor mark en frans");
         event3 = new Event(3L, "hamid event", "festival", "nijmegen", LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 34.35, 456, "dit event alleen voor mark en frans");
 
-        eventRespondsDto1 = new EventRespondsDTO(author1.getId(), "J.K.", "Joanne Kathleen", "Rowling", LocalDate.of(1965, 7, 31), Gender.FEMALE);
+        eventRespondsDto1 = new EventRespondsDTO(d(), "J.K.", "Joanne Kathleen", "Rowling", LocalDate.of(1965, 7, 31), Gender.FEMALE);
         eventRespondsDto2 = new EventRespondsDTO(author2.getId(), "R.", "Roald", "Dahl", LocalDate.of(1916, 9, 13), Gender.MALE);
         eventRespondsDto3 = new EventRespondsDTO(3L, "R.", "Roald", "Dahl", LocalDate.of(1916, 9, 13), Gender.MALE);
 
@@ -73,10 +73,10 @@ class EventIntegrationTest {
     }
 
     @Test
-    void getAllAuthors() throws Exception {
+    void getAllEvents() throws Exception {
 //            given(authorService.getAllAuthors()).willReturn(List.of(authorDto1, authorDto2));
 
-        mockMvc.perform(get("/authors"))
+        mockMvc.perform(get("/events"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].id").value(author1.getId().toString()))
                 .andExpect(jsonPath("$[0].initials").value("J.K."))
