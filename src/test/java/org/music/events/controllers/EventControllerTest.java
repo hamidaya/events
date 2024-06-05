@@ -12,24 +12,27 @@ import org.music.events.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.*;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+@SpringBootTest
 @ExtendWith(SpringExtension.class)
 @WebMvcTest(EventController.class)
-@AutoConfigureMockMvc(addFilters = false)
 
+@ActiveProfiles("test")
+@AutoConfigureMockMvc(addFilters = false)
 public class EventControllerTest {
     @Autowired
     private MockMvc mockMvc;
@@ -41,7 +44,6 @@ public class EventControllerTest {
     private ObjectMapper objectMapper;
     private EventRespondsDTO eventRespondsDTO;
     private EventRequestDTO eventRequestDTO;
-
     @BeforeEach
     public void setUp() {
         eventRespondsDTO = new EventRespondsDTO(1L, "party", "mark event", "utrecht",
@@ -49,11 +51,12 @@ public class EventControllerTest {
         eventRequestDTO = new EventRequestDTO("party", "mark event", "utrecht",
                 LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 456.00, 34, "dit event alleen voor mark en frans");
     }
-
     @Test
+//    @WithMockUser(username = "admin", password = "password", roles = "ADMIN")
     void getAllEvents() throws Exception {
-        given(eventService.getAllEvents()).willReturn(List.of(eventRespondsDTO));
-        mockMvc.perform(get("/events"))
+        when(eventService.getAllEvents()).thenReturn(List.of(eventRespondsDTO));
+        mockMvc.perform(get("/events")
+                        .with(httpBasic("admin", "password")))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].eventId").value(1L))
                 .andExpect(jsonPath("$[0].eventName").value("mark event"))
@@ -65,10 +68,9 @@ public class EventControllerTest {
                 .andExpect(jsonPath("$[0].eventPrice").value(456.00))
                 .andExpect(jsonPath("$[0].eventDescription").value("dit event alleen voor mark en frans"));
     }
-
     @Test
     void getAllEventsByName() throws Exception {
-        given(eventService.getAllEventsByName("mark event")).willReturn(List.of(eventRespondsDTO));
+        when(eventService.getAllEventsByName("mark event")).thenReturn(List.of(eventRespondsDTO));
         mockMvc.perform(get("/events").param("eventname", "mark event"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].eventId").value(1L))
@@ -81,10 +83,9 @@ public class EventControllerTest {
                 .andExpect(jsonPath("$[0].eventPrice").value(456.00))
                 .andExpect(jsonPath("$[0].eventDescription").value("dit event alleen voor mark en frans"));
     }
-
     @Test
     void addEvent() throws Exception {
-        given(eventService.addEvent(any(EventRequestDTO.class))).willReturn(eventRespondsDTO);
+        when(eventService.addEvent(any(EventRequestDTO.class))).thenReturn(eventRespondsDTO);
         mockMvc.perform(post("/events")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(eventRequestDTO)))
@@ -99,15 +100,14 @@ public class EventControllerTest {
                 .andExpect(jsonPath("$.eventPrice").value(456.00))
                 .andExpect(jsonPath("$.eventDescription").value("dit event alleen voor mark en frans"));
     }
-
     @Test
     void updateEvent() throws Exception {
         Event updatedEvent = new Event(1L, "mark event updated", "party", "utrecht",
                 LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 34.80, 456, "dit event alleen voor mark en frans");
         EventRespondsDTO updatedEventRespondsDTO = new EventRespondsDTO(1L, "party", "mark event updated", "utrecht",
                 LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 456.00, 34, "dit event alleen voor mark en frans");
-        given(eventService.updateEvent(anyLong(), any(EventRequestDTO.class))).willReturn(updatedEvent);
-        given(eventService.transferToDto(updatedEvent)).willReturn(updatedEventRespondsDTO);
+        when(eventService.updateEvent(anyLong(), any(EventRequestDTO.class))).thenReturn(updatedEvent);
+        when(eventService.transferToDto(updatedEvent)).thenReturn(updatedEventRespondsDTO);
         mockMvc.perform(put("/events/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(eventRequestDTO)))
@@ -122,7 +122,6 @@ public class EventControllerTest {
                 .andExpect(jsonPath("$.eventPrice").value(456.00))
                 .andExpect(jsonPath("$.eventDescription").value("dit event alleen voor mark en frans"));
     }
-
     @Test
     void deleteEvent() throws Exception {
         doNothing().when(eventService).deleteEvent(anyLong());
@@ -130,7 +129,3 @@ public class EventControllerTest {
                 .andExpect(status().isNoContent());
     }
 }
-
-
-
-
