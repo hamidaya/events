@@ -47,7 +47,7 @@ public class EventIntegrationTest {
                 LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 46.00, 1234, "dit event alleen voor mark en frans");
         eventRespondsDTO = new EventRespondsDTO(1L, "party", "mark event", "utrecht",
                 LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 456.00, 34, "dit event alleen voor mark en frans");
-        eventRequestDTO = new EventRequestDTO("mark party", "party", "utrecht",
+        eventRequestDTO = new EventRequestDTO("mark party", "party", "amsterdam",
                 LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 5556.00, 34, "dit event alleen voor mark en frans");
     }
 
@@ -101,7 +101,7 @@ public class EventIntegrationTest {
     void updateEvent() throws Exception {
         EventRespondsDTO addedEvent = eventService.addEvent(eventRequestDTO);
         Long eventId = addedEvent.getEventId();
-        EventRequestDTO updatedEventRequestDTO = new EventRequestDTO("mark party updated", "party", "utrecht",
+        EventRequestDTO updatedEventRequestDTO = new EventRequestDTO("mark party updated", "party", "amsterdam",
                 LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 7777.00, 100, "updated description");
         mockMvc.perform(put("/events/{eventId}", eventId)
                         .contentType(MediaType.APPLICATION_JSON)
@@ -109,7 +109,7 @@ public class EventIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.eventName").value("mark party updated"))
                 .andExpect(jsonPath("$.eventType").value("party"))
-                .andExpect(jsonPath("$.eventLocation").value("utrecht"))
+                .andExpect(jsonPath("$.eventLocation").value("amsterdam"))
                 .andExpect(jsonPath("$.eventStartDate").value("2024-02-04"))
                 .andExpect(jsonPath("$.eventEndDate").value("2024-07-15"))
                 .andExpect(jsonPath("$.availableTickets").value(34))
