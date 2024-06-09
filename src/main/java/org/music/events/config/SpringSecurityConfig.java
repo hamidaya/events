@@ -92,7 +92,7 @@ public class SpringSecurityConfig {
                 // Festivals endpoints:
                 .requestMatchers(HttpMethod.GET,"/festivals").hasAnyRole("ADMIN", "USER")
                 .requestMatchers(HttpMethod.POST, "/festivals").hasAnyRole("ADMIN","USER")
-                .requestMatchers(HttpMethod.POST,"/festivals/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST,"/festivals/**").hasAnyRole("ADMIN","USER")
                 .requestMatchers(HttpMethod.PUT, "/festivals").hasAnyRole("ADMIN","USER")
                 .requestMatchers(HttpMethod.DELETE, "/festivals").hasAnyRole("ADMIN","USER")
                 .requestMatchers(HttpMethod.DELETE,"/festivals/**").hasAnyRole("ADMIN","USER")

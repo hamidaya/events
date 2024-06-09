@@ -1,56 +1,72 @@
 package org.music.events.services;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentCaptor;
 import org.mockito.Captor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
-import org.mockito.junit.jupiter.MockitoSettings;
-import org.mockito.quality.Strictness;
+import org.mockito.MockitoAnnotations;
+import org.mockito.ArgumentCaptor;
 import org.music.events.dtos.EventRequestDTO;
 import org.music.events.dtos.EventRespondsDTO;
 import org.music.events.models.Event;
 import org.music.events.repositories.EventRepository;
-import org.music.events.services.EventService;
-import org.springframework.context.annotation.Profile;
-import org.springframework.test.context.ActiveProfiles;
-
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
-
-@ExtendWith(MockitoExtension.class)
-@MockitoSettings(strictness = Strictness.LENIENT)
-@ActiveProfiles("test")
-class EventServiceTest {
-    @Mock
-    EventRepository eventRepository;
+public class EventServiceTest {
     @InjectMocks
-    EventService eventService;
+    private EventService eventService;
+    @Mock
+    private EventRepository eventRepository;
     @Captor
-    ArgumentCaptor<Event> captor;
-    Event event1;
-    Event event2;
-    Event event3;
+    private ArgumentCaptor<Event> captor;
+    private Event event1;
+    private Event event2;
+    private Event event3;
     @BeforeEach
     void setUp() {
+        MockitoAnnotations.openMocks(this);
         event1 = new Event(1L, "mark event", "party", "utrecht", LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 34.80, 456, "dit event alleen voor mark en frans");
         event2 = new Event(2L, "frans event", "festival", "Amsterdam", LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 34.32, 456, "dit event alleen voor mark en frans");
         event3 = new Event(3L, "hamid event", "festival", "nijmegen", LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 34.35, 456, "dit event alleen voor mark en frans");
     }
     @Test
-    void getAllEvents() {
-        when(eventRepository.findAll()).thenReturn(List.of(event1, event2, event3));
-        List<EventRespondsDTO> eventsFound = eventService.getAllEvents();
-        assertEquals(event1.getEventName(), eventsFound.get(0).getEventName());
-        assertEquals(event2.getEventLocation(), eventsFound.get(1).getEventLocation());
-        assertEquals(event3.getEventDescription(), eventsFound.get(2).getEventDescription());
-        verify(eventRepository, times(1)).findAll();
+    void addEvent() {
+        EventRequestDTO eventRequestDTO = new EventRequestDTO("new event", "party", "utrecht", LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 34.80, 456, "description");
+        Event eventToSave = new Event(null, "new event", "party", "utrecht", LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 34.80, 456, "description");
+        Event savedEvent = new Event(4L, "new event", "party", "utrecht", LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 34.80, 456, "description");
+        // Correct gebruik van argument matchers
+        when(eventRepository.save(any(Event.class))).thenReturn(savedEvent);
+        EventRespondsDTO result = eventService.addEvent(eventRequestDTO);
+        assertEquals(savedEvent.getEventName(), result.getEventName());
+        assertEquals(savedEvent.getEventLocation(), result.getEventLocation());
+        // Gebruik van ArgumentCaptor om de opgeslagen waarde te verifiëren
+        verify(eventRepository, times(1)).save(captor.capture());
+        Event capturedEvent = captor.getValue();
+        assertEquals(eventToSave.getEventName(), capturedEvent.getEventName());
+        assertEquals(eventToSave.getEventLocation(), capturedEvent.getEventLocation());
+    }
+    @Test
+    void updateEvent() {
+        EventRequestDTO eventRequestDTO = new EventRequestDTO("updated event", "festival", "rotterdam", LocalDate.of(2024, 3, 4), LocalDate.of(2024, 8, 15), 40.00, 500, "updated description");
+        Event updatedEvent = new Event(1L, "updated event", "festival", "rotterdam", LocalDate.of(2024, 3, 4), LocalDate.of(2024, 8, 15), 40.00, 500, "updated description");
+        when(eventRepository.findById(1L)).thenReturn(Optional.of(event1));
+        when(eventRepository.save(any(Event.class))).thenReturn(updatedEvent);
+        Event result = eventService.updateEvent(1L, eventRequestDTO);
+        assertEquals(updatedEvent.getEventName(), result.getEventName());
+        assertEquals(updatedEvent.getEventLocation(), result.getEventLocation());
+        // Gebruik van ArgumentCaptor om de opgeslagen waarde te verifiëren
+        verify(eventRepository, times(1)).findById(1L);
+        verify(eventRepository, times(1)).save(captor.capture());
+        Event capturedEvent = captor.getValue();
+        assertEquals(updatedEvent.getEventName(), capturedEvent.getEventName());
+        assertEquals(updatedEvent.getEventLocation(), capturedEvent.getEventLocation());
+    }
+    @Test
+    void deleteEvent() {
+        eventService.deleteEvent(1L);
+        verify(eventRepository, times(1)).deleteById(1L);
     }
 }

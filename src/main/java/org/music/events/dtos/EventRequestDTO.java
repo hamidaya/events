@@ -8,8 +8,7 @@ public class EventRequestDTO {
 
     @NotNull(message = "eventName must not be blank")
     private String eventName;
-  //  @NotNull(message = "eventLocation must not be blank")
-
+   @NotNull(message = "eventLocation must not be blank")
     private String eventType;
     private String eventLocation;
    // @NotBlank(message = "eventStartDate must not be blank")
@@ -30,6 +29,10 @@ public class EventRequestDTO {
         this.eventPrice = eventPrice;
         this.availableTickets = availableTickets;
         this.eventDescription = eventDescription;
+
+    }
+
+    public EventRequestDTO() {
 
     }
 

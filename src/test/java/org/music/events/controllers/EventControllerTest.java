@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.music.events.dtos.EventRequestDTO;
 import org.music.events.dtos.EventRespondsDTO;
+import org.music.events.filter.JwtRequestFilter;
 import org.music.events.models.Event;
 import org.music.events.services.EventService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,6 +35,9 @@ public class EventControllerTest {
 
     @MockBean
     private EventService eventService;
+
+    @MockBean
+    private JwtRequestFilter jwtRequestFilter;
 
     Event event1;
     Event event2;
