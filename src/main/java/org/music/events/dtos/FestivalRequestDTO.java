@@ -2,7 +2,6 @@ package org.music.events.dtos;
 import java.time.LocalDate;
 public class FestivalRequestDTO extends EventRequestDTO {
 
-
     private String artistName;
     private Boolean campingAvailable;
 

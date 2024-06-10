@@ -1,114 +1,113 @@
 package org.music.events.integrationtests;
-
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
 import org.music.events.dtos.FestivalRequestDTO;
 import org.music.events.dtos.FestivalRespondsDTO;
 import org.music.events.models.Festival;
 import org.music.events.repositories.FestivalRepository;
 import org.music.events.services.FestivalService;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithMockUser;
+import org.springframework.test.context.ActiveProfiles;
+import org.springframework.test.web.servlet.MockMvc;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 
-import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
-
-class FestivalIntegrationTest {
-
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.httpBasic;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+@SpringBootTest
+@ActiveProfiles("test")
+@AutoConfigureMockMvc(addFilters = false)
+public class FestivalIntegrationTest {
+    @Autowired
+    private MockMvc mockMvc;
+    @Autowired
     private FestivalService festivalService;
-
-    @Mock
+    @Autowired
     private FestivalRepository festivalRepository;
+    @Autowired
+    private ObjectMapper objectMapper;
 
+    private FestivalRespondsDTO festivalRespondsDTO;
+    private FestivalRequestDTO festivalRequestDTO;
     @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-        festivalService = new FestivalService(festivalRepository);
+    public void setUp() {
+
+        festivalRepository.deleteAll();
+
+        festivalRespondsDTO = new FestivalRespondsDTO(3L, "mark festival", "festival", "utrecht",
+                LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 56.00, 34, "dit festival alleen voor mark en frans", "Mark Artist", true);
+        festivalRequestDTO = new FestivalRequestDTO("mark festival", "festival", "utrecht",
+                LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 56.00, 34, "dit festival alleen voor mark en frans", "Mark Artist", true);
+
+        festivalService.addFestival(festivalRequestDTO);
     }
 
     @Test
-    void deleteFestival() {
-        // Arrange
-        Festival festival1 = new Festival();
-        festival1.setEventName("Festival 1");
-        Festival festival2 = new Festival();
-        festival2.setEventName("Festival 2");
-        List<Festival> festivalList = List.of(festival1, festival2);
-
-        when(festivalRepository.findAll()).thenReturn(festivalList);
-
-        // Act
-        List<FestivalRespondsDTO> result = festivalService.getAllFestivals();
-
-        // Assert
-        assertThat(result).hasSize(2);
-        assertThat(result.get(0).getEventName()).isEqualTo("Festival 1");
-        assertThat(result.get(1).getEventName()).isEqualTo("Festival 2");
+    @WithMockUser(username = "admin", password = "password", roles = "ADMIN")
+    void getAllFestivals() throws Exception {
+        mockMvc.perform(get("/festivals").with(httpBasic("admin", "password"))
+                        .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].festivalId").value(1L))
+                .andExpect(jsonPath("$[0].festivalName").value("mark festival"))
+                .andExpect(jsonPath("$[0].festivalType").value("festival"))
+                .andExpect(jsonPath("$[0].festivalLocation").value("utrecht"))
+                .andExpect(jsonPath("$[0].festivalStartDate").value("2024-02-04"))
+                .andExpect(jsonPath("$[0].festivalEndDate").value("2024-07-15"))
+                .andExpect(jsonPath("$[0].availableTickets").value(34))
+                .andExpect(jsonPath("$[0].festivalPrice").value(56.00))
+                .andExpect(jsonPath("$[0].festivalDescription").value("dit festival alleen voor mark en frans"))
+                .andExpect(jsonPath("$[0].artistName").value("Mark Artist"))
+                .andExpect(jsonPath("$[0].campingAvailable").value(true));
     }
-
     @Test
-    void addFestival() {
-        // Arrange
-        FestivalRequestDTO requestDTO = new FestivalRequestDTO(
-                "New Festival",
-                "Festival",
-                "Utrecht",
-                LocalDate.of(2024, 2, 4),
-                LocalDate.of(2024, 7, 15),
-                56.00,
-                34,
-                "Description",
-                "Artist",
-                true
-        );
-
-        when(festivalRepository.save(any(Festival.class))).thenReturn(new Festival());
-
-        // Act
-        FestivalRespondsDTO result = festivalService.addFestival(requestDTO);
-
-        // Assert
-        assertThat(result.getEventName()).isEqualTo("New Festival");
-        verify(festivalRepository, times(1)).save(any(Festival.class));
+    void addFestival() throws Exception {
+        FestivalRequestDTO newFestivalRequestDTO = new FestivalRequestDTO("new festival", "festival", "amsterdam",
+                LocalDate.of(2024, 5, 10), LocalDate.of(2024, 5, 20), 75.00, 100, "nieuw festival in amsterdam", "New Artist", false);
+        mockMvc.perform(post("/festivals")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(newFestivalRequestDTO)))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.festivalName").value("new festival"))
+                .andExpect(jsonPath("$.festivalType").value("festival"))
+                .andExpect(jsonPath("$.festivalLocation").value("amsterdam"))
+                .andExpect(jsonPath("$.festivalStartDate").value("2024-05-10"))
+                .andExpect(jsonPath("$.festivalEndDate").value("2024-05-20"))
+                .andExpect(jsonPath("$.availableTickets").value(100))
+                .andExpect(jsonPath("$.festivalPrice").value(75.00))
+                .andExpect(jsonPath("$.festivalDescription").value("nieuw festival in amsterdam"))
+                .andExpect(jsonPath("$.artistName").value("New Artist"))
+                .andExpect(jsonPath("$.campingAvailable").value(false));
     }
-
-    // Voeg meer testmethoden toe voor andere functionaliteiten (bijwerken, verwijderen, etc.)
-
-    // Voorbeeldtest voor de updateFestival-methode
     @Test
-    void updateFestival() {
-        // Arrange
-        Long eventId = 1L;
-        FestivalRequestDTO requestDTO = new FestivalRequestDTO(
-                "Updated Festival",
-                "Festival",
-                "Amsterdam",
-                LocalDate.of(2024, 3, 10),
-                LocalDate.of(2024, 7, 20),
-                60.00,
-                50,
-                "Updated Description",
-                "New Artist",
-                false
-        );
-        Festival existingFestival = new Festival();
-        existingFestival.setEventId(eventId);
-
-        when(festivalRepository.findById(eventId)).thenReturn(Optional.of(existingFestival));
-        when(festivalRepository.save(any(Festival.class))).thenReturn(existingFestival);
-
-        // Act
-        Festival updatedFestival = festivalService.updateFestival(eventId, requestDTO);
-
-        // Assert
-        assertThat(updatedFestival.getEventName()).isEqualTo("Updated Festival");
-        assertThat(updatedFestival.getEventLocation()).isEqualTo("Amsterdam");
-        verify(festivalRepository, times(1)).save(any(Festival.class));
+    void updateFestival() throws Exception {
+        FestivalRequestDTO updatedFestivalRequestDTO = new FestivalRequestDTO("mark festival updated", "festival", "utrecht",
+                LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 34.80, 456, "dit festival alleen voor mark en frans", "Updated Artist", false);
+        mockMvc.perform(put("/festivals/{festivalId}", 1L)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(updatedFestivalRequestDTO)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.festivalId").value(1L))
+                .andExpect(jsonPath("$.festivalName").value("mark festival updated"))
+                .andExpect(jsonPath("$.festivalType").value("festival"))
+                .andExpect(jsonPath("$.festivalLocation").value("utrecht"))
+                .andExpect(jsonPath("$.festivalStartDate").value("2024-02-04"))
+                .andExpect(jsonPath("$.festivalEndDate").value("2024-07-15"))
+                .andExpect(jsonPath("$.availableTickets").value(456))
+                .andExpect(jsonPath("$.festivalPrice").value(34.80))
+                .andExpect(jsonPath("$.festivalDescription").value("dit festival alleen voor mark en frans"))
+                .andExpect(jsonPath("$.artistName").value("Updated Artist"))
+                .andExpect(jsonPath("$.campingAvailable").value(false));
     }
-
-}
-
+    @Test
+    void deleteFestival() throws Exception {
+        mockMvc.perform(delete("/festivals/{festivalId}", 1L))
+                .andExpect(status().isNoContent());
+    }
+    }

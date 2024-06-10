@@ -35,6 +35,7 @@ public class EventService {
         }
         return eventDtoList;
     }
+
     public EventRespondsDTO addEvent(EventRequestDTO dto) {
         if (dto == null) {
             throw new IllegalArgumentException("EventRequestDTO cannot be null");

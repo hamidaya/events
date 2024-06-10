@@ -29,7 +29,7 @@ public class EventServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         event1 = new Event(1L, "mark event", "party", "utrecht", LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 34.80, 456, "dit event alleen voor mark en frans");
-        event2 = new Event(2L, "frans event", "festival", "Amsterdam", LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 34.32, 456, "dit event alleen voor mark en frans");
+        event2 = new Event(2L, "frans event", "festival", "utrecht", LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 34.32, 456, "dit event alleen voor mark en frans");
         event3 = new Event(3L, "hamid event", "festival", "nijmegen", LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 34.35, 456, "dit event alleen voor mark en frans");
     }
     @Test
@@ -47,7 +47,14 @@ public class EventServiceTest {
         Event capturedEvent = captor.getValue();
         assertEquals(eventToSave.getEventName(), capturedEvent.getEventName());
         assertEquals(eventToSave.getEventLocation(), capturedEvent.getEventLocation());
+
     }
+
+//    @Test
+//    void addEventWithNullEvent() {
+//        throw new NullPointerException("eventService is null");
+//    }
+
     @Test
     void updateEvent() {
         EventRequestDTO eventRequestDTO = new EventRequestDTO("updated event", "festival", "rotterdam", LocalDate.of(2024, 3, 4), LocalDate.of(2024, 8, 15), 40.00, 500, "updated description");
@@ -69,4 +76,11 @@ public class EventServiceTest {
         eventService.deleteEvent(1L);
         verify(eventRepository, times(1)).deleteById(1L);
     }
-}
+
+    @Test
+    void testAddEvent() {
+            if (eventRepository.existsById(1L)) {
+                throw new AssertionError("Event already exists");
+            }
+        }
+    }
