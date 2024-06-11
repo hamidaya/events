@@ -1,5 +1,7 @@
 package org.music.events.integrationtests;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -54,5 +56,7 @@ import java.time.LocalDate;
                             .content("{}"))
                     .andExpect(status().isBadRequest());
         }
+
+
     }
 

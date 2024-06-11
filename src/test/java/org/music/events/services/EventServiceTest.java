@@ -13,6 +13,7 @@ import org.music.events.repositories.EventRepository;
 import java.time.LocalDate;
 import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 public class EventServiceTest {
@@ -49,11 +50,13 @@ public class EventServiceTest {
         assertEquals(eventToSave.getEventLocation(), capturedEvent.getEventLocation());
 
     }
-
-//    @Test
-//    void addEventWithNullEvent() {
-//        throw new NullPointerException("eventService is null");
-//    }
+    @Test
+    void addEvent_ShouldThrowException_WhenDtoIsNull() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            eventService.addEvent(null);
+        });
+        assertEquals("EventRequestDTO cannot be null", exception.getMessage());
+    }
 
     @Test
     void updateEvent() {

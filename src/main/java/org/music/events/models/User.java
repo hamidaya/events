@@ -11,7 +11,6 @@ import java.util.Set;
 @Table(name = "users")
 public class User {
 
-    // Deze eerste 3 variabelen zijn verplicht om te kunnen inloggen met een username, password en rol.
     @Id
     @Column(nullable = false, unique = true)
     private String username;

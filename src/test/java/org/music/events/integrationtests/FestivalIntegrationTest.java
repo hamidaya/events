@@ -40,11 +40,13 @@ public class FestivalIntegrationTest {
 
         festivalRepository.deleteAll();
 
-        festivalRespondsDTO = new FestivalRespondsDTO(3L, "mark festival", "festival", "utrecht",
-                LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 56.00, 34, "dit festival alleen voor mark en frans", "Mark Artist", true);
+        festivalRespondsDTO = new FestivalRespondsDTO(1L, "mark festival", "festival", "utrecht",
+                LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 56.00, 34, "dit festival alleen voor mark en frans", "mark Artist", true);
         festivalRequestDTO = new FestivalRequestDTO("mark festival", "festival", "utrecht",
-                LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 56.00, 34, "dit festival alleen voor mark en frans", "Mark Artist", true);
+                LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 56.00, 34, "dit festival alleen voor mark en frans", "mark Artist", true);
 
+        festivalRequestDTO = new FestivalRequestDTO("new festival", "festival", "amsterdam",
+                LocalDate.of(2024, 5, 10), LocalDate.of(2024, 5, 20), 75.00, 100, "nieuw festival in amsterdam", "mark Artist", false);
         festivalService.addFestival(festivalRequestDTO);
     }
 
@@ -54,60 +56,59 @@ public class FestivalIntegrationTest {
         mockMvc.perform(get("/festivals").with(httpBasic("admin", "password"))
                         .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$[0].festivalId").value(1L))
-                .andExpect(jsonPath("$[0].festivalName").value("mark festival"))
-                .andExpect(jsonPath("$[0].festivalType").value("festival"))
-                .andExpect(jsonPath("$[0].festivalLocation").value("utrecht"))
-                .andExpect(jsonPath("$[0].festivalStartDate").value("2024-02-04"))
-                .andExpect(jsonPath("$[0].festivalEndDate").value("2024-07-15"))
+                .andExpect(jsonPath("$[0].eventId").value(3L))
+                .andExpect(jsonPath("$[0].eventName").value("mark festival"))
+                .andExpect(jsonPath("$[0].eventType").value("festival"))
+                .andExpect(jsonPath("$[0].eventLocation").value("utrecht"))
+                .andExpect(jsonPath("$[0].eventStartDate").value("2024-02-04"))
+                .andExpect(jsonPath("$[0].eventEndDate").value("2024-07-15"))
                 .andExpect(jsonPath("$[0].availableTickets").value(34))
-                .andExpect(jsonPath("$[0].festivalPrice").value(56.00))
-                .andExpect(jsonPath("$[0].festivalDescription").value("dit festival alleen voor mark en frans"))
-                .andExpect(jsonPath("$[0].artistName").value("Mark Artist"))
+                .andExpect(jsonPath("$[0].eventPrice").value(56.00))
+                .andExpect(jsonPath("$[0].eventDescription").value("dit festival alleen voor mark en frans"))
+                .andExpect(jsonPath("$[0].artistName").value("mark Artist"))
                 .andExpect(jsonPath("$[0].campingAvailable").value(true));
     }
     @Test
+    @WithMockUser(username = "admin", password = "password", roles = "ADMIN")
     void addFestival() throws Exception {
-        FestivalRequestDTO newFestivalRequestDTO = new FestivalRequestDTO("new festival", "festival", "amsterdam",
-                LocalDate.of(2024, 5, 10), LocalDate.of(2024, 5, 20), 75.00, 100, "nieuw festival in amsterdam", "New Artist", false);
-        mockMvc.perform(post("/festivals")
+        mockMvc.perform(post("/festivals").with(httpBasic("admin", "password"))
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(newFestivalRequestDTO)))
+                        .content(objectMapper.writeValueAsString(festivalRequestDTO)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.festivalName").value("new festival"))
-                .andExpect(jsonPath("$.festivalType").value("festival"))
-                .andExpect(jsonPath("$.festivalLocation").value("amsterdam"))
-                .andExpect(jsonPath("$.festivalStartDate").value("2024-05-10"))
-                .andExpect(jsonPath("$.festivalEndDate").value("2024-05-20"))
+                .andExpect(jsonPath("$.eventName").value("new festival"))
+                .andExpect(jsonPath("$.eventType").value("festival"))
+                .andExpect(jsonPath("$.eventLocation").value("amsterdam"))
+                .andExpect(jsonPath("$.eventStartDate").value("2024-05-10"))
+                .andExpect(jsonPath("$.eventEndDate").value("2024-05-20"))
                 .andExpect(jsonPath("$.availableTickets").value(100))
-                .andExpect(jsonPath("$.festivalPrice").value(75.00))
-                .andExpect(jsonPath("$.festivalDescription").value("nieuw festival in amsterdam"))
-                .andExpect(jsonPath("$.artistName").value("New Artist"))
+                .andExpect(jsonPath("$.eventPrice").value(75.00))
+                .andExpect(jsonPath("$.eventDescription").value("nieuw festival in amsterdam"))
+                .andExpect(jsonPath("$.artistName").value("hamid Artist"))
                 .andExpect(jsonPath("$.campingAvailable").value(false));
     }
     @Test
+//    @WithMockUser(username = "admin", password = "password", roles = "ADMIN")
     void updateFestival() throws Exception {
-        FestivalRequestDTO updatedFestivalRequestDTO = new FestivalRequestDTO("mark festival updated", "festival", "utrecht",
-                LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 34.80, 456, "dit festival alleen voor mark en frans", "Updated Artist", false);
-        mockMvc.perform(put("/festivals/{festivalId}", 1L)
+
+        mockMvc.perform(put("/festivals{eventId}", 1L)
                         .contentType(MediaType.APPLICATION_JSON)
-                        .content(objectMapper.writeValueAsString(updatedFestivalRequestDTO)))
+                        .content(objectMapper.writeValueAsString(festivalRequestDTO)))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.festivalId").value(1L))
-                .andExpect(jsonPath("$.festivalName").value("mark festival updated"))
-                .andExpect(jsonPath("$.festivalType").value("festival"))
-                .andExpect(jsonPath("$.festivalLocation").value("utrecht"))
-                .andExpect(jsonPath("$.festivalStartDate").value("2024-02-04"))
-                .andExpect(jsonPath("$.festivalEndDate").value("2024-07-15"))
+                .andExpect(jsonPath("$.eventId").value(1L))
+                .andExpect(jsonPath("$.eventName").value("mark festival updated"))
+                .andExpect(jsonPath("$.eventType").value("festival"))
+                .andExpect(jsonPath("$.eventLocation").value("utrecht"))
+                .andExpect(jsonPath("$.eventStartDate").value("2024-02-04"))
+                .andExpect(jsonPath("$.eventEndDate").value("2024-07-15"))
                 .andExpect(jsonPath("$.availableTickets").value(456))
-                .andExpect(jsonPath("$.festivalPrice").value(34.80))
-                .andExpect(jsonPath("$.festivalDescription").value("dit festival alleen voor mark en frans"))
-                .andExpect(jsonPath("$.artistName").value("Updated Artist"))
+                .andExpect(jsonPath("$.eventPrice").value(34.80))
+                .andExpect(jsonPath("$.eventDescription").value("dit festival alleen voor mark en frans"))
+                .andExpect(jsonPath("$.artistName").value("mark Artist"))
                 .andExpect(jsonPath("$.campingAvailable").value(false));
     }
     @Test
     void deleteFestival() throws Exception {
-        mockMvc.perform(delete("/festivals/{festivalId}", 1L))
+        mockMvc.perform(delete("/festivals}", 1L))
                 .andExpect(status().isNoContent());
     }
     }
