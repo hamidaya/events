@@ -71,7 +71,6 @@ public class FestivalService {
         return dto;
     }
 
-    //Update festival methode.
     public Festival updateFestival(Long eventId, FestivalRequestDTO festivalRequestDTO) {
         Festival festivalToUpdate = festivalRepository.findById(eventId).orElseThrow();
         new EntityNotFoundException("Festival with id " + eventId + " not found");

@@ -5,17 +5,14 @@ import org.music.events.dtos.EventRespondsDTO;
 import org.music.events.models.Event;
 import org.music.events.repositories.EventRepository;
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 import java.util.ArrayList;
 @Service
 public class EventService {
     private EventRepository eventRepository;
-
     public EventService(EventRepository eventRepository) {
         this.eventRepository = eventRepository;
     }
-
     public List<EventRespondsDTO> getAllEvents() {
         List<Event> eventList = eventRepository.findAll();
         return transferEventListToDtoList(eventList);
@@ -40,17 +37,16 @@ public class EventService {
     }
 
     public EventRespondsDTO addEvent(EventRequestDTO dto) {
-
+        if (dto == null) {
+            throw new IllegalArgumentException("EventRequestDTO cannot be null");
+        }
         Event event = transferToEvent(dto);
         eventRepository.save(event);
-
         return transferToDto(event);
     }
-
     public Event updateEvent(Long eventId, EventRequestDTO eventRequestDTO) {
-        Event eventToUpdate = eventRepository.findById(eventId).orElseThrow();
-        new EntityNotFoundException("Event with id " + eventId + " not found");
-
+        Event eventToUpdate = eventRepository.findById(eventId)
+                .orElseThrow(() -> new EntityNotFoundException("Event with id " + eventId + " not found"));
         eventToUpdate.setEventName(eventRequestDTO.getEventName());
         eventToUpdate.setEventLocation(eventRequestDTO.getEventLocation());
         eventToUpdate.setEventType(eventRequestDTO.getEventType());
@@ -59,19 +55,12 @@ public class EventService {
         eventToUpdate.setEventLocation(eventRequestDTO.getEventLocation());
         eventToUpdate.setEventPrice(eventRequestDTO.getEventPrice());
         eventToUpdate.setEventDescription(eventRequestDTO.getEventDescription());
-
         return eventRepository.save(eventToUpdate);
-
     }
-
     public void deleteEvent(Long eventId) {
         eventRepository.deleteById(eventId);
-        new EntityNotFoundException("Event with id " + eventId + "deleted successfully");
-
-
+        new EntityNotFoundException("Event with id " + eventId + " deleted successfully");
     }
-
-
     public Event transferToEvent(EventRequestDTO dto) {
         Event event = new Event();
         event.setEventLocation(dto.getEventLocation());
@@ -82,11 +71,10 @@ public class EventService {
         event.setAvailableTickets(dto.getAvailableTickets());
         event.setEventType(dto.getEventType());
         event.setEventDescription(dto.getEventDescription());
-
         return event;
     }
     public EventRespondsDTO transferToDto(Event event) {
-        EventRespondsDTO dto =  new EventRespondsDTO();
+        EventRespondsDTO dto = new EventRespondsDTO();
         dto.setEventId(event.getEventId());
         dto.setEventName(event.getEventName());
         dto.setEventLocation(event.getEventLocation());
@@ -96,8 +84,6 @@ public class EventService {
         dto.setAvailableTickets(event.getAvailableTickets());
         dto.setEventType(event.getEventType());
         dto.setEventDescription(event.getEventDescription());
-
         return dto;
     }
-
-    }
+}
