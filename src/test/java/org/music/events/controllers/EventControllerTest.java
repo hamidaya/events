@@ -75,4 +75,5 @@ public class EventControllerTest {
                 .andExpect(jsonPath("$[0].eventPrice").value(35.00)) // Corrected event price
                 .andExpect(jsonPath("$[0].eventDescription").value("dit event alleen voor mark en frans"));
     }
+
 }
