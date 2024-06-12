@@ -54,7 +54,6 @@ public class EventIntegrationTest {
     @Test
     @WithMockUser(username = "admin", password = "password", roles = "ADMIN")
     void getAllEvents() throws Exception {
-        // Voeg testdata toe
         eventService.addEvent(eventRequestDTO);
         mockMvc.perform(get("/events").with(httpBasic("admin", "password"))
                         .contentType(MediaType.APPLICATION_JSON))

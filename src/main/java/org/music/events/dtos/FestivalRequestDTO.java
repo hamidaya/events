@@ -20,6 +20,9 @@ public class FestivalRequestDTO extends EventRequestDTO {
         return artistName;
     }
 
+    public FestivalRequestDTO() {
+    }
+
     public void setArtistName(String artistName) {
         this.artistName = artistName;
     }
