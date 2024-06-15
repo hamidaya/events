@@ -41,7 +41,7 @@ public class UserController {
     }
 
     @PostMapping(value = "")
-    public ResponseEntity<UserDto> createKlant(@RequestBody UserDto dto) {;
+    public ResponseEntity<UserDto> createUser(@RequestBody UserDto dto) {;
 
         // Let op: het password van een nieuwe gebruiker wordt in deze code nog niet encrypted opgeslagen.
         // Je kan dus (nog) niet inloggen met een nieuwe user.
@@ -56,7 +56,7 @@ public class UserController {
     }
 
     @PutMapping(value = "/{username}")
-    public ResponseEntity<UserDto> updateKlant(@PathVariable("username") String username, @RequestBody UserDto dto) {
+    public ResponseEntity<UserDto> updateUser(@PathVariable("username") String username, @RequestBody UserDto dto) {
 
         userService.updateUser(username, dto);
 
@@ -64,7 +64,7 @@ public class UserController {
     }
 
     @DeleteMapping(value = "/{username}")
-    public ResponseEntity<Object> deleteKlant(@PathVariable("username") String username) {
+    public ResponseEntity<Object> deleteUser(@PathVariable("username") String username) {
         userService.deleteUser(username);
         return ResponseEntity.noContent().build();
     }
