@@ -2,6 +2,7 @@ package org.music.events.services;
 import jakarta.persistence.EntityNotFoundException;
 import org.music.events.dtos.EventRequestDTO;
 import org.music.events.dtos.EventRespondsDTO;
+import org.music.events.exceptions.EventNotFoundException;
 import org.music.events.models.Event;
 import org.music.events.repositories.EventRepository;
 import org.springframework.stereotype.Service;
@@ -46,7 +47,7 @@ public class EventService {
     }
     public Event updateEvent(Long eventId, EventRequestDTO eventRequestDTO) {
         Event eventToUpdate = eventRepository.findById(eventId)
-                .orElseThrow(() -> new EntityNotFoundException("Event with id " + eventId + " not found"));
+                .orElseThrow(() -> new EventNotFoundException("Event id " + eventId + "not found"));
         eventToUpdate.setEventName(eventRequestDTO.getEventName());
         eventToUpdate.setEventLocation(eventRequestDTO.getEventLocation());
         eventToUpdate.setEventType(eventRequestDTO.getEventType());

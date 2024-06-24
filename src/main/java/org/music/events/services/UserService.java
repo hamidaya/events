@@ -3,6 +3,7 @@ package org.music.events.services;
 import jakarta.transaction.Transactional;
 import org.music.events.dtos.UserDto;
 import org.music.events.exceptions.RecordNotFoundException;
+import org.music.events.exceptions.UsernameExistsException;
 import org.music.events.models.Authority;
 import org.music.events.models.Photo;
 import org.music.events.models.Profile;
@@ -64,10 +65,10 @@ public class UserService {
 
     public boolean profileExists(String username, Long profileId) {
         if (userRepository.existsById(username)) {
-            throw new RuntimeException("User already exists with username: " + username);
+            throw new RuntimeException(username);
         }
         if (profileRepository.existsById(profileId)) {
-            throw new RuntimeException("Profile already exists with username: " + username);
+            throw new UsernameExistsException("Profile already exists with username: " + username);
         }
         return false;
     }
@@ -75,7 +76,7 @@ public class UserService {
     public String createUser(UserDto userDto) {
         String username = userDto.getUsername();
         if (userExists(username)) {
-            throw new RuntimeException("User is already exists with username: " + username);
+            throw new UsernameExistsException(username);
         }
 
         String randomString = RandomStringGenerator.generateAlphaNumeric(20);

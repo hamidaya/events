@@ -64,6 +64,12 @@ public class GlobalExceptionsHandler {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.NOT_FOUND);
     }
 
+
+    @ExceptionHandler(UsernameExistsException.class)
+    public ResponseEntity<String> handleUsernameExistsException(UsernameExistsException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.FORBIDDEN);
+    }
+
     @ExceptionHandler(MappingException.class)
     public ResponseEntity<String> handleMappingException(MappingException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);

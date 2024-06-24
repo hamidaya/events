@@ -74,7 +74,6 @@ public class PartyService {
         return dto;
     }
 
-    //Update party methode.
     public Party updateParty(Long eventId, PartyRequestDTO partyRequestDTO) {
         Party partyToUpdate = partyRepository.findById(eventId).orElseThrow();
         new EntityNotFoundException("Party with id " + eventId + " not found");

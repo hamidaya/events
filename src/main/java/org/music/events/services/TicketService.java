@@ -52,7 +52,8 @@ public class TicketService {
             throw new QRCodeException();
         }
 
-    }}
+    }
+}
 
 
 

@@ -18,27 +18,21 @@ public class QRCodeImage {
         this.image = image;
     }
 
-    // Getter voor qrCodeId
     public Long getQrCodeId() {
         return qrCodeId;
     }
-    // Setter voor qrCodeId
     public void setQrCodeId(Long qrCodeId) {
         this.qrCodeId = qrCodeId;
     }
-    // Getter voor image
     public byte[] getImage() {
         return image;
     }
-    // Setter voor image
     public void setImage(byte[] image) {
         this.image = image;
     }
-    // Getter voor ticket
     public Ticket getTicket() {
         return ticket;
     }
-    // Setter voor ticket
     public void setTicket(Ticket ticket) {
         this.ticket = ticket;
     }

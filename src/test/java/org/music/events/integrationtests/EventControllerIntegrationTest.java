@@ -28,7 +28,6 @@ import java.time.LocalDate;
         @Test
         @WithMockUser(username = "admin", password = "password", roles = "ADMIN")
         void addEvent() throws Exception {
-            // Test with a valid EventRequestDTO
             EventRequestDTO eventRequestDTO = new EventRequestDTO();
             eventRequestDTO.setEventName("mark party");
             eventRequestDTO.setEventType("party");
