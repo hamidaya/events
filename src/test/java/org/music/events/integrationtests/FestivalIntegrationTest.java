@@ -5,7 +5,6 @@ import org.junit.jupiter.api.Test;
 import org.music.events.dtos.EventRespondsDTO;
 import org.music.events.dtos.FestivalRequestDTO;
 import org.music.events.dtos.FestivalRespondsDTO;
-import org.music.events.models.Festival;
 import org.music.events.repositories.FestivalRepository;
 import org.music.events.services.FestivalService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -109,40 +108,6 @@ public class FestivalIntegrationTest {
                 .andExpect(jsonPath("$.campingAvailable").value(true));
     }
 
-//    @Test
-//    @WithMockUser(username = "admin", password = "password", roles = "ADMIN")
-//    void updateFestival() throws Exception {
-//        mockMvc.perform(put("/festivals/").with(httpBasic("admin", "password"))
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content("""
-//
-//        {
-//
-//            "eventName": "supersupergeengeen geen fffffFestival",
-//                "eventType": "festival",
-//                "eventLocation": "nergens",
-//                "eventStartDate": "2024-05-11",
-//                "eventEndDate": "2024-05-14",
-//                "eventPrice": 11150,
-//                "availableTickets": 12200,
-//                "eventDescription": "echt leuke festival",
-//                "artistName": "mega artist",
-//                "campingAvailable":true
-////        }
-////    """))
-//                .andExpect(status().isOk())
-//                .andExpect(jsonPath("$.eventId").value(1L))
-//                .andExpect(jsonPath("$.eventName").value("mark festival updated"))
-//                .andExpect(jsonPath("$.eventType").value("festival"))
-//                .andExpect(jsonPath("$.eventLocation").value("utrecht"))
-//                .andExpect(jsonPath("$.eventStartDate").value("2024-02-04"))
-//                .andExpect(jsonPath("$.eventEndDate").value("2024-07-15"))
-//                .andExpect(jsonPath("$.availableTickets").value(456))
-//                .andExpect(jsonPath("$.eventPrice").value(34.80))
-//                .andExpect(jsonPath("$.eventDescription").value("dit festival alleen voor mark en frans"))
-//                .andExpect(jsonPath("$.artistName").value("mark Artist"))
-//                .andExpect(jsonPath("$.campingAvailable").value(false));
-//    }
 
     @Test
     void deleteFestival() throws Exception {
