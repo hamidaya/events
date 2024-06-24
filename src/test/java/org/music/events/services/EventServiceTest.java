@@ -67,7 +67,7 @@ public class EventServiceTest {
         Event result = eventService.updateEvent(1L, eventRequestDTO);
         assertEquals(updatedEvent.getEventName(), result.getEventName());
         assertEquals(updatedEvent.getEventLocation(), result.getEventLocation());
-        // Gebruik van ArgumentCaptor om de opgeslagen waarde te verifiëren
+
         verify(eventRepository, times(1)).findById(1L);
         verify(eventRepository, times(1)).save(captor.capture());
         Event capturedEvent = captor.getValue();
