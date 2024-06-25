@@ -1,7 +1,5 @@
 package org.music.events.filter;
 
-
-
 import org.music.events.services.CustomUserDetailsService;
 import org.music.events.utils.JwtUtil;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

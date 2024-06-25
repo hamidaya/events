@@ -1,4 +1,5 @@
 package org.music.events.exceptions;
+
 import jakarta.servlet.http.HttpServletRequest;
 import org.hibernate.boot.MappingException;
 import org.music.events.dtos.ApiExceptionResponse;
@@ -13,6 +14,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
+
 @RestControllerAdvice
 public class GlobalExceptionsHandler {
     @ExceptionHandler(ResourceNotFoundException.class)

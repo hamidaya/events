@@ -16,10 +16,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-
-/*  Deze security is niet de enige manier om het te doen.
-    In de andere branch van deze github repo staat een ander voorbeeld
- */
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig {
@@ -33,15 +29,12 @@ public class SpringSecurityConfig {
         this.jwtRequestFilter = jwtRequestFilter;
     }
 
-    // PasswordEncoderBean. Deze kun je overal in je applicatie injecteren waar nodig.
-    // Je kunt dit ook in een aparte configuratie klasse zetten.
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
 
-    // Authenticatie met customUserDetailsService en passwordEncoder
     @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http, PasswordEncoder passwordEncoder) throws Exception {
         var auth = new DaoAuthenticationProvider();
@@ -51,9 +44,6 @@ public class SpringSecurityConfig {
     }
 
 
-
-
-    // Authorizatie met jwt
     @Bean
     protected SecurityFilterChain filter (HttpSecurity http) throws Exception {
 
@@ -64,7 +54,6 @@ public class SpringSecurityConfig {
                 .authorizeHttpRequests(auth ->
                         auth
 
-               // .requestMatchers("/**").permitAll()
                 .requestMatchers(HttpMethod.POST, "/users").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.POST,"/users/**").hasRole("ADMIN")
                 .requestMatchers(HttpMethod.GET,"/users").hasRole("ADMIN")
@@ -73,23 +62,17 @@ public class SpringSecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/users/**").hasRole("ADMIN")
               
 
-                // Je mag meerdere paths tegelijk definieren
-               // .requestMatchers("/cimodules", "/remotecontrollers", "/televisions", "/wallbrackets").hasAnyRole("ADMIN", "USER")
-
-               // Authentication endpoints:
                 .requestMatchers("/authenticated").authenticated()
                 .requestMatchers("/authenticate").permitAll()
 
-               // Events endpoints.
-                .requestMatchers(HttpMethod.GET,"/events").hasAnyRole("ADMIN", "USER") //.done
+                .requestMatchers(HttpMethod.GET,"/events").hasAnyRole("ADMIN", "USER")
                 .requestMatchers(HttpMethod.POST, "/events").hasAnyRole("ADMIN","USER")
-                .requestMatchers(HttpMethod.POST,"/events/**").hasRole("ADMIN")
+                .requestMatchers(HttpMethod.POST,"/events/**").hasAnyRole("ADMIN","USER")
                 .requestMatchers(HttpMethod.PUT, "/events").hasAnyRole("ADMIN","USER")
                 .requestMatchers(HttpMethod.PUT, "/**").hasAnyRole("ADMIN","USER")
                 .requestMatchers(HttpMethod.DELETE, "/events").hasAnyRole("ADMIN","USER")
                 .requestMatchers(HttpMethod.DELETE,"/events/**").hasAnyRole("ADMIN","USER")
 
-                // Festivals endpoints:
                 .requestMatchers(HttpMethod.GET,"/festivals").hasAnyRole("ADMIN", "USER")
                 .requestMatchers(HttpMethod.POST, "/festivals").hasAnyRole("ADMIN","USER")
                 .requestMatchers(HttpMethod.POST,"/festivals/**").hasAnyRole("ADMIN","USER")
@@ -97,7 +80,6 @@ public class SpringSecurityConfig {
                 .requestMatchers(HttpMethod.DELETE, "/festivals").hasAnyRole("ADMIN","USER")
                 .requestMatchers(HttpMethod.DELETE,"/festivals/**").hasAnyRole("ADMIN","USER")
 
-               // Partys endpoints:
                   .requestMatchers(HttpMethod.GET,"/partys").hasAnyRole("ADMIN", "USER")
                   .requestMatchers(HttpMethod.POST, "/partys").hasAnyRole("ADMIN","USER")
                   .requestMatchers(HttpMethod.POST,"/partys/**").hasRole("ADMIN")
@@ -105,25 +87,19 @@ public class SpringSecurityConfig {
                   .requestMatchers(HttpMethod.DELETE, "/partys").hasAnyRole("ADMIN","USER")
                   .requestMatchers(HttpMethod.DELETE,"/partys/**").hasAnyRole("ADMIN","USER")
 
-                // Tickets endpoints:
-                  .requestMatchers(HttpMethod.GET,"/tickets/**").hasAnyRole("ADMIN", "USER")
-
-                 // Profile endpoints:
                   .requestMatchers(HttpMethod.PUT, "/profiles").hasAnyRole("ADMIN","USER")
                   .requestMatchers(HttpMethod.PUT, "/profiles/**").hasAnyRole("ADMIN","USER")
-                 .requestMatchers(HttpMethod.GET, "/profiles").hasAnyRole("ADMIN","USER")
+                  .requestMatchers(HttpMethod.GET, "/profiles").hasAnyRole("ADMIN","USER")
                   .requestMatchers(HttpMethod.GET, "/profiles/**").hasAnyRole("ADMIN","USER")
 
-                 // Tickets endpoints:
-                    .requestMatchers(HttpMethod.POST, "/tickets").hasAnyRole("ADMIN","USER")
-                    .requestMatchers(HttpMethod.POST, "/tickets/**").hasAnyRole("ADMIN","USER")
-                 //None role
+                  .requestMatchers(HttpMethod.GET,"/tickets/**").hasAnyRole("ADMIN", "USER")
+                  .requestMatchers(HttpMethod.POST, "/tickets").hasAnyRole("ADMIN","USER")
+                  .requestMatchers(HttpMethod.POST, "/tickets/**").hasAnyRole("ADMIN","USER")
                   .anyRequest().denyAll()
-
                 )
+
                 .sessionManagement(sess -> sess.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
-
 }

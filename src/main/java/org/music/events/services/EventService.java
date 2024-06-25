@@ -49,6 +49,7 @@ public class EventService {
     @Transactional
     public void deleteEvent(Long eventId) {
         if (!eventRepository.existsById(eventId)) {
+
             throw new EventNotFoundException("Event id " + eventId + " not found");
         }
         eventRepository.deleteById(eventId);

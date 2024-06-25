@@ -101,7 +101,7 @@ public class EventIntegrationTest {
         EventRespondsDTO addedEvent = eventService.addEvent(eventRequestDTO);
         Long eventId = addedEvent.getEventId();
         EventRequestDTO updatedEventRequestDTO = new EventRequestDTO("mark party updated", "party", "utrecht",
-                LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 7777.00, 100, "updated description");
+                LocalDate.of(2024, 2, 4), LocalDate.of(2024, 7, 15), 7777.00, 34, "updated description");
         mockMvc.perform(put("/events/{eventId}", eventId)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(updatedEventRequestDTO)))
