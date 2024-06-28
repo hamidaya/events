@@ -2,7 +2,6 @@ package org.music.events.models;
 
 import jakarta.persistence.*;
 
-import java.time.LocalDate;
 
 @Table(name="partys")
 @Entity
