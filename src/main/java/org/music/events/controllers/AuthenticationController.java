@@ -16,6 +16,7 @@ import java.security.Principal;
 
 @CrossOrigin
 @RestController
+
 public class AuthenticationController {
 
     private final AuthenticationManager authenticationManager;
