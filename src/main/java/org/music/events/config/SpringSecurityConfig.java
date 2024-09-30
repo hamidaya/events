@@ -95,6 +95,8 @@ public class SpringSecurityConfig {
                   .requestMatchers(HttpMethod.GET,"/tickets/**").hasAnyRole("ADMIN", "USER")
                   .requestMatchers(HttpMethod.POST, "/tickets").hasAnyRole("ADMIN","USER")
                   .requestMatchers(HttpMethod.POST, "/tickets/**").hasAnyRole("ADMIN","USER")
+
+                  .requestMatchers(HttpMethod.GET,"/validate/**").hasAnyRole("ADMIN", "USER")
                   .anyRequest().denyAll()
                 )
 

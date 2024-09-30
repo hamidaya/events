@@ -10,10 +10,8 @@ public class QRCodeImage {
     @OneToOne
     @JoinColumn(name = "ticketId", referencedColumnName = "ticketId")
     private Ticket ticket;
-    // Lege constructor
     public QRCodeImage() {
     }
-    // Constructor met image parameter
     public QRCodeImage(byte[] image) {
         this.image = image;
     }
