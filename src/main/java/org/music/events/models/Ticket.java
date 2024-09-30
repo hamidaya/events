@@ -10,7 +10,6 @@ public class Ticket {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ticketId;
 
-
     public QRCodeImage getQrCodeImage() {
         return qrCodeImage;
     }
@@ -42,8 +41,6 @@ public class Ticket {
 
     @Enumerated(EnumType.STRING)
     private TicketStatus status;
-
-
 
     public Ticket() {
 

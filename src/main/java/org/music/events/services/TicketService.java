@@ -1,6 +1,7 @@
 package org.music.events.services;
 import org.hibernate.event.service.spi.EventListenerRegistrationException;
 import org.music.events.exceptions.QRCodeException;
+import org.music.events.exceptions.TicketNotFoundException;
 import org.music.events.helpers.QRCodeGenerator;
 import org.music.events.models.*;
 import org.music.events.repositories.EventRepository;
@@ -8,8 +9,13 @@ import org.music.events.repositories.QRCodeImageRepository;
 import org.music.events.repositories.TicketRepository;
 import org.music.events.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
+
 
 @Service
 public class TicketService {
@@ -17,8 +23,8 @@ public class TicketService {
     private final TicketRepository ticketRepository;
     private final UserRepository userRepository;
     private final EventRepository eventRepository;
-
     private final QRCodeImageRepository qrCodeImageRepository;
+
 
     @Autowired
     public TicketService(TicketRepository ticketRepository, UserRepository userRepository, EventRepository eventRepository, QRCodeImageRepository qrCodeImageRepository) {
@@ -51,10 +57,17 @@ public class TicketService {
         } catch (Exception e) {
             throw new QRCodeException();
         }
-
     }
-}
-
-
-
+    public String validateTicket(Long ticketId) {
+        Optional<Ticket> optionalTicket = ticketRepository.findByTicketIdAndStatus(ticketId, TicketStatus.VALID);
+        if (optionalTicket.isPresent()) {
+            Ticket ticket = optionalTicket.get();
+            ticket.setStatus(TicketStatus.USED);
+            ticketRepository.save(ticket);
+            return "Ticket is geldig en is nu gebruikt!";
+        } else {
+            return "Ongeldig ticket of ticket is al gebruikt!";
+        }
+    }
+    }
 
